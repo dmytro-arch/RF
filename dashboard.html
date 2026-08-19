@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Dashboard Audit — decorativearchitecturalproducts.com</title>
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1b2338; --border:#2a3352;
+    --text:#e8ecf5; --muted:#9aa5c0; --accent:#5b8cff; --good:#3ecf8e;
+    --warn:#f5b942; --bad:#f0576a; --chip:#232c47;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:linear-gradient(180deg,#0b0f1a,#0f1420 400px, #0f1420);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; padding:32px 20px 80px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  header.top{margin-bottom:28px;}
+  header.top .eyebrow{color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+  header.top h1{font-size:28px;margin:6px 0 4px;}
+  header.top .sub{color:var(--muted);font-size:14px;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .badge{background:var(--chip);border:1px solid var(--border);color:var(--muted);font-size:12.5px;padding:5px 10px;border-radius:999px;}
+  .badge.ok{color:var(--good);border-color:#1f4d3c;}
+  .badge.warn{color:var(--warn);border-color:#4d3f1f;}
+  .badge.bad{color:var(--bad);border-color:#4d1f28;}
+
+  section{margin-bottom:34px;}
+  h2.sec{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
+  h2.sec .num{color:var(--accent);font-variant-numeric:tabular-nums;}
+  p.sec-note{color:var(--muted);font-size:13px;margin:0 0 16px;}
+
+  .grid{display:grid;gap:14px;}
+  .grid.kpi{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px;
+  }
+  .card .label{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+  .card .value{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .card .delta{font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums;}
+  .delta.up{color:var(--good);}
+  .delta.down{color:var(--bad);}
+  .delta.flat{color:var(--muted);}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:6px 16px;overflow:auto;}
+
+  .two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
+  @media (max-width:820px){.two-col{grid-template-columns:1fr;}}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin:10px 0;}
+  .bar-row .name{width:170px;font-size:13px;color:var(--muted);flex-shrink:0;}
+  .bar-track{flex:1;background:#0c1120;border-radius:6px;height:10px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#5b8cff,#7aa2ff);}
+  .bar-val{width:110px;text-align:right;font-size:13px;font-variant-numeric:tabular-nums;flex-shrink:0;}
+
+  .score-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .score{
+    width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;border:6px solid var(--border);
+    font-weight:700;font-size:24px;
+  }
+  .score.good{border-color:#1f4d3c;color:var(--good);}
+  .score.mid{border-color:#4d3f1f;color:var(--warn);}
+  .score.bad{border-color:#4d1f28;color:var(--bad);}
+  .score .lbl{font-size:10.5px;font-weight:500;color:var(--muted);margin-top:2px;}
+  .score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .score-block .cap{font-size:12.5px;color:var(--muted);}
+
+  .metric-mini{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border);}
+  .metric-mini:last-child{border-bottom:none;}
+  .metric-mini .v{font-variant-numeric:tabular-nums;font-weight:600;}
+  .v.bad{color:var(--bad);}
+  .v.good{color:var(--good);}
+
+  .issue{
+    display:flex; gap:12px; padding:12px 14px; border-radius:10px; background:var(--panel2);
+    border:1px solid var(--border); margin-bottom:10px; align-items:flex-start;
+  }
+  .issue .sev{
+    flex-shrink:0; width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;
+  }
+  .sev.crit{background:#4d1f28;color:#ff8a9a;}
+  .sev.high{background:#4d3f1f;color:#ffcf6b;}
+  .sev.med{background:#1f2e4d;color:#8fb2ff;}
+  .issue .body h4{margin:0 0 3px;font-size:14px;}
+  .issue .body p{margin:0;color:var(--muted);font-size:13px;}
+
+  .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:820px){.rec-grid{grid-template-columns:1fr;}}
+  .rec-col h3{font-size:14px;margin:0 0 10px;color:var(--accent);}
+  .rec-col ol{margin:0;padding-left:18px;font-size:13.5px;}
+  .rec-col li{margin-bottom:10px;color:var(--text);}
+  .rec-col li b{color:var(--text);}
+  .rec-col li span.why{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;}
+
+  .callout{
+    background:var(--panel2); border:1px solid #4d1f28; border-left:4px solid var(--bad);
+    border-radius:10px; padding:16px 18px; margin-bottom:14px;
+  }
+  .callout h4{margin:0 0 6px;font-size:14.5px;color:#ff8a9a;}
+  .callout p{margin:0 0 8px;color:var(--text);font-size:13.5px;}
+  .callout p:last-child{margin-bottom:0;}
+  .spam-chip{display:inline-block;background:#231a1a;border:1px solid #4d1f28;color:#ff9a9a;font-size:11.5px;padding:2px 8px;border-radius:6px;margin:2px 4px 2px 0;font-family:ui-monospace,Consolas,monospace;}
+
+  footer{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">SEO Dashboard Audit</div>
+    <h1>decorativearchitecturalproducts.com</h1>
+    <div class="sub">Отчёт сформирован 19 августа 2026 · Основной период: 20 июля – 16 августа 2026 (GSC, 28 дней) · Источники: Google Search Console, PageSpeed Insights, Ahrefs (Google Analytics 4 — недоступен, см. раздел 1)</div>
+    <div class="badges">
+      <span class="badge ok">HTTPS ✓</span>
+      <span class="badge ok">canonical non-www ✓</span>
+      <span class="badge ok">GSC property подтверждён (URL-prefix)</span>
+      <span class="badge ok">Ahrefs проект подтверждён</span>
+      <span class="badge bad">GA4 property не найден — раздел трафика недоступен</span>
+      <span class="badge bad">Backlink-профиль под спам/PBN-атакой</span>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="sec">1. Идентификация сайта</h2>
+    <p class="sec-note">
+      Проверка перед сбором показателей: домен, протокол и подключённые свойства.
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Проверка</th><th>Статус</th></tr>
+        <tr><td>Домен соответствует запрошенному URL</td><td>✓ decorativearchitecturalproducts.com</td></tr>
+        <tr><td>HTTPS</td><td>✓ используется</td></tr>
+        <tr><td>www vs non-www</td><td>✓ канонический — non-www (https://decorativearchitecturalproducts.com/, подтверждено тегом &lt;link rel="canonical"&gt;)</td></tr>
+        <tr><td>Property в GA4</td><td>✗ <b>Не найдено.</b> В подключённом Google-аккаунте зарегистрирован только один GA4-ресурс — decorativearchitecturalshapes.com. Поиск по слову «product» в переключателе аккаунтов/свойств ничего не нашёл. Раздел «Трафик и вовлечённость GA4» в этом отчёте отсутствует — это уже третий из трёх проверенных доменов семейства Royal Foam с этой проблемой.</td></tr>
+        <tr><td>Property в GSC</td><td>✓ Найдено URL-prefix свойство <code>https://decorativearchitecturalproducts.com/</code> (использовано для отчёта). Domain-property <code>sc-domain:decorativearchitecturalproducts.com</code> в этом аккаунте недоступен («you don't have access to this property») — обратная ситуация по сравнению с royalfoam.art.</td></tr>
+        <tr><td>Проект в Ahrefs</td><td>✓ Site Explorer / Site Audit — проект «Decorativearchitecturalproducts» (projectId 7927351)</td></tr>
+        <tr><td>Связанные домены</td><td>ℹ Подтверждена прямая связь с decorativearchitecturalshapes.com, royalfoam.us и royalfoam.art (перекрёстные бэклинки, общий владелец «Royal Foam US LLC», Jacksonville, FL) — сайты одного бизнеса конкурируют за одни и те же запросы и делят один и тот же спам-ссылочный «шлейф».</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">2. Google Search Console — Эффективность в поиске</h2>
+    <p class="sec-note">28 дней (20 июля – 16 августа 2026) vs предыдущие 28 дней (22 июня – 19 июля 2026)</p>
+    <div class="grid kpi">
+      <div class="card"><div class="label">Clicks</div><div class="value">74</div><div class="delta up">↑ 76,2% (было 42)</div></div>
+      <div class="card"><div class="label">Impressions</div><div class="value">9 380</div><div class="delta up">↑ 156,3% (было 3 660)</div></div>
+      <div class="card"><div class="label">Average CTR</div><div class="value">0,8%</div><div class="delta down">↓ было 1,1%</div></div>
+      <div class="card"><div class="label">Average position</div><div class="value">15,7</div><div class="delta down">↓ ухудшилась на 3,5 (было 12,2)</div></div>
+    </div>
+    <p class="sec-note" style="margin-top:14px;">Смешанный сигнал: клики и показы выросли более чем вдвое, но CTR упал на 27%, а средняя позиция ухудшилась — сайт стал виднее по большему числу запросов, но в среднем на более низких позициях, что типично при резком расширении «длинного хвоста» низкочастотных запросов.</p>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div>
+        <h2 class="sec">Топ-страницы (28 дней)</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Страница</th><th class="num">Clicks</th><th class="num">Δ</th><th class="num">Impr.</th><th class="num">Δ impr.</th></tr>
+            <tr><td>/services/faux-wood-trusses/</td><td class="num">16</td><td class="num" style="color:var(--good)">+8</td><td class="num">1 238</td><td class="num" style="color:var(--good)">+761</td></tr>
+            <tr><td>/ (главная)</td><td class="num">11</td><td class="num" style="color:var(--bad)">−1</td><td class="num">849</td><td class="num" style="color:var(--good)">+298</td></tr>
+            <tr><td>/services/custom-coffered-ceilings/</td><td class="num">7</td><td class="num" style="color:var(--good)">+4</td><td class="num">541</td><td class="num" style="color:var(--good)">+188</td></tr>
+            <tr><td>/services/custom-column-capitals-and-bases/</td><td class="num">6</td><td class="num" style="color:var(--good)">+5</td><td class="num">410</td><td class="num" style="color:var(--good)">+236</td></tr>
+            <tr><td>/services/custom-faux-wood-beams/</td><td class="num">5</td><td class="num" style="color:var(--good)">+3</td><td class="num">556</td><td class="num" style="color:var(--good)">+385</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h2 class="sec">Топ-запросы по показам (28 дней)</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Запрос</th><th class="num">Clicks</th><th class="num">Impr.</th></tr>
+            <tr><td>faux trusses</td><td class="num">4</td><td class="num">100</td></tr>
+            <tr><td>decorative architectural products</td><td class="num">2</td><td class="num">10</td></tr>
+            <tr><td>faux wood trusses</td><td class="num">1</td><td class="num">26</td></tr>
+            <tr><td>architectural products</td><td class="num">0</td><td class="num">45</td></tr>
+            <tr><td>architectural products company</td><td class="num">0</td><td class="num">25</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top:14px;">
+      За 3 месяца по запросу «architectural products» — 45 показов и 0 кликов при средней позиции 28,7; «custom architectural products» — 24 показа, позиция 15,8; «architectural products company» — 25 показов, позиция 33,5. Десятки подобных общеотраслевых запросов получают показы, но сайт ранжируется слишком низко (15–70 место), чтобы получать клики — это резерв роста, который не требует новых страниц, а требует улучшения позиций уже существующих.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="sec">3. PageSpeed Insights / Core Web Vitals</h2>
+    <p class="sec-note">Главная страница, 19 августа 2026. Реальных данных пользователей (CrUX field data) нет — «Нет данных»; оценки лабораторные (Lighthouse).</p>
+    <div class="two-col">
+      <div class="card">
+        <div class="label" style="margin-bottom:14px;">Mobile (смартфон)</div>
+        <div class="score-row">
+          <div class="score-block"><div class="score bad">56</div><div class="cap">Performance</div></div>
+          <div class="score-block"><div class="score mid">85</div><div class="cap">Accessibility</div></div>
+          <div class="score-block"><div class="score good">96</div><div class="cap">Best Practices</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="metric-mini"><span>LCP</span><span class="v bad">11,6 сек (критически плохо)</span></div>
+          <div class="metric-mini"><span>FCP</span><span class="v bad">9,1 сек</span></div>
+          <div class="metric-mini"><span>Speed Index</span><span class="v bad">9,1 сек</span></div>
+          <div class="metric-mini"><span>TBT</span><span class="v good">20 мс</span></div>
+          <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label" style="margin-bottom:14px;">Desktop</div>
+        <div class="score-row">
+          <div class="score-block"><div class="score good">81</div><div class="cap">Performance</div></div>
+          <div class="score-block"><div class="score good">87</div><div class="cap">Accessibility</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">Best Practices</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="metric-mini"><span>LCP</span><span class="v good">2,1 сек</span></div>
+          <div class="metric-mini"><span>FCP</span><span class="v good">1,7 сек</span></div>
+          <div class="metric-mini"><span>Speed Index</span><span class="v good">1,9 сек</span></div>
+          <div class="metric-mini"><span>TBT</span><span class="v good">50 мс</span></div>
+          <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top:10px;">Разрыв LCP мобильный/десктоп — 11,6 сек против 2,1 сек — худший показатель из трёх проверенных доменов семейства Royal Foam (у royalfoam.art было 10,0 сек). И FCP, и Speed Index на мобильном совпадают на уровне 9,1 сек — верный признак, что страница почти не начинает отрисовываться до полной загрузки тяжёлых ресурсов первого экрана.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">4. Ahrefs — Backlink-профиль и техническое состояние</h2>
+    <div class="grid kpi">
+      <div class="card"><div class="label">Domain Rating (DR)</div><div class="value">4,3</div><div class="delta down">−0,2 (мес.)</div></div>
+      <div class="card"><div class="label">URL Rating (главная)</div><div class="value">5</div></div>
+      <div class="card"><div class="label">Backlinks</div><div class="value">3 100</div><div class="delta down">−1 500 · всего за всё время 24 400</div></div>
+      <div class="card"><div class="label">Referring domains</div><div class="value">484</div><div class="delta up">+20 · всего за всё время 969</div></div>
+      <div class="card"><div class="label">Органические ключевые слова</div><div class="value">2</div><div class="delta flat">Топ-3: 2</div></div>
+      <div class="card"><div class="label">Органический трафик/мес (оценка Ahrefs)</div><div class="value">0</div><div class="delta flat">ценность $0</div></div>
+      <div class="card"><div class="label">Платные ключевые слова / объявления</div><div class="value">0 / 0</div></div>
+      <div class="card"><div class="label">Site Audit Health Score</div><div class="value">96/100</div><div class="delta flat">«Excellent» (краул от 19 авг. 2026)</div></div>
+    </div>
+    <p class="sec-note" style="margin-top:14px;">
+      Referring domains за месяц выросли (+20), а вот общее число бэклинков сократилось (−1 500) — то есть часть свежих спам-ссылок уже отвалилась/переиндексировалась, но приток новых доменов продолжается. При этом органический трафик по оценке Ahrefs — 0, а keywords — всего 2. 969 referring domains за всё время и 24,4К бэклинков не конвертируются в органическую видимость — см. критическую находку ниже.
+    </p>
+  </section>
+
+  <section>
+    <div class="callout">
+      <h4>⚠ Backlink-профиль под активной спам/PBN-атакой — самый тяжёлый случай из трёх проверенных доменов</h4>
+      <p>Просмотр списка обратных ссылок (576 групп доменов, отсортировано по трафику донора) показал, что подавляющее большинство заметных по трафику referring domains — не органические ссылки, а спам-сети, которые Ahrefs напрямую маркирует категорией «SPAM». Более десятка почти идентичных доменов на <span class="spam-chip">*.store</span> публикуют один и тот же шаблонный фейковый отзыв «Back When I Launched My New Blog, I Had Zero Followers... SEOExpress.org helped me...» с разным названием сайта-прокладки (seoexpress-white-hat-group.store, expert-seoexpress-authority-directory.store, seoexpress-superior-on-page-house.store, thehighseo.shop, therankboostseo.shop и др.), плюс отдельная волна PBN/линк-фарм ссылок (linksbox.agency, linkbox.agency, primeboostseo.com, itxoft.com, rankgear.shop, linkbundle.shop, siteranksolutions.shop, ranklinkx.shop, toprankresults.shop, searchrankbuilders.shop, worldclasspbnlinks.biz, sergechel.info, preparation.co.in) с текстами вида «Where to buy aged domains and backlinks» и «How PBN Backlinks Compares to High-DA Guest Posts».</p>
+      <p>Атака не историческая, а <b>продолжается прямо сейчас</b>: часть ссылок датирована «9 дней назад», «8 дней назад», «4 дня назад» относительно даты отчёта. Все ссылки nofollow, но их объём искусственно раздувает referring domains (969 за всё время) и создаёт репутационный риск, а несколько доменов из той же волны (royalfoam.shop) явно помечены Ahrefs как SPAM и одновременно являются частью «семьи» Royal Foam — то есть спам-сеть, вероятно, целится сразу в несколько связанных доменов бизнеса.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">5. Технические проблемы (Ahrefs Site Audit)</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Проблема</th><th class="num">Страниц</th><th>Тип</th><th class="num">Новых</th></tr>
+        <tr><td>«Осиротевшая» страница (нет входящих внутр. ссылок)</td><td class="num">40</td><td>Ошибка</td><td class="num" style="color:var(--bad)">+33</td></tr>
+        <tr><td>Перенаправления 3XX в карте сайта (sitemap.xml)</td><td class="num">8</td><td>Ошибка</td><td class="num" style="color:var(--bad)">+4</td></tr>
+        <tr><td>Размер файла изображения слишком большой</td><td class="num">3</td><td>Ошибка</td><td class="num" style="color:var(--bad)">+1</td></tr>
+        <tr><td>Размер страницы превышает лимит сканирования Googlebot (2 МБ)</td><td class="num">2</td><td>Ошибка</td><td class="num">—</td></tr>
+        <tr><td>Отсутствует альтернативный текст (alt) у изображений</td><td class="num">155</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+47</td></tr>
+        <tr><td>Медленная страница</td><td class="num">148</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+44</td></tr>
+        <tr><td>Страница содержит ссылки для перенаправления</td><td class="num">145</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+47</td></tr>
+        <tr><td>Перенаправления 3XX</td><td class="num">82</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+6</td></tr>
+        <tr><td>Тег meta description отсутствует или пустой</td><td class="num">59</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+47</td></tr>
+        <tr><td>Теги Open Graph неполные</td><td class="num">51</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+17</td></tr>
+        <tr><td>Заголовок (title) слишком длинный</td><td class="num">18</td><td>Предупреждение</td><td class="num" style="color:var(--bad)">+10</td></tr>
+      </table>
+    </div>
+    <p class="sec-note" style="margin-top:10px;">HTTP-коды по краулу проекта (1 495 URL с ответом): 2xx — 1 413 (94,5%), 3xx — 82 (5,5%). Health Score 96/100 — отличный формально, но обращает на себя внимание, что сразу несколько разнородных проблем (meta description, alt-текст, Open Graph, ссылки-редиректы) получили практически одинаковый прирост «новых» случаев — по 44–47 страниц у каждой в этом краулe. Такая синхронность обычно указывает не на постепенное накопление технического долга, а на одно системное изменение (обновление темы/плагина CMS, миграция шаблона), которое одновременно задело контент, изображения и метатеги на десятках страниц. AI content level distribution: High — 10 страниц, Moderate — 6, Low — 4.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">6. Критические проблемы</h2>
+    <div class="issue">
+      <div class="sev crit">1</div>
+      <div class="body"><h4>Backlink-профиль под активной, продолжающейся спам/PBN-атакой</h4>
+      <p>576 групп referring domains, значительная часть — свежие (до 4–9 дней на момент отчёта) спам-ссылки от продавцов «aged domains and backlinks», PBN-сетей и фейковых SEO-отзывов на *.store/*.shop/*.biz доменах, явно помеченные Ahrefs как «SPAM». Это самый тяжёлый случай из трёх проверенных доменов семейства Royal Foam и явный признак того, что кто-то целенаправленно и систематически «накачивает» домен мусорными ссылками.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev crit">2</div>
+      <div class="body"><h4>GA4-аналитика недоступна или не настроена</h4>
+      <p>В подключённом Google-аккаунте нет GA4-ресурса для decorativearchitecturalproducts.com — только для decorativearchitecturalshapes.com. Без данных о сессиях, вовлечённости и конверсиях невозможно оценить, окупается ли трафик, который сайт всё же получает через органический поиск.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev crit">3</div>
+      <div class="body"><h4>LCP на мобильных — 11,6 сек, FCP — 9,1 сек (норма LCP ≤2,5 сек)</h4>
+      <p>На десктопе LCP — 2,1 сек, т.е. страница на мобильных загружается более чем в 5 раз медленнее. Это худший результат по Core Web Vitals из трёх проверенных доменов семейства Royal Foam и напрямую подтверждается Ahrefs Site Audit: 148 страниц (+44 новых за краул) помечены как «медленные».</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev high">4</div>
+      <div class="body"><h4>Почти нулевая органическая видимость несмотря на рост показов в GSC</h4>
+      <p>Ahrefs фиксирует всего 2 органических ключевых слова и $0 расчётной ценности трафика — при 484 активных referring domains. В GSC показы выросли на 156% за 28 дней, но средняя позиция ухудшилась (15,7 против 12,2), а CTR упал на 27% — сайт становится виднее по «длинному хвосту», но не поднимается в топ по ключевым коммерческим запросам («architectural products» — 45 показов, позиция 28,7; «custom architectural products» — позиция 15,8).</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev high">5</div>
+      <div class="body"><h4>Синхронный всплеск технических проблем на 40+ страницах одновременно</h4>
+      <p>Отсутствие meta description (+47 новых), alt-текста (+47), корректных Open Graph-тегов (+17) и ссылки на редиректы (+47) выросли практически синхронно в одном краулe — похоже на одно системное изменение (обновление темы/плагина CMS), которое разом задело метаданные и изображения на десятках страниц, а не на постепенную деградацию.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev med">6</div>
+      <div class="body"><h4>40 «осиротевших» страниц (+33 новых) и 8 редиректов 3XX в sitemap.xml</h4>
+      <p>Резкий скачок осиротевших страниц (с ~7 до 40 за один краул) говорит о недавних структурных изменениях меню/каталога без пересмотра внутренней перелинковки; редиректы в sitemap.xml вводят краулер в заблуждение и расходуют краулинговый бюджет.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">7. Рекомендации</h2>
+    <div class="rec-grid">
+      <div class="rec-col">
+        <h3>Быстрые победы (1–2 недели)</h3>
+        <ol>
+          <li><b>Отклонить спам-домены через Google Search Console Disavow Tool</b> — выгрузить из Ahrefs список *.store/*.shop/*.biz/*.agency доменов с меткой SPAM и подать disavow-файл
+            <span class="why">Атака продолжается еженедельно; без disavow объём мусорных доменов будет только расти</span></li>
+          <li><b>Создать/восстановить счётчик GA4</b> для decorativearchitecturalproducts.com и связать его с уже работающим GSC-свойством
+            <span class="why">Без этого невозможно оценить, окупается ли уже получаемый органический трафик</span></li>
+          <li><b>Найти и откатить недавнее системное изменение CMS/темы</b>, вызвавшее одновременный скачок проблем с meta description, alt-текстом, Open Graph и redirect-ссылками (+44–47 новых случаев по каждой)
+            <span class="why">Один патч может закрыть сразу 4 категории проблем вместо точечных правок на 40+ страницах</span></li>
+          <li><b>Оптимизировать LCP-элемент мобильной версии главной</b> (сжатие/lazy-load изображений первого экрана, устранение render-blocking ресурсов)
+            <span class="why">FCP и Speed Index совпадают на уровне 9,1 сек — верный признак, что рендер блокируется тяжёлыми ресурсами</span></li>
+          <li><b>Убрать 8 редиректов 3XX из sitemap.xml</b>
+            <span class="why">Экономит краулинговый бюджет и ускоряет индексацию актуальных URL</span></li>
+        </ol>
+      </div>
+      <div class="rec-col">
+        <h3>Стратегические задачи (1–3 месяца)</h3>
+        <ol>
+          <li><b>Поднять позиции по уже «видимым», но низкоранжируемым коммерческим запросам</b> (architectural products, custom architectural products, architectural products company и др. — сотни показов, позиции 15–70)
+            <span class="why">Не требует новых страниц — нужно усилить существующий контент и внутреннюю перелинковку под эти темы</span></li>
+          <li><b>Наладить регулярный (еженедельный) мониторинг новых referring domains</b> через Ahrefs Alerts
+            <span class="why">Спам-атака активна прямо сейчас — новые ссылки появляются каждые несколько дней</span></li>
+          <li><b>Проработать 40 «осиротевших» страниц</b> — добавить внутренние ссылки из релевантных категорий каталога услуг
+            <span class="why">Без входящих внутренних ссылок эти страницы почти не индексируются и не ранжируются</span></li>
+          <li><b>Системно снизить вес мобильных страниц</b> (148 страниц помечены «медленными», +44 новых за краул)
+            <span class="why">Проблема системная — вероятно, общий для всех страниц шаблон, набор скриптов или неоптимизированные медиа</span></li>
+          <li><b>Скоординировать SEO- и security-стратегию с sister-доменами</b> (decorativearchitecturalshapes.com, royalfoam.us, royalfoam.art)
+            <span class="why">Спам-сеть, судя по всему, целится в несколько доменов одного бизнеса одновременно — есть смысл бороться с ней на уровне всего портфеля, а не по одному домену</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Итоговый вывод</h2>
+    <p style="color:var(--text);font-size:14.5px;max-width:900px;">
+      Аудит decorativearchitecturalproducts.com выявил три критических проблемы: самую тяжёлую из трёх проверенных доменов семейства Royal Foam спам/PBN-атаку на ссылочный профиль (активную и продолжающуюся на момент отчёта), полное отсутствие данных GA4 и критически медленную мобильную загрузку (LCP 11,6 сек против 2,1 сек на десктопе). Технически сайт формально в хорошем состоянии (Site Audit Health Score 96/100), но синхронный всплеск проблем с метаданными и изображениями на 40+ страницах указывает на недавнюю системную регрессию, которую стоит найти и исправить одним патчем. В отличие от royalfoam.art, здесь есть обнадёживающий сигнал — показы и клики в GSC выросли более чем вдвое за 28 дней, — но рост не подкреплён улучшением позиций (CTR и средняя позиция ухудшились), а органическая ценность трафика по оценке Ahrefs остаётся нулевой. Первоочередные шаги: разослать disavow по спам-доменам, восстановить GA4 и устранить причину мобильной медлительности — без этого дальнейший рост показов не конвертируется в реальных посетителей и лиды.
+    </p>
+  </section>
+
+  <footer>
+    Источники: Google Search Console (https://decorativearchitecturalproducts.com/, URL-prefix property), PageSpeed Insights (19.08.2026), Ahrefs Site Explorer / Site Audit (проект «Decorativearchitecturalproducts», projectId 7927351, краул от 19.08.2026). Google Analytics 4 — свойство для decorativearchitecturalproducts.com не найдено в подключённом аккаунте, раздел трафика GA4 в отчёте отсутствует. Отчёт сформирован Claude на основе данных, открытых в подключённом браузере пользователя.
+  </footer>
+
+</div>
+</body>
+</html>
