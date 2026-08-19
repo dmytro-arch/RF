@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Dashboard Audit — royalfoam.art</title>
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1b2338; --border:#2a3352;
+    --text:#e8ecf5; --muted:#9aa5c0; --accent:#5b8cff; --good:#3ecf8e;
+    --warn:#f5b942; --bad:#f0576a; --chip:#232c47;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:linear-gradient(180deg,#0b0f1a,#0f1420 400px, #0f1420);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; padding:32px 20px 80px;
+  }
+  .wrap{max-width:1180px;margin:0 auto;}
+  header.top{margin-bottom:28px;}
+  header.top .eyebrow{color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+  header.top h1{font-size:28px;margin:6px 0 4px;}
+  header.top .sub{color:var(--muted);font-size:14px;}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .badge{background:var(--chip);border:1px solid var(--border);color:var(--muted);font-size:12.5px;padding:5px 10px;border-radius:999px;}
+  .badge.ok{color:var(--good);border-color:#1f4d3c;}
+  .badge.warn{color:var(--warn);border-color:#4d3f1f;}
+  .badge.bad{color:var(--bad);border-color:#4d1f28;}
+
+  section{margin-bottom:34px;}
+  h2.sec{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
+  h2.sec .num{color:var(--accent);font-variant-numeric:tabular-nums;}
+  p.sec-note{color:var(--muted);font-size:13px;margin:0 0 16px;}
+
+  .grid{display:grid;gap:14px;}
+  .grid.kpi{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px;
+  }
+  .card .label{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+  .card .value{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .card .delta{font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums;}
+  .delta.up{color:var(--good);}
+  .delta.down{color:var(--bad);}
+  .delta.flat{color:var(--muted);}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:6px 16px;overflow:auto;}
+
+  .two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
+  @media (max-width:820px){.two-col{grid-template-columns:1fr;}}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin:10px 0;}
+  .bar-row .name{width:170px;font-size:13px;color:var(--muted);flex-shrink:0;}
+  .bar-track{flex:1;background:#0c1120;border-radius:6px;height:10px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#5b8cff,#7aa2ff);}
+  .bar-val{width:110px;text-align:right;font-size:13px;font-variant-numeric:tabular-nums;flex-shrink:0;}
+
+  .score-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .score{
+    width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;border:6px solid var(--border);
+    font-weight:700;font-size:24px;
+  }
+  .score.good{border-color:#1f4d3c;color:var(--good);}
+  .score.mid{border-color:#4d3f1f;color:var(--warn);}
+  .score.bad{border-color:#4d1f28;color:var(--bad);}
+  .score .lbl{font-size:10.5px;font-weight:500;color:var(--muted);margin-top:2px;}
+  .score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .score-block .cap{font-size:12.5px;color:var(--muted);}
+
+  .metric-mini{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--border);}
+  .metric-mini:last-child{border-bottom:none;}
+  .metric-mini .v{font-variant-numeric:tabular-nums;font-weight:600;}
+  .v.bad{color:var(--bad);}
+  .v.good{color:var(--good);}
+
+  .issue{
+    display:flex; gap:12px; padding:12px 14px; border-radius:10px; background:var(--panel2);
+    border:1px solid var(--border); margin-bottom:10px; align-items:flex-start;
+  }
+  .issue .sev{
+    flex-shrink:0; width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;
+  }
+  .sev.crit{background:#4d1f28;color:#ff8a9a;}
+  .sev.high{background:#4d3f1f;color:#ffcf6b;}
+  .sev.med{background:#1f2e4d;color:#8fb2ff;}
+  .issue .body h4{margin:0 0 3px;font-size:14px;}
+  .issue .body p{margin:0;color:var(--muted);font-size:13px;}
+
+  .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:820px){.rec-grid{grid-template-columns:1fr;}}
+  .rec-col h3{font-size:14px;margin:0 0 10px;color:var(--accent);}
+  .rec-col ol{margin:0;padding-left:18px;font-size:13.5px;}
+  .rec-col li{margin-bottom:10px;color:var(--text);}
+  .rec-col li b{color:var(--text);}
+  .rec-col li span.why{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;}
+
+  .callout{
+    background:var(--panel2); border:1px solid #4d1f28; border-left:4px solid var(--bad);
+    border-radius:10px; padding:16px 18px; margin-bottom:14px;
+  }
+  .callout h4{margin:0 0 6px;font-size:14.5px;color:#ff8a9a;}
+  .callout p{margin:0 0 8px;color:var(--text);font-size:13.5px;}
+  .callout p:last-child{margin-bottom:0;}
+  .spam-chip{display:inline-block;background:#231a1a;border:1px solid #4d1f28;color:#ff9a9a;font-size:11.5px;padding:2px 8px;border-radius:6px;margin:2px 4px 2px 0;font-family:ui-monospace,Consolas,monospace;}
+
+  footer{color:var(--muted);font-size:12px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">SEO Dashboard Audit</div>
+    <h1>royalfoam.art</h1>
+    <div class="sub">Отчёт сформирован 19 августа 2026 · Основной период: 20 июля – 16 августа 2026 (GSC, 28 дней) · Источники: Google Search Console, PageSpeed Insights, Ahrefs (Google Analytics 4 — недоступен, см. раздел 1)</div>
+    <div class="badges">
+      <span class="badge ok">HTTPS ✓</span>
+      <span class="badge ok">www → non-www redirect ✓</span>
+      <span class="badge ok">GSC property подтверждён (domain-property)</span>
+      <span class="badge ok">Ahrefs проект подтверждён</span>
+      <span class="badge bad">GA4 property не найден — раздел трафика недоступен</span>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="sec">1. Идентификация сайта</h2>
+    <p class="sec-note">
+      Проверка перед сбором показателей: домен, протокол и подключённые свойства. Обнаружен критический пробел в аналитике.
+    </p>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Проверка</th><th>Статус</th></tr>
+        <tr><td>Домен соответствует запрошенному URL</td><td>✓ royalfoam.art</td></tr>
+        <tr><td>HTTPS</td><td>✓ используется</td></tr>
+        <tr><td>www vs non-www</td><td>✓ канонический — non-www; https://www.royalfoam.art/ редиректит на https://royalfoam.art/</td></tr>
+        <tr><td>Property в GA4</td><td>✗ <b>Не найдено.</b> В подключённом Google-аккаунте зарегистрирован только один GA4-ресурс — decorativearchitecturalshapes.com. Свойства для royalfoam.art в аккаунте нет (проверено через селектор аккаунтов/свойств и поиск). Раздел «Трафик и вовлечённость GA4» в этом отчёте отсутствует — либо счётчик не установлен на сайте, либо привязан к недоступному аккаунту.</td></tr>
+        <tr><td>Property в GSC</td><td>✓ Найдено domain-property <code>sc-domain:royalfoam.art</code> (использовано для отчёта). URL-prefix свойство <code>https://royalfoam.art/</code> в этом аккаунте недоступно («you don't have access to this property») — используется другой уровень доступа.</td></tr>
+        <tr><td>Проект в Ahrefs</td><td>✓ Site Explorer / Site Audit — проект «Royalfoam Art Design» настроен на royalfoam.art</td></tr>
+        <tr><td>Связанные домены</td><td>ℹ В структуре сайта и в бэклинк-профиле обнаружена явная связь с decorativearchitecturalshapes.com и decorativearchitecturalproducts.com (та же товарная линейка «Royal Foam») — не перепутать при параллельном ведении нескольких аудитов.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">2. Google Search Console — Эффективность в поиске</h2>
+    <p class="sec-note">28 дней (20 июля – 16 августа 2026) vs предыдущие 28 дней (22 июня – 19 июля 2026); справочно — 3 месяца (17 мая – 16 августа 2026)</p>
+    <div class="grid kpi">
+      <div class="card"><div class="label">Clicks</div><div class="value">70</div><div class="delta down">↓ 2,8% (было 72)</div></div>
+      <div class="card"><div class="label">Impressions</div><div class="value">8 110</div><div class="delta up">↑ 4,0% (было 7 800)</div></div>
+      <div class="card"><div class="label">Average CTR</div><div class="value">0,9%</div><div class="delta flat">без изменений</div></div>
+      <div class="card"><div class="label">Average position</div><div class="value">19,2</div><div class="delta up">↑ на 0,3 (было 19,5 — небольшое улучшение)</div></div>
+    </div>
+    <p class="sec-note" style="margin-top:14px;">За 3 месяца: 225 кликов, 26 100 показов, CTR 0,9%, средняя позиция 20,5.</p>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div>
+        <h2 class="sec">Топ-страницы (28 дней)</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Страница</th><th class="num">Clicks</th><th class="num">Δ</th><th class="num">Impr.</th><th class="num">Δ impr.</th></tr>
+            <tr><td>/ (главная)</td><td class="num">13</td><td class="num" style="color:var(--bad)">−1</td><td class="num">716</td><td class="num" style="color:var(--bad)">−159</td></tr>
+            <tr><td>/services/custom-foam-characters/</td><td class="num">5</td><td class="num" style="color:var(--bad)">−7</td><td class="num">733</td><td class="num" style="color:var(--good)">+225</td></tr>
+            <tr><td>/services/foam-trade-show-displays/</td><td class="num">5</td><td class="num" style="color:var(--good)">+2</td><td class="num">578</td><td class="num" style="color:var(--good)">+17</td></tr>
+            <tr><td>/location/new-york/</td><td class="num">5</td><td class="num" style="color:var(--good)">+2</td><td class="num">121</td><td class="num" style="color:var(--good)">+7</td></tr>
+            <tr><td>/custom-3d-props-that-turn-events-into-shareable-moments/</td><td class="num">3</td><td class="num" style="color:var(--good)">+1</td><td class="num">395</td><td class="num" style="color:var(--good)">+225</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h2 class="sec">Топ-запросы по показам (28 дней)</h2>
+        <div class="tbl-wrap">
+          <table>
+            <tr><th>Запрос</th><th class="num">Clicks</th><th class="num">Impr.</th></tr>
+            <tr><td>product replicas</td><td class="num">0</td><td class="num">104</td></tr>
+            <tr><td>3d foam sculptures</td><td class="num">0</td><td class="num">87</td></tr>
+            <tr><td>custom 3d foam props</td><td class="num">0</td><td class="num">84</td></tr>
+            <tr><td>3d architectural foam core monument sign</td><td class="num">0</td><td class="num">72</td></tr>
+            <tr><td>3d architectural foam sign</td><td class="num">0</td><td class="num">66</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top:14px;">
+      Ключевая аномалия: ни один из отраслевых нерегиональных запросов с наибольшим числом показов не приносит ни одного клика за 28 дней. Все 70 кликов периода рассеяны по десяткам разных длиннохвостых запросов (по 1 клику), включая брендовый «royal foam» (позиция ≈1,1). Устойчивой видимости и CTR по коммерческим темам («foam sculptures», «monument signs», «custom foam props» и т.п.) сайт не имеет.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="sec">3. PageSpeed Insights / Core Web Vitals</h2>
+    <p class="sec-note">Главная страница, 19 августа 2026. Реальных данных пользователей (CrUX field data) нет — «Нет данных»; оценки лабораторные (Lighthouse).</p>
+    <div class="two-col">
+      <div class="card">
+        <div class="label" style="margin-bottom:14px;">Mobile (смартфон)</div>
+        <div class="score-row">
+          <div class="score-block"><div class="score bad">64</div><div class="cap">Performance</div></div>
+          <div class="score-block"><div class="score mid">88</div><div class="cap">Accessibility</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">Best Practices</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="metric-mini"><span>LCP</span><span class="v bad">10,0 сек (очень плохо)</span></div>
+          <div class="metric-mini"><span>FCP</span><span class="v">3,3 сек</span></div>
+          <div class="metric-mini"><span>Speed Index</span><span class="v">5,9 сек</span></div>
+          <div class="metric-mini"><span>TBT</span><span class="v good">10 мс</span></div>
+          <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label" style="margin-bottom:14px;">Desktop</div>
+        <div class="score-row">
+          <div class="score-block"><div class="score good">99</div><div class="cap">Performance</div></div>
+          <div class="score-block"><div class="score mid">88</div><div class="cap">Accessibility</div></div>
+          <div class="score-block"><div class="score good">100</div><div class="cap">Best Practices</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="metric-mini"><span>LCP</span><span class="v good">0,9 сек</span></div>
+          <div class="metric-mini"><span>FCP</span><span class="v good">0,6 сек</span></div>
+          <div class="metric-mini"><span>Speed Index</span><span class="v good">0,8 сек</span></div>
+          <div class="metric-mini"><span>TBT</span><span class="v good">0 мс</span></div>
+          <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top:10px;">Accessibility: недостаточный контраст текста, заголовки расположены не по порядку убывания (H1→H2→H3). Разрыв LCP мобильный/десктоп — 10,0 сек против 0,9 сек — один из самых больших зафиксированных в наших аудитах.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">4. Ahrefs — Backlink-профиль и техническое состояние</h2>
+    <div class="grid kpi">
+      <div class="card"><div class="label">Domain Rating (DR)</div><div class="value">6</div><div class="delta up">+3,6 (мес.)</div></div>
+      <div class="card"><div class="label">URL Rating (главная)</div><div class="value">4,5</div></div>
+      <div class="card"><div class="label">Backlinks</div><div class="value">1 900</div><div class="delta up">+1 400 · всего за всё время 2 400</div></div>
+      <div class="card"><div class="label">Referring domains</div><div class="value">439</div><div class="delta up">+152 · всего за всё время 453</div></div>
+      <div class="card"><div class="label">Органические ключевые слова</div><div class="value">1</div><div class="delta flat">+1</div></div>
+      <div class="card"><div class="label">Топ-3 позиции</div><div class="value">1</div></div>
+      <div class="card"><div class="label">Оценка Ahrefs: трафик/мес</div><div class="value">6</div><div class="delta up">+6 · ценность ≈ $24</div></div>
+      <div class="card"><div class="label">Site Audit Health Score</div><div class="value">98/100</div><div class="delta flat">«Excellent» (краул 6 авг. 2026)</div></div>
+    </div>
+    <p class="sec-note" style="margin-top:14px;">
+      Платных ключевых слов и платного трафика — 0. География органического трафика: 100% США (на базе единственного отслеживаемого запроса). Резкий рост backlinks (+1 400) и referring domains (+152) за последний месяц <b>не связан с органическим ростом популярности</b> — см. критическую находку ниже.
+    </p>
+  </section>
+
+  <section>
+    <div class="callout">
+      <h4>⚠ Backlink-профиль заражён спам/PBN-сетью</h4>
+      <p>Просмотр списка обратных ссылок (452 группы доменов) показал, что подавляющее большинство новых referring domains за последние месяцы — не органические ссылки, а автоматически сгенерированные спам-сети, которые сам Ahrefs маркирует категорией «SPAM». Десятки почти идентичных доменов (<span class="spam-chip">*.store</span> <span class="spam-chip">*.shop</span> <span class="spam-chip">*.agency</span>) публикуют один и тот же шаблонный fake-отзыв «Running a Small E-Commerce Store... SEOExpress.org» с разными названиями сайта, плюс десятки PBN/guest-post спам-страниц («High-DA Guest Posts vs DR Boost Services...», «Scale royalfoam.art with backlinks...») — все ссылки nofollow, но их объём (сотни доменов) искусственно раздувает метрики DR/backlinks/referring domains и создаёт репутационный и потенциально алгоритмический риск.</p>
+      <p>Единственные содержательные (dofollow, тематические) внешние ссылки — с родственных доменов decorativearchitecturalshapes.com (DR 10) и decorativearchitecturalproducts.com (DR 4,3), а также nofollow-упоминание на Work.ua (вакансия). Настоящих независимых органических ссылок в топе списка практически нет.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">5. Технические проблемы (Ahrefs Site Audit)</h2>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Проблема</th><th class="num">Страниц</th><th>Тип</th></tr>
+        <tr><td>Медленная страница <span style="color:var(--bad)">(+106 новых)</span></td><td class="num">138</td><td>Предупреждение</td></tr>
+        <tr><td>Страница содержит ссылки для перенаправления</td><td class="num">131</td><td>Предупреждение</td></tr>
+        <tr><td>Перенаправления 3XX</td><td class="num">80</td><td>Предупреждение</td></tr>
+        <tr><td>Перенаправления 302</td><td class="num">42</td><td>Предупреждение</td></tr>
+        <tr><td>3XX редирект в sitemap.xml</td><td class="num">13</td><td>Ошибка</td></tr>
+        <tr><td>Тег meta description отсутствует или пустой</td><td class="num">16</td><td>Предупреждение</td></tr>
+        <tr><td>«Осиротевшая» страница (нет входящих внутр. ссылок)</td><td class="num">11</td><td>Ошибка</td></tr>
+        <tr><td>Страница noindex</td><td class="num">6</td><td>Предупреждение</td></tr>
+        <tr><td>Повреждённое изображение <span style="color:var(--bad)">(новое)</span></td><td class="num">1</td><td>Ошибка</td></tr>
+        <tr><td>Страница содержит повреждённое изображение <span style="color:var(--bad)">(новое)</span></td><td class="num">1</td><td>Ошибка</td></tr>
+      </table>
+    </div>
+    <p class="sec-note" style="margin-top:10px;">HTTP-коды по краулу проекта (1 056 URL): 2xx — 975 (92,3%), 3xx — 80 (7,6%), 4xx — 1 (0,1%). Health Score 98/100 — отличный, но резкий скачок «медленных страниц» (+106 за месяц) напрямую коррелирует с обнаруженной в PSI проблемой мобильного LCP (10 сек).</p>
+  </section>
+
+  <section>
+    <h2 class="sec">6. Критические проблемы</h2>
+    <div class="issue">
+      <div class="sev crit">1</div>
+      <div class="body"><h4>GA4-аналитика недоступна или не настроена</h4>
+      <p>В подключённом Google-аккаунте нет GA4-ресурса для royalfoam.art. Без данных о сессиях, вовлечённости и конверсиях невозможно оценить, как посетители используют сайт и какие каналы реально приносят лиды — это слепая зона для принятия решений о маркетинговом бюджете.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev crit">2</div>
+      <div class="body"><h4>LCP на мобильных — 10,0 сек (норма ≤2,5 сек)</h4>
+      <p>При этом на десктопе LCP — 0,9 сек. Это один из самых больших разрывов, зафиксированных в наших аудитах, и напрямую подтверждается Ahrefs Site Audit: число «медленных страниц» выросло со ~32 до 138 за месяц. Мобильный Core Web Vitals — сигнал ранжирования Google; такая скорость почти наверняка ограничивает позиции в мобильной выдаче.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev crit">3</div>
+      <div class="body"><h4>Backlink-профиль заражён спам/PBN-сетью</h4>
+      <p>Сотни новых referring domains за последний месяц — фиктивные спам-сайты с идентичными фейковыми отзывами и PBN-сетями, помеченные Ahrefs как «SPAM». Хотя ссылки nofollow, такой объём мусорных доменов создаёт репутационный риск и маскирует реальное отсутствие органического ссылочного роста.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev high">4</div>
+      <div class="body"><h4>Практически нулевая видимость по нерегиональным ключевым словам</h4>
+      <p>Ahrefs фиксирует всего 1 органическое ключевое слово. В GSC ни один из топ-5 запросов по показам (product replicas, 3d foam sculptures, custom 3d foam props и т.д.) не принёс ни одного клика за 28 дней — видимость есть, но не конвертируется в переходы.</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev high">5</div>
+      <div class="body"><h4>131 страница ссылается на редиректы, а не на финальный URL + 13 редиректов в sitemap.xml</h4>
+      <p>Расходует краулинговый бюджет и размывает вес ссылок между версиями URL; 80 редиректов 3XX и 42 из них — 302 (временные, не передающие полный вес ссылки).</p></div>
+    </div>
+    <div class="issue">
+      <div class="sev med">6</div>
+      <div class="body"><h4>11 «осиротевших» страниц + 16 страниц без meta description</h4>
+      <p>Страницы без входящих внутренних ссылок почти не индексируются; отсутствие meta description напрямую снижает CTR в выдаче — который и так составляет всего 0,9%.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">7. Рекомендации</h2>
+    <div class="rec-grid">
+      <div class="rec-col">
+        <h3>Быстрые победы (1–2 недели)</h3>
+        <ol>
+          <li><b>Установить/восстановить счётчик GA4</b> и подтвердить доступ к нему в аккаунте, используемом для аудита
+            <span class="why">Без этого недоступна половина стандартных SEO-метрик (трафик, вовлечённость, конверсии)</span></li>
+          <li><b>Оптимизировать LCP-элемент на мобильной версии главной</b> (сжатие/lazy-load изображений первого экрана, приоритетная загрузка шрифтов)
+            <span class="why">10 сек LCP — критический барьер для мобильного ранжирования и удержания посетителей</span></li>
+          <li><b>Провести ревизию новых referring domains за последний месяц и подать заявку на отклонение (disavow) спам-доменов</b>
+            <span class="why">Снижает репутационный риск и очищает аналитику ссылочного профиля от шума</span></li>
+          <li><b>Заполнить meta description на 16 страницах без него</b>
+            <span class="why">Прямое влияние на CTR в выдаче — сейчас всего 0,9%</span></li>
+          <li><b>Исправить 131 внутреннюю ссылку, ведущую на редиректы, и убрать 13 редиректов из sitemap.xml</b>
+            <span class="why">Экономит краулинговый бюджет и ускоряет индексацию</span></li>
+        </ol>
+      </div>
+      <div class="rec-col">
+        <h3>Стратегические задачи (1–3 месяца)</h3>
+        <ol>
+          <li><b>Контент-стратегия под непокрытые коммерческие запросы</b> (3d foam sculptures, custom 3d foam props, monument signs и т.д. — сейчас 0 кликов при сотнях показов)
+            <span class="why">Ahrefs фиксирует всего 1 органическое ключевое слово при десятках релевантных тем в каталоге услуг</span></li>
+          <li><b>Проработать 11 «осиротевших» страниц</b> — добавить внутренние ссылки из релевантных категорий
+            <span class="why">Без внутренних ссылок эти страницы почти не ранжируются</span></li>
+          <li><b>Наращивать качественный тематический ссылочный профиль</b> вместо пассивного накопления спам-доменов
+            <span class="why">DR 6 и всего 1 keyword говорят о том, что текущий ссылочный «рост» не конвертируется в видимость</span></li>
+          <li><b>Устранить системную причину мобильной медлительности</b> (128+ «медленных» страниц, не только главная)
+            <span class="why">Проблема системная, а не точечная — вероятно, общий для всех страниц шаблон/тема/хостинг</span></li>
+          <li><b>Согласовать SEO-стратегию с sister-доменами</b> (decorativearchitecturalshapes.com, decorativearchitecturalproducts.com)
+            <span class="why">Домены одного бизнеса конкурируют за одни и те же запросы и делят ссылочный вес — стоит распределить роли между сайтами</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Итоговый вывод</h2>
+    <p style="color:var(--text);font-size:14.5px;max-width:900px;">
+      Аудит royalfoam.art выявил три критических проблемы: полное отсутствие данных GA4, экстремально медленную мобильную загрузку (LCP 10 сек против 0,9 сек на десктопе) и backlink-профиль, заражённый спам/PBN-сетями, которые маскируют реальное отсутствие органического роста. Технически сайт формально здоров (Site Audit Health Score 98/100), но органический поиск почти не работает как канал: всего 1 отслеживаемое ключевое слово в Ahrefs, а в GSC ни один из топ-5 запросов по показам не принёс ни одного клика за 28 дней. Прежде всего необходимо восстановить видимость через GA4, устранить системную причину мобильной медлительности и провести чистку ссылочного профиля от спам-доменов — без этого дальнейшие SEO-инвестиции сложно измерить и они рискуют быть подорваны репутационными факторами.
+    </p>
+  </section>
+
+  <footer>
+    Источники: Google Search Console (sc-domain:royalfoam.art), PageSpeed Insights (19.08.2026), Ahrefs Site Explorer / Site Audit (проект «Royalfoam Art Design», краул от 06.08.2026). Google Analytics 4 — свойство для royalfoam.art не найдено в подключённом аккаунте, раздел трафика GA4 в отчёте отсутствует. Отчёт сформирован Claude на основе данных, открытых в подключённом браузере пользователя.
+  </footer>
+
+</div>
+</body>
+</html>
