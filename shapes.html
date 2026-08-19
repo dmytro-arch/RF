@@ -31,11 +31,11 @@
   body{
     margin:0; background:linear-gradient(180deg,#0b0f1a,#0f1420 400px, #0f1420);
     color:var(--text); font-family:var(--font-body);
-    line-height:1.5; padding:32px 20px 80px;
+    line-height:1.5;
     transition:background .25s ease, color .25s ease;
   }
   html[data-theme="light"] body{background:var(--bg);}
-  .wrap{max-width:1180px;margin:0 auto;}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px;}
   header.top{margin-bottom:28px; position:relative;}
   header.top .eyebrow{color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-family:var(--font-body);}
   header.top h1{font-size:28px;margin:6px 0 4px;font-family:var(--font-head);font-weight:700;}
@@ -47,15 +47,23 @@
   html[data-theme="light"] .badge.ok{border-color:#c9d6bb;}
   html[data-theme="light"] .badge.warn{border-color:#e6d3ae;}
 
+  .topnav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
+  .topnav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .topnav-brand{font-weight:700;font-size:14px;color:var(--text);text-decoration:none;letter-spacing:.02em;margin-right:auto;font-family:var(--font-head);}
+  .topnav-links{display:flex;gap:4px;flex-wrap:wrap;}
+  .topnav-link{color:var(--muted);text-decoration:none;font-size:13px;padding:7px 12px;border-radius:var(--radius-btn);transition:background .15s,color .15s;}
+  .topnav-link:hover{color:var(--text);background:var(--chip);}
+  .topnav-link.active{color:var(--text);background:var(--chip);font-weight:600;}
+
   .theme-toggle{
-    position:absolute; top:0; right:0; display:inline-flex; align-items:center; gap:8px;
+    display:inline-flex; align-items:center; gap:8px;
     background:var(--chip); border:1px solid var(--border); color:var(--text);
     font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:var(--radius-btn);
     cursor:pointer; font-family:var(--font-body); transition:background .2s ease, color .2s ease, border-color .2s ease;
+    flex-shrink:0;
   }
   .theme-toggle:hover{border-color:var(--accent);}
   .theme-toggle .ico{font-size:14px;}
-  @media (max-width:600px){.theme-toggle{position:static;margin-top:14px;}}
 
   section{margin-bottom:34px;}
   h2.sec{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;}
@@ -144,12 +152,25 @@
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header class="top">
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">Royal Foam · SEO Audits</a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link">Главная</a>
+      <a href="shapes.html" class="topnav-link active">decorativearchitecturalshapes.com</a>
+      <a href="royalfoam.html" class="topnav-link">royalfoam.art</a>
+      <a href="products.html" class="topnav-link">decorativearchitecturalproducts.com</a>
+    </div>
     <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()">
       <span class="ico" id="themeIco">☀</span><span id="themeLabel">Светлая тема</span>
     </button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="top">
     <div class="eyebrow">SEO Dashboard Audit</div>
     <h1>decorativearchitecturalshapes.com</h1>
     <div class="sub">Отчёт сформирован 19 августа 2026 · Основной период: 20 июля – 16 августа 2026 (GSC, 28 дней) / 22 июля – 18 августа 2026 (GA4, 28 дней) · Источники: Google Analytics 4, Google Search Console, PageSpeed Insights, Ahrefs</div>
