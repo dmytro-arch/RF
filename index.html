@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Dashboard Audits — Royal Foam</title>
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1b2338; --border:#2a3352;
+    --text:#e8ecf5; --muted:#9aa5c0; --accent:#5b8cff; --good:#3ecf8e;
+    --warn:#f5b942; --bad:#f0576a; --chip:#232c47;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:linear-gradient(180deg,#0b0f1a,#0f1420 400px, #0f1420);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; padding:48px 20px 80px;
+  }
+  .wrap{max-width:880px;margin:0 auto;}
+  .eyebrow{color:var(--accent);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+  h1{font-size:30px;margin:8px 0 6px;}
+  .sub{color:var(--muted);font-size:14.5px;margin-bottom:36px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+  a.card{
+    display:block; background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:22px 22px 20px; text-decoration:none; color:var(--text); transition:border-color .15s, transform .15s;
+  }
+  a.card:hover{border-color:var(--accent); transform:translateY(-2px);}
+  a.card .domain{font-size:17px;font-weight:700;margin-bottom:10px;word-break:break-word;}
+  a.card .desc{color:var(--muted);font-size:13px;margin-bottom:14px;}
+  a.card .badges{display:flex;gap:6px;flex-wrap:wrap;}
+  .badge{background:var(--chip);border:1px solid var(--border);color:var(--muted);font-size:11px;padding:4px 8px;border-radius:999px;}
+  .badge.bad{color:var(--bad);border-color:#4d1f28;}
+  .badge.ok{color:var(--good);border-color:#1f4d3c;}
+  footer{color:var(--muted);font-size:12px;margin-top:48px;border-top:1px solid var(--border);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">SEO Dashboard Audits</div>
+  <h1>Royal Foam — портфель доменов</h1>
+  <div class="sub">Три независимых аудита: Google Search Console, PageSpeed Insights / Core Web Vitals, Ahrefs (бэклинки + техаудит). Обновлено 19 августа 2026.</div>
+  <div class="grid">
+    <a class="card" href="shapes.html">
+      <div class="domain">decorativearchitecturalshapes.com</div>
+      <div class="desc">Полный аудит с переключателем светлой/тёмной темы, оформлен в стиле сайта.</div>
+      <div class="badges"><span class="badge ok">GA4 ✓</span><span class="badge ok">GSC ✓</span></div>
+    </a>
+    <a class="card" href="royalfoam.html">
+      <div class="domain">royalfoam.art</div>
+      <div class="desc">GA4 не найден, LCP mobile 10,0 сек, backlink-профиль заражён спам/PBN-сетью.</div>
+      <div class="badges"><span class="badge bad">GA4 ✗</span><span class="badge bad">SPAM backlinks</span></div>
+    </a>
+    <a class="card" href="products.html">
+      <div class="domain">decorativearchitecturalproducts.com</div>
+      <div class="desc">Активная спам/PBN-атака на ссылочный профиль, LCP mobile 11,6 сек, GA4 не найден.</div>
+      <div class="badges"><span class="badge bad">GA4 ✗</span><span class="badge bad">SPAM backlinks</span></div>
+    </a>
+  </div>
+  <footer>Источники: Google Search Console, PageSpeed Insights, Ahrefs. Отчёты сформированы Claude на основе данных, открытых в подключённом браузере пользователя.</footer>
+</div>
+</body>
+</html>
