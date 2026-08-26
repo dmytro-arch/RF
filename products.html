@@ -68,6 +68,19 @@
   html[data-theme="light"] .badge.warn{border-color:#e6d3ae;}
   html[data-theme="light"] .badge.bad{border-color:#e8c9c9;}
 
+  .change-banner{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-card);padding:18px 20px;margin-bottom:34px;}
+  .change-banner h2{font-size:16px;margin:0 0 12px;font-family:var(--font-head);font-weight:700;display:flex;align-items:center;gap:8px;}
+  .change-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
+  .chg-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+  .chg-card .lbl{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+  .chg-card .val{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .chg-card .d{font-size:12.5px;margin-top:4px;font-variant-numeric:tabular-nums;font-weight:600;}
+  .d.up{color:var(--good);} .d.down{color:var(--bad);} .d.flat{color:var(--muted);}
+  .stale-note{color:var(--muted);font-size:12px;font-style:italic;margin:0 0 14px;}
+  .check-delta{font-size:12px;margin-top:4px;padding-top:4px;border-top:1px dashed var(--border);color:var(--muted);}
+  .check-delta b{font-variant-numeric:tabular-nums;}
+  .check-delta .u{color:var(--good);} .check-delta .dn{color:var(--bad);} .check-delta .f{color:var(--muted);}
+
   section{margin-bottom:34px;}
   h2.sec{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
   h2.sec .num{color:var(--accent);font-variant-numeric:tabular-nums;}
@@ -186,7 +199,7 @@
   <header class="top">
     <div class="eyebrow">SEO Dashboard Audit</div>
     <h1>decorativearchitecturalproducts.com</h1>
-    <div class="sub">Отчёт сформирован 19 августа 2026 · Основной период: 20 июля – 16 августа 2026 (GSC, 28 дней) · Источники: Google Search Console, PageSpeed Insights, Ahrefs (Google Analytics 4 — недоступен, см. раздел 1)</div>
+    <div class="sub">Отчёт обновлён 26 августа 2026 (первая версия — 19 августа 2026) · Основной период: 27 июля – 23 августа 2026 (GSC, 28 дней) · Источники: Google Search Console, PageSpeed Insights, Ahrefs (Google Analytics 4 — недоступен, см. раздел 1)</div>
     <div class="badges">
       <span class="badge ok">HTTPS ✓</span>
       <span class="badge ok">canonical non-www ✓</span>
@@ -196,6 +209,21 @@
       <span class="badge bad">Backlink-профиль под спам/PBN-атакой</span>
     </div>
   </header>
+
+  <div class="change-banner">
+    <h2>📈 Изменения с прошлой проверки (19 → 26 августа)</h2>
+    <div class="change-grid">
+      <div class="chg-card"><div class="lbl">Клики GSC</div><div class="val">76</div><div class="d up">↑ +2 (+2,7%)</div></div>
+      <div class="chg-card"><div class="lbl">Показы GSC</div><div class="val">10,8K</div><div class="d up">↑ +1 420 (+15,1%)</div></div>
+      <div class="chg-card"><div class="lbl">Позиция GSC</div><div class="val">16,0</div><div class="d down">↓ хуже на 0,3 (было 15,7)</div></div>
+      <div class="chg-card"><div class="lbl">Domain Rating</div><div class="val">4,2</div><div class="d flat">≈ без изменений</div></div>
+      <div class="chg-card"><div class="lbl">Backlinks (live)</div><div class="val">2 511</div><div class="d down">↓ −786 (было 3 297)</div></div>
+      <div class="chg-card"><div class="lbl">Referring domains</div><div class="val">460</div><div class="d down">↓ −24</div></div>
+      <div class="chg-card"><div class="lbl">LCP mobile</div><div class="val">10,9 сек</div><div class="d up">↑ лучше на 0,7 сек (было 11,6)</div></div>
+      <div class="chg-card"><div class="lbl">Site Audit Health Score</div><div class="val">96/100</div><div class="d flat">без изменений</div></div>
+    </div>
+    <p class="stale-note" style="margin:14px 0 0;">Показы и клики GSC продолжили расти, а мобильный LCP немного улучшился (всё ещё критичен). Объём бэклинков резко сократился (−786 за неделю) — похоже, часть спам/PBN-сети из раздела 4 деиндексировалась. Desktop Performance в PSI просел с 81 до 77. Детальные разбивки (топ-страницы, топ-запросы, список технических проблем) ниже показывают срез на 19 августа.</p>
+  </div>
 
   <section>
     <h2 class="sec">1. Идентификация сайта</h2>
@@ -218,20 +246,21 @@
 
   <section>
     <h2 class="sec">2. Google Search Console — Эффективность в поиске</h2>
-    <p class="sec-note">28 дней (20 июля – 16 августа 2026) vs предыдущие 28 дней (22 июня – 19 июля 2026)</p>
+    <p class="sec-note">28 дней (27 июля – 23 августа 2026) · дельты — vs проверка от 19 августа (период 20 июля – 16 августа)</p>
     <div class="grid kpi">
-      <div class="card"><div class="label">Clicks</div><div class="value">74</div><div class="delta up">↑ 76,2% (было 42)</div></div>
-      <div class="card"><div class="label">Impressions</div><div class="value">9 380</div><div class="delta up">↑ 156,3% (было 3 660)</div></div>
-      <div class="card"><div class="label">Average CTR</div><div class="value">0,8%</div><div class="delta down">↓ было 1,1%</div></div>
-      <div class="card"><div class="label">Average position</div><div class="value">15,7</div><div class="delta down">↓ ухудшилась на 3,5 (было 12,2)</div></div>
+      <div class="card"><div class="label">Clicks</div><div class="value">76</div><div class="check-delta">vs 19.08: <b class="u">↑ +2 (+2,7%)</b></div></div>
+      <div class="card"><div class="label">Impressions</div><div class="value">10 800</div><div class="check-delta">vs 19.08: <b class="u">↑ +1 420 (+15,1%)</b></div></div>
+      <div class="card"><div class="label">Average CTR</div><div class="value">0,7%</div><div class="check-delta">vs 19.08: <b class="dn">↓ 0,1 п.п. (было 0,8%)</b></div></div>
+      <div class="card"><div class="label">Average position</div><div class="value">16,0</div><div class="check-delta">vs 19.08: <b class="dn">↓ хуже на 0,3 (было 15,7)</b></div></div>
     </div>
-    <p class="sec-note" style="margin-top:14px;">Смешанный сигнал: клики и показы выросли более чем вдвое, но CTR упал на 27%, а средняя позиция ухудшилась — сайт стал виднее по большему числу запросов, но в среднем на более низких позициях, что типично при резком расширении «длинного хвоста» низкочастотных запросов.</p>
+    <p class="sec-note" style="margin-top:14px;">Показы продолжают расти двузначными темпами, но CTR и позиция за неделю снова немного просели — та же динамика «длинного хвоста», что и в прошлой проверке: видимость растёт быстрее, чем качество позиций.</p>
   </section>
 
   <section>
     <div class="two-col">
       <div>
         <h2 class="sec">Топ-страницы (28 дней)</h2>
+        <p class="stale-note" style="margin-top:-8px;">Срез на 19 августа</p>
         <div class="tbl-wrap">
           <table>
             <tr><th>Страница</th><th class="num">Clicks</th><th class="num">Δ</th><th class="num">Impr.</th><th class="num">Δ impr.</th></tr>
@@ -245,6 +274,7 @@
       </div>
       <div>
         <h2 class="sec">Топ-запросы по показам (28 дней)</h2>
+        <p class="stale-note" style="margin-top:-8px;">Срез на 19 августа</p>
         <div class="tbl-wrap">
           <table>
             <tr><th>Запрос</th><th class="num">Clicks</th><th class="num">Impr.</th></tr>
@@ -264,58 +294,57 @@
 
   <section>
     <h2 class="sec">3. PageSpeed Insights / Core Web Vitals</h2>
-    <p class="sec-note">Главная страница, 19 августа 2026. Реальных данных пользователей (CrUX field data) нет — «Нет данных»; оценки лабораторные (Lighthouse).</p>
+    <p class="sec-note">Главная страница, 26 августа 2026. Реальных данных пользователей (CrUX field data) по-прежнему нет — «Нет данных»; оценки лабораторные (Lighthouse). Дельты — vs проверка от 19 августа.</p>
     <div class="two-col">
       <div class="card">
         <div class="label" style="margin-bottom:14px;">Mobile (смартфон)</div>
         <div class="score-row">
-          <div class="score-block"><div class="score bad">56</div><div class="cap">Performance</div></div>
-          <div class="score-block"><div class="score mid">85</div><div class="cap">Accessibility</div></div>
-          <div class="score-block"><div class="score good">96</div><div class="cap">Best Practices</div></div>
-          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+          <div class="score-block"><div class="score bad">56</div><div class="cap">Performance</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score mid">85</div><div class="cap">Accessibility</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">96</div><div class="cap">Best Practices</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div><div class="check-delta">= без изм.</div></div>
         </div>
         <div style="margin-top:16px;">
-          <div class="metric-mini"><span>LCP</span><span class="v bad">11,6 сек (критически плохо)</span></div>
+          <div class="metric-mini"><span>LCP</span><span class="v bad">10,9 сек (критически плохо, было 11,6)</span></div>
           <div class="metric-mini"><span>FCP</span><span class="v bad">9,1 сек</span></div>
           <div class="metric-mini"><span>Speed Index</span><span class="v bad">9,1 сек</span></div>
-          <div class="metric-mini"><span>TBT</span><span class="v good">20 мс</span></div>
+          <div class="metric-mini"><span>TBT</span><span class="v">70 мс</span></div>
           <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
         </div>
       </div>
       <div class="card">
         <div class="label" style="margin-bottom:14px;">Desktop</div>
         <div class="score-row">
-          <div class="score-block"><div class="score good">81</div><div class="cap">Performance</div></div>
-          <div class="score-block"><div class="score good">87</div><div class="cap">Accessibility</div></div>
-          <div class="score-block"><div class="score good">92</div><div class="cap">Best Practices</div></div>
-          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+          <div class="score-block"><div class="score good">77</div><div class="cap">Performance</div><div class="check-delta"><b class="dn">↓ −4 (было 81)</b></div></div>
+          <div class="score-block"><div class="score good">87</div><div class="cap">Accessibility</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">Best Practices</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div><div class="check-delta">= без изм.</div></div>
         </div>
         <div style="margin-top:16px;">
-          <div class="metric-mini"><span>LCP</span><span class="v good">2,1 сек</span></div>
+          <div class="metric-mini"><span>LCP</span><span class="v good">2,0 сек (было 2,1)</span></div>
           <div class="metric-mini"><span>FCP</span><span class="v good">1,7 сек</span></div>
-          <div class="metric-mini"><span>Speed Index</span><span class="v good">1,9 сек</span></div>
-          <div class="metric-mini"><span>TBT</span><span class="v good">50 мс</span></div>
-          <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+          <div class="metric-mini"><span>Speed Index</span><span class="v good">2,1 сек</span></div>
+          <div class="metric-mini"><span>TBT</span><span class="v">170 мс</span></div>
+          <div class="metric-mini"><span>CLS</span><span class="v good">0,001</span></div>
         </div>
       </div>
     </div>
-    <p class="sec-note" style="margin-top:10px;">Разрыв LCP мобильный/десктоп — 11,6 сек против 2,1 сек — худший показатель из трёх проверенных доменов семейства Royal Foam (у royalfoam.art было 10,0 сек). И FCP, и Speed Index на мобильном совпадают на уровне 9,1 сек — верный признак, что страница почти не начинает отрисовываться до полной загрузки тяжёлых ресурсов первого экрана.</p>
+    <p class="sec-note" style="margin-top:10px;">Мобильный LCP чуть улучшился (11,6 → 10,9 сек), но остаётся критическим — худшим среди трёх проверенных доменов семейства Royal Foam. Desktop Performance просел с 81 до 77 (TBT вырос со 50 до 170 мс) — стоит проверить, не добавился ли на страницу лишний JS.</p>
   </section>
 
   <section>
     <h2 class="sec">4. Ahrefs — Backlink-профиль и техническое состояние</h2>
+    <p class="sec-note">Актуально на 26 августа · дельты — vs проверка от 19 августа</p>
     <div class="grid kpi">
-      <div class="card"><div class="label">Domain Rating (DR)</div><div class="value">4,3</div><div class="delta down">−0,2 (мес.)</div></div>
-      <div class="card"><div class="label">URL Rating (главная)</div><div class="value">5</div></div>
-      <div class="card"><div class="label">Backlinks</div><div class="value">3 100</div><div class="delta down">−1 500 · всего за всё время 24 400</div></div>
-      <div class="card"><div class="label">Referring domains</div><div class="value">484</div><div class="delta up">+20 · всего за всё время 969</div></div>
-      <div class="card"><div class="label">Органические ключевые слова</div><div class="value">2</div><div class="delta flat">Топ-3: 2</div></div>
-      <div class="card"><div class="label">Органический трафик/мес (оценка Ahrefs)</div><div class="value">0</div><div class="delta flat">ценность $0</div></div>
-      <div class="card"><div class="label">Платные ключевые слова / объявления</div><div class="value">0 / 0</div></div>
-      <div class="card"><div class="label">Site Audit Health Score</div><div class="value">96/100</div><div class="delta flat">«Excellent» (краул от 19 авг. 2026)</div></div>
+      <div class="card"><div class="label">Domain Rating (DR)</div><div class="value">4,2</div><div class="check-delta">vs 19.08: <b class="f">≈ без изменений</b></div></div>
+      <div class="card"><div class="label">Backlinks (live)</div><div class="value">2 511</div><div class="check-delta">vs 19.08: <b class="dn">↓ −786 (было 3 297) · всего за всё время 24 428</b></div></div>
+      <div class="card"><div class="label">Referring domains (live)</div><div class="value">460</div><div class="check-delta">vs 19.08: <b class="dn">↓ −24 (было 484) · всего за всё время 982</b></div></div>
+      <div class="card"><div class="label">Органические ключевые слова</div><div class="value">3</div><div class="check-delta">vs 19.08: <b class="u">↑ +1 (было 2)</b></div></div>
+      <div class="card"><div class="label">Органический трафик/мес (оценка Ahrefs)</div><div class="value">1</div><div class="check-delta">vs 19.08: <b class="u">↑ +1 (было 0)</b></div></div>
+      <div class="card"><div class="label">Site Audit Health Score</div><div class="value">96/100</div><div class="check-delta">vs 19.08: <b class="f">без изменений</b> · краул 25 авг. 2026</div></div>
     </div>
     <p class="sec-note" style="margin-top:14px;">
-      Referring domains за месяц выросли (+20), а вот общее число бэклинков сократилось (−1 500) — то есть часть свежих спам-ссылок уже отвалилась/переиндексировалась, но приток новых доменов продолжается. При этом органический трафик по оценке Ahrefs — 0, а keywords — всего 2. 969 referring domains за всё время и 24,4К бэклинков не конвертируются в органическую видимость — см. критическую находку ниже.
+      Резкое сокращение бэклинков (−786) за неделю — вероятно, часть спам-сети из раздела ниже деиндексировалась или была удалена площадками-донорами; referring domains снизились не так сильно (−24), то есть костяк спам-доменов пока остаётся. Органический трафик по оценке Ahrefs впервые сдвинулся с нуля (0 → 1), а keywords выросли до 3 — незначительно, но в правильную сторону.
     </p>
   </section>
 
@@ -329,6 +358,7 @@
 
   <section>
     <h2 class="sec">5. Технические проблемы (Ahrefs Site Audit)</h2>
+    <p class="stale-note">Разбивка по типам проблем — срез краула от 19 августа; агрегированные показатели (раздел 4) обновлены по краулу от 25 августа, список ниже не пересобирался в этой проверке.</p>
     <div class="tbl-wrap">
       <table>
         <tr><th>Проблема</th><th class="num">Страниц</th><th>Тип</th><th class="num">Новых</th></tr>
@@ -421,12 +451,12 @@
   <section>
     <h2 class="sec">Итоговый вывод</h2>
     <p style="color:var(--text);font-size:14.5px;max-width:900px;">
-      Аудит decorativearchitecturalproducts.com выявил три критических проблемы: самую тяжёлую из трёх проверенных доменов семейства Royal Foam спам/PBN-атаку на ссылочный профиль (активную и продолжающуюся на момент отчёта), полное отсутствие данных GA4 и критически медленную мобильную загрузку (LCP 11,6 сек против 2,1 сек на десктопе). Технически сайт формально в хорошем состоянии (Site Audit Health Score 96/100), но синхронный всплеск проблем с метаданными и изображениями на 40+ страницах указывает на недавнюю системную регрессию, которую стоит найти и исправить одним патчем. В отличие от royalfoam.art, здесь есть обнадёживающий сигнал — показы и клики в GSC выросли более чем вдвое за 28 дней, — но рост не подкреплён улучшением позиций (CTR и средняя позиция ухудшились), а органическая ценность трафика по оценке Ahrefs остаётся нулевой. Первоочередные шаги: разослать disavow по спам-доменам, восстановить GA4 и устранить причину мобильной медлительности — без этого дальнейший рост показов не конвертируется в реальных посетителей и лиды.
+      За неделю с 19 по 26 августа показы и клики GSC продолжили расти (показы +15,1%), мобильный LCP немного улучшился (11,6 → 10,9 сек, но остаётся критическим), а бэклинки резко просели (−786) — вероятно, часть спам/PBN-сети деиндексировалась. Впервые за время наблюдений органический трафик по оценке Ahrefs сдвинулся с нуля (0 → 1), а keywords выросли до 3 — слабый, но позитивный сигнал. Настораживает падение Desktop Performance в PSI (81 → 77). GA4-аналитика по-прежнему недоступна, а спам/PBN-атака на ссылочный профиль остаётся самой тяжёлой из трёх проверенных доменов семейства Royal Foam. Первоочередные шаги не изменились: разослать disavow по спам-доменам, восстановить GA4 и продолжать снижать мобильный LCP.
     </p>
   </section>
 
   <footer>
-    Источники: Google Search Console (https://decorativearchitecturalproducts.com/, URL-prefix property), PageSpeed Insights (19.08.2026), Ahrefs Site Explorer / Site Audit (проект «Decorativearchitecturalproducts», projectId 7927351, краул от 19.08.2026). Google Analytics 4 — свойство для decorativearchitecturalproducts.com не найдено в подключённом аккаунте, раздел трафика GA4 в отчёте отсутствует. Отчёт сформирован Claude на основе данных, открытых в подключённом браузере пользователя.
+    Источники: Google Search Console (https://decorativearchitecturalproducts.com/, URL-prefix property), PageSpeed Insights (26.08.2026), Ahrefs Site Explorer / Site Audit (проект «Decorativearchitecturalproducts», projectId 7927351, краул от 25.08.2026). Первая версия отчёта — 19.08.2026, обновлено 26.08.2026. Google Analytics 4 — свойство для decorativearchitecturalproducts.com не найдено в подключённом аккаунте, раздел трафика GA4 в отчёте отсутствует. Отчёт сформирован Claude на основе данных, открытых в подключённом браузере пользователя.
   </footer>
 
 </div>

@@ -47,6 +47,19 @@
   html[data-theme="light"] .badge.ok{border-color:#c9d6bb;}
   html[data-theme="light"] .badge.warn{border-color:#e6d3ae;}
 
+  .change-banner{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-card);padding:18px 20px;margin-bottom:34px;}
+  .change-banner h2{font-size:16px;margin:0 0 12px;font-family:var(--font-head);font-weight:700;display:flex;align-items:center;gap:8px;}
+  .change-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
+  .chg-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+  .chg-card .lbl{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+  .chg-card .val{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .chg-card .d{font-size:12.5px;margin-top:4px;font-variant-numeric:tabular-nums;font-weight:600;}
+  .d.up{color:var(--good);} .d.down{color:var(--bad);} .d.flat{color:var(--muted);}
+  .stale-note{color:var(--muted);font-size:12px;font-style:italic;margin:0 0 14px;}
+  .check-delta{font-size:12px;margin-top:4px;padding-top:4px;border-top:1px dashed var(--border);color:var(--muted);}
+  .check-delta b{font-variant-numeric:tabular-nums;}
+  .check-delta .u{color:var(--good);} .check-delta .dn{color:var(--bad);} .check-delta .f{color:var(--muted);}
+
   .topnav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
   .topnav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
   .topnav-brand{font-weight:700;font-size:14px;color:var(--text);text-decoration:none;letter-spacing:.02em;margin-right:auto;font-family:var(--font-head);}
@@ -173,7 +186,7 @@
   <header class="top">
     <div class="eyebrow">SEO Dashboard Audit</div>
     <h1>decorativearchitecturalshapes.com</h1>
-    <div class="sub">Отчёт сформирован 19 августа 2026 · Основной период: 20 июля – 16 августа 2026 (GSC, 28 дней) / 22 июля – 18 августа 2026 (GA4, 28 дней) · Источники: Google Analytics 4, Google Search Console, PageSpeed Insights, Ahrefs</div>
+    <div class="sub">Отчёт обновлён 26 августа 2026 (первая версия — 19 августа 2026) · Основной период: 27 июля – 23 августа 2026 (GSC, 28 дней) / 29 июля – 25 августа 2026 (GA4, 28 дней) · Источники: Google Analytics 4, Google Search Console, PageSpeed Insights, Ahrefs</div>
     <div class="badges">
       <span class="badge ok">HTTPS ✓</span>
       <span class="badge ok">www → non-www redirect ✓</span>
@@ -182,6 +195,21 @@
       <span class="badge warn">GA4 data stream default URL указан как http://www... — расходится с фактическим https non-www</span>
     </div>
   </header>
+
+  <div class="change-banner">
+    <h2>📈 Изменения с прошлой проверки (19 → 26 августа)</h2>
+    <div class="change-grid">
+      <div class="chg-card"><div class="lbl">Клики GSC</div><div class="val">268</div><div class="d up">↑ +43 (+19,1%)</div></div>
+      <div class="chg-card"><div class="lbl">Показы GSC</div><div class="val">23,7K</div><div class="d up">↑ +2 800 (+13,4%)</div></div>
+      <div class="chg-card"><div class="lbl">Позиция GSC</div><div class="val">13,1</div><div class="d up">↑ лучше на 0,2 (было 13,3)</div></div>
+      <div class="chg-card"><div class="lbl">Визиты GA4 (sessions)</div><div class="val">2 155</div><div class="d up">↑ +188 (+9,6%)</div></div>
+      <div class="chg-card"><div class="lbl">Лиды (key events)</div><div class="val">3 350</div><div class="d up">↑ +45 (+1,4%)</div></div>
+      <div class="chg-card"><div class="lbl">Domain Rating</div><div class="val">10</div><div class="d down">↓ −1 (было 11)</div></div>
+      <div class="chg-card"><div class="lbl">Backlinks (live)</div><div class="val">5 338</div><div class="d down">↓ −28</div></div>
+      <div class="chg-card"><div class="lbl">Site Audit Health Score</div><div class="val">80/100</div><div class="d down">↓ −6 (было 86)</div></div>
+    </div>
+    <p class="stale-note" style="margin:14px 0 0;">Клики и показы GSC, визиты и лиды GA4 заметно выросли за неделю. При этом технические показатели просели: Health Score −6 (новый краул Ahrefs зафиксировал 124 страницы с ошибками против 99 ранее), DR −1, объём бэклинков и реферальных доменов сократился. Детальные разбивки (посадочные страницы, топ-запросы, список технических проблем) ниже показывают срез на 19 августа — агрегированные показатели по разделам 2, 5, 6 и 7 обновлены на 26 августа.</p>
+  </div>
 
   <section>
     <h2 class="sec">1. Идентификация сайта</h2>
@@ -203,37 +231,38 @@
 
   <section>
     <h2 class="sec">2. Google Analytics 4 — Трафик и вовлечённость</h2>
-    <p class="sec-note">28 дней (22 июля – 18 августа 2026) vs предыдущие 28 дней (24 июня – 21 июля 2026)</p>
+    <p class="sec-note">28 дней (29 июля – 25 августа 2026) · дельты — vs проверка от 19 августа (период 22 июля – 18 августа)</p>
     <div class="grid kpi">
-      <div class="card"><div class="label">Sessions</div><div class="value">1 967</div><div class="delta up">↑ 58,3% (было 1 243)</div></div>
-      <div class="card"><div class="label">Active users</div><div class="value">1 535</div><div class="delta up">↑ 67,6% (было 916)</div></div>
-      <div class="card"><div class="label">New users</div><div class="value">1 520</div><div class="delta up">↑ 71,0% (было 889)</div></div>
-      <div class="card"><div class="label">Engaged sessions</div><div class="value">1 659</div><div class="delta up">↑ 51,2% (было 1 097)</div></div>
-      <div class="card"><div class="label">Engagement rate</div><div class="value">84,3%</div><div class="delta down">↓ 3,9 п.п. (было 88,3%)</div></div>
-      <div class="card"><div class="label">Ср. время вовлечения</div><div class="value">37 сек</div><div class="delta down">↓ 30,4% (было 53 сек)</div></div>
-      <div class="card"><div class="label">Key events (конверсии)</div><div class="value">3 305</div><div class="delta up">↑ 37,9% (было 2 397)</div></div>
-      <div class="card"><div class="label">Session key event rate</div><div class="value">53,0%</div><div class="delta down">↓ 6,8 п.п. (было 59,9%)</div></div>
+      <div class="card"><div class="label">Sessions</div><div class="value">2 155</div><div class="check-delta">vs 19.08: <b class="u">↑ +188 (+9,6%)</b></div></div>
+      <div class="card"><div class="label">Active users</div><div class="value">1 709</div><div class="check-delta">vs 19.08: <b class="u">↑ +174 (+11,3%)</b></div></div>
+      <div class="card"><div class="label">New users</div><div class="value">1 688</div><div class="check-delta">vs 19.08: <b class="u">↑ +168 (+11,1%)</b></div></div>
+      <div class="card"><div class="label">Engaged sessions</div><div class="value">1 795</div><div class="check-delta">vs 19.08: <b class="u">↑ +136 (+8,2%)</b></div></div>
+      <div class="card"><div class="label">Engagement rate</div><div class="value">83,3%</div><div class="check-delta">vs 19.08: <b class="dn">↓ 1,0 п.п. (было 84,3%)</b></div></div>
+      <div class="card"><div class="label">Ср. время вовлечения</div><div class="value">35 сек</div><div class="check-delta">vs 19.08: <b class="dn">↓ 2 сек (было 37)</b></div></div>
+      <div class="card"><div class="label">Key events (конверсии)</div><div class="value">3 350</div><div class="check-delta">vs 19.08: <b class="u">↑ +45 (+1,4%)</b></div></div>
+      <div class="card"><div class="label">Session key event rate</div><div class="value">50,7%</div><div class="check-delta">vs 19.08: <b class="dn">↓ 2,3 п.п. (было 53,0%)</b></div></div>
     </div>
   </section>
 
   <section>
     <h2 class="sec">3. GA4 — Каналы привлечения (28 дней)</h2>
+    <p class="stale-note">Доли по каналам обновлены на 26 августа; разбивка по Eng. rate / Key events на уровне канала — срез на 19 августа (не пересобиралась в этой проверке).</p>
     <div class="two-col">
       <div class="tbl-wrap">
         <table>
-          <tr><th>Канал</th><th class="num">Sessions</th><th class="num">Δ vs пред.</th><th class="num">Eng. rate</th><th class="num">Key events</th><th class="num">Key event rate</th></tr>
-          <tr><td>Direct</td><td class="num">1 108 (56,3%)</td><td class="num" style="color:var(--good)">+89,7%</td><td class="num">81,4%</td><td class="num">1 379</td><td class="num">45,3%</td></tr>
-          <tr><td>Organic Search</td><td class="num">670 (34,1%)</td><td class="num" style="color:var(--good)">+21,6%</td><td class="num">90,3%</td><td class="num">1 411</td><td class="num">61,9%</td></tr>
-          <tr><td>Referral</td><td class="num">119 (6,1%)</td><td class="num" style="color:var(--good)">+91,9%</td><td class="num">84,9%</td><td class="num">311</td><td class="num">68,1%</td></tr>
-          <tr><td>AI Assistant / Organic Social / Unassigned</td><td class="num">70 (3,6%)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><th>Канал</th><th class="num">Sessions (26.08)</th><th class="num">Sessions (19.08)</th><th class="num">Eng. rate</th><th class="num">Key events</th><th class="num">Key event rate</th></tr>
+          <tr><td>Direct</td><td class="num">1 235 (57,3%)</td><td class="num">1 108 (56,3%)</td><td class="num">80,2%</td><td class="num">1 327</td><td class="num">41,7%</td></tr>
+          <tr><td>Organic Search</td><td class="num">717 (33,3%)</td><td class="num">670 (34,1%)</td><td class="num">90,8%</td><td class="num">1 514</td><td class="num">61,5%</td></tr>
+          <tr><td>Referral</td><td class="num">116 (5,4%)</td><td class="num">119 (6,1%)</td><td class="num">83,6%</td><td class="num">279</td><td class="num">66,4%</td></tr>
+          <tr><td>AI Assistant / Organic Social / Unassigned</td><td class="num">87 (4,0%)</td><td class="num">70 (3,6%)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
         </table>
       </div>
       <div class="card">
-        <div class="label" style="margin-bottom:12px;">Доля сессий по каналам</div>
-        <div class="bar-row"><div class="name">Direct</div><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div><div class="bar-val">56,3%</div></div>
-        <div class="bar-row"><div class="name">Organic Search</div><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div><div class="bar-val">34,1%</div></div>
-        <div class="bar-row"><div class="name">Referral</div><div class="bar-track"><div class="bar-fill" style="width:6%"></div></div><div class="bar-val">6,1%</div></div>
-        <div class="bar-row"><div class="name">Прочее</div><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><div class="bar-val">3,6%</div></div>
+        <div class="label" style="margin-bottom:12px;">Доля сессий по каналам (26.08)</div>
+        <div class="bar-row"><div class="name">Direct</div><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div><div class="bar-val">57,3%</div></div>
+        <div class="bar-row"><div class="name">Organic Search</div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><div class="bar-val">33,3%</div></div>
+        <div class="bar-row"><div class="name">Referral</div><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div><div class="bar-val">5,4%</div></div>
+        <div class="bar-row"><div class="name">Прочее</div><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><div class="bar-val">4,0%</div></div>
       </div>
     </div>
   </section>
@@ -241,6 +270,7 @@
   <section>
     <h2 class="sec">4. GA4 — Посадочные страницы</h2>
     <p class="sec-note">Топ страниц входа из органического поиска (фильтр: Session default channel group = Organic Search), 28 дней vs пред. период</p>
+    <p class="stale-note">Срез на 19 августа — таблица не пересобиралась в этой проверке, актуальные агрегаты органики см. в разделе 3.</p>
     <div class="tbl-wrap">
       <table>
         <tr><th>Landing page</th><th class="num">Sessions</th><th class="num">Δ</th><th class="num">Ср. вовлечение</th><th class="num">Key events</th><th class="num">Key event rate</th></tr>
@@ -256,20 +286,21 @@
 
   <section>
     <h2 class="sec">5. Google Search Console — Эффективность в поиске</h2>
-    <p class="sec-note">28 дней (20 июля – 16 августа 2026) vs предыдущие 28 дней (22 июня – 19 июля 2026); справочно — 3 месяца (17 мая – 16 августа 2026)</p>
+    <p class="sec-note">28 дней (27 июля – 23 августа 2026) · дельты — vs проверка от 19 августа (период 20 июля – 16 августа)</p>
     <div class="grid kpi">
-      <div class="card"><div class="label">Clicks</div><div class="value">225</div><div class="delta down">↓ 14,8% (было 264)</div></div>
-      <div class="card"><div class="label">Impressions</div><div class="value">20 900</div><div class="delta up">↑ 25,1% (было 16 700)</div></div>
-      <div class="card"><div class="label">Average CTR</div><div class="value">1,1%</div><div class="delta down">↓ 0,5 п.п. (было 1,6%)</div></div>
-      <div class="card"><div class="label">Average position</div><div class="value">13,3</div><div class="delta down">↓ на 1,0 (было 12,3 — позиция ухудшилась)</div></div>
+      <div class="card"><div class="label">Clicks</div><div class="value">268</div><div class="check-delta">vs 19.08: <b class="u">↑ +43 (+19,1%)</b></div></div>
+      <div class="card"><div class="label">Impressions</div><div class="value">23 700</div><div class="check-delta">vs 19.08: <b class="u">↑ +2 800 (+13,4%)</b></div></div>
+      <div class="card"><div class="label">Average CTR</div><div class="value">1,1%</div><div class="check-delta">vs 19.08: <b class="f">→ без изменений</b></div></div>
+      <div class="card"><div class="label">Average position</div><div class="value">13,1</div><div class="check-delta">vs 19.08: <b class="u">↑ лучше на 0,2 (было 13,3)</b></div></div>
     </div>
-    <p class="sec-note" style="margin-top:14px;">За 3 месяца: 966 кликов, 76 800 показов, CTR 1,3%, средняя позиция 12,3.</p>
+    <p class="sec-note" style="margin-top:14px;">За 3 месяца (на 19.08): 966 кликов, 76 800 показов, CTR 1,3%, средняя позиция 12,3.</p>
   </section>
 
   <section>
     <div class="two-col">
       <div>
         <h2 class="sec">Топ-запросы (28 дней)</h2>
+        <p class="stale-note" style="margin-top:-8px;">Срез на 19 августа</p>
         <div class="tbl-wrap">
           <table>
             <tr><th>Запрос</th><th class="num">Clicks</th><th class="num">Impr.</th><th class="num">CTR</th><th class="num">Позиция</th></tr>
@@ -284,6 +315,7 @@
       </div>
       <div>
         <h2 class="sec">Топ-страницы (28 дней)</h2>
+        <p class="stale-note" style="margin-top:-8px;">Срез на 19 августа</p>
         <div class="tbl-wrap">
           <table>
             <tr><th>Страница</th><th class="num">Clicks</th><th class="num">Δ</th></tr>
@@ -303,36 +335,37 @@
 
   <section>
     <h2 class="sec">6. PageSpeed Insights / Core Web Vitals</h2>
-    <p class="sec-note">Главная страница, 19 августа 2026. Реальных данных пользователей (CrUX field data) недостаточно — оценки лабораторные (Lighthouse).</p>
+    <p class="sec-note">Главная страница, 26 августа 2026. На мобильных теперь доступны реальные данные пользователей (CrUX field data, 28 дней) — раньше их не хватало и отчёт полагался только на лабораторные (Lighthouse) оценки.</p>
+    <div class="card" style="margin-bottom:16px;background:var(--panel2);">
+      <div class="label" style="margin-bottom:10px;">🆕 Реальные данные пользователей (CrUX, mobile, 28 дней) — впервые доступны</div>
+      <div class="metric-mini"><span>LCP</span><span class="v bad">4,7 сек — проверка не пройдена</span></div>
+      <div class="metric-mini"><span>FCP</span><span class="v bad">4,3 сек</span></div>
+      <div class="metric-mini"><span>TTFB</span><span class="v bad">4,2 сек</span></div>
+      <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+    </div>
     <div class="two-col">
       <div class="card">
-        <div class="label" style="margin-bottom:14px;">Mobile (смартфон)</div>
+        <div class="label" style="margin-bottom:14px;">Mobile (смартфон) — лабораторные (Lighthouse)</div>
         <div class="score-row">
-          <div class="score-block"><div class="score mid">76</div><div class="cap">Performance</div></div>
-          <div class="score-block"><div class="score good">90</div><div class="cap">Accessibility</div></div>
-          <div class="score-block"><div class="score good">96</div><div class="cap">Best Practices</div></div>
-          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
-        </div>
-        <div style="margin-top:16px;">
-          <div class="metric-mini"><span>LCP</span><span class="v bad">5,6 сек (плохо)</span></div>
-          <div class="metric-mini"><span>FCP</span><span class="v">1,8 сек</span></div>
-          <div class="metric-mini"><span>TBT</span><span class="v good">0 мс</span></div>
-          <div class="metric-mini"><span>CLS</span><span class="v good">0</span></div>
+          <div class="score-block"><div class="score mid">76</div><div class="cap">Performance</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">90</div><div class="cap">Accessibility</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">100</div><div class="cap">Best Practices</div><div class="check-delta"><b class="u">↑ +4</b></div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div><div class="check-delta">= без изм.</div></div>
         </div>
       </div>
       <div class="card">
         <div class="label" style="margin-bottom:14px;">Desktop</div>
         <div class="score-row">
-          <div class="score-block"><div class="score good">100</div><div class="cap">Performance</div></div>
-          <div class="score-block"><div class="score mid">87</div><div class="cap">Accessibility</div></div>
-          <div class="score-block"><div class="score good">96</div><div class="cap">Best Practices</div></div>
-          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div></div>
+          <div class="score-block"><div class="score good">100</div><div class="cap">Performance</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score mid">87</div><div class="cap">Accessibility</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">96</div><div class="cap">Best Practices</div><div class="check-delta">= без изм.</div></div>
+          <div class="score-block"><div class="score good">92</div><div class="cap">SEO</div><div class="check-delta">= без изм.</div></div>
         </div>
         <div style="margin-top:16px;">
           <div class="metric-mini"><span>LCP</span><span class="v good">0,4 сек</span></div>
           <div class="metric-mini"><span>FCP</span><span class="v good">0,3 сек</span></div>
           <div class="metric-mini"><span>TBT</span><span class="v good">0 мс</span></div>
-          <div class="metric-mini"><span>CLS</span><span class="v good">0,02</span></div>
+          <div class="metric-mini"><span>CLS</span><span class="v good">0,021</span></div>
         </div>
       </div>
     </div>
@@ -340,18 +373,18 @@
 
   <section>
     <h2 class="sec">7. Ahrefs — Backlink-профиль и техническое состояние</h2>
+    <p class="sec-note">Актуально на 26 августа · дельты — vs проверка от 19 августа</p>
     <div class="grid kpi">
-      <div class="card"><div class="label">Domain Rating (DR)</div><div class="value">10</div><div class="delta down">−1</div></div>
-      <div class="card"><div class="label">URL Rating (главная)</div><div class="value">9</div></div>
-      <div class="card"><div class="label">Backlinks</div><div class="value">5 200</div><div class="delta up">+55 · всего за всё время 7 900</div></div>
-      <div class="card"><div class="label">Referring domains</div><div class="value">481</div><div class="delta up">+20 · всего за всё время 642</div></div>
-      <div class="card"><div class="label">Органические ключевые слова</div><div class="value">29</div><div class="delta down">−2</div></div>
-      <div class="card"><div class="label">Топ-3 позиции</div><div class="value">11</div><div class="delta up">+1</div></div>
-      <div class="card"><div class="label">Оценка Ahrefs: трафик/мес</div><div class="value">37</div><div class="delta down">−4 · ценность ≈ $17</div></div>
-      <div class="card"><div class="label">Site Audit Health Score</div><div class="value">86/100</div><div class="delta flat">«Good» (краул 7 авг. 2026)</div></div>
+      <div class="card"><div class="label">Domain Rating (DR)</div><div class="value">10</div><div class="check-delta">vs 19.08: <b class="dn">↓ −1 (было 11)</b></div></div>
+      <div class="card"><div class="label">Backlinks (live)</div><div class="value">5 338</div><div class="check-delta">vs 19.08: <b class="dn">↓ −28 (было 5 366) · всего за всё время 7 903</b></div></div>
+      <div class="card"><div class="label">Referring domains (live)</div><div class="value">460</div><div class="check-delta">vs 19.08: <b class="dn">↓ −23 (было 483) · всего за всё время 658</b></div></div>
+      <div class="card"><div class="label">Органические ключевые слова</div><div class="value">22</div><div class="check-delta">vs 19.08: <b class="dn">↓ −5 (было 27)</b></div></div>
+      <div class="card"><div class="label">Топ-3 позиции</div><div class="value">10</div><div class="check-delta">vs 19.08: <b class="f">≈ было 10</b></div></div>
+      <div class="card"><div class="label">Оценка Ahrefs: трафик/мес</div><div class="value">21</div><div class="check-delta">vs 19.08: <b class="dn">↓ −5 (было 26) · ценность ≈ $5,40</b></div></div>
+      <div class="card"><div class="label">Site Audit Health Score</div><div class="value">80/100</div><div class="check-delta">vs 19.08: <b class="dn">↓ −6 (было 86) · краул 21 авг. 2026</b></div></div>
     </div>
     <p class="sec-note" style="margin-top:14px;">
-      Платных ключевых слов и платного трафика — 0 (контекстная реклама не ведётся). География органического трафика: 97,3% США. Из 481 реферального домена только 44 (9,1%) размещают dofollow-ссылки — 90,9% доменов ссылаются исключительно nofollow; при этом среди самих обратных ссылок 91,3% dofollow — то есть высокое число dofollow-ссылок сконцентрировано в узком пуле доменов. 12-месячный тренд органического трафика по оценке Ahrefs — устойчиво нисходящий (с пика ≈350 визитов/мес год назад до ≈90–100 сейчас).
+      Платных ключевых слов и платного трафика — 0 (контекстная реклама не ведётся). Новый краул Site Audit (21 августа, против 7 августа ранее) зафиксировал рост числа страниц с ошибками (99 → 124) при небольшом снижении предупреждений (340 → 318); общее число просканированных URL сократилось с 715 до 615. 12-месячный тренд органического трафика по оценке Ahrefs — по-прежнему устойчиво нисходящий.
     </p>
     <p class="sec-note">
       Конкуренты по пересечению ключевых слов: royalfoam.shop, ocalaarchitecturalfoam.com, royalfoam.us, architecturalfoamandart.com, foamfactory.com.
@@ -360,6 +393,7 @@
 
   <section>
     <h2 class="sec">8. Технические проблемы (Ahrefs Site Audit)</h2>
+    <p class="stale-note">Разбивка по типам проблем — срез краула от 7 августа (число ошибок выросло к 21 августа до 124, см. раздел 7); список ниже не пересобирался в этой проверке.</p>
     <div class="tbl-wrap">
       <table>
         <tr><th>Проблема</th><th class="num">Страниц</th><th>Тип</th></tr>
@@ -453,12 +487,12 @@
   <section>
     <h2 class="sec">Итоговый вывод</h2>
     <p style="color:var(--text);font-size:14.5px;max-width:900px;">
-      Сайт технически в целом здоров (Health Score 86/100, десктопная скорость отличная), но органический поиск практически не работает как канал роста: видимость держится на одном брендовом запросе, средняя позиция в GSC ухудшилась (12,3 → 13,3), а Ahrefs фиксирует нисходящий годовой тренд органического трафика при DR всего 10. Основной трафик и рост сейчас обеспечивает Direct-канал, а не SEO. Наибольший практический эффект в моменте даст исправление мобильного LCP (5,6 сек) и базовая SEO-гигиена (H1/meta description на 60+ страницах, устранение внутренних редиректов) — это быстро и напрямую влияет на CTR и индексацию. Для устойчивого роста органики в горизонте 1–3 месяцев нужна контентная работа под коммерческие запросы каталога и наращивание качественного ссылочного профиля.
+      За неделю с 19 по 26 августа видимость в поиске заметно выросла: клики GSC +19,1% (225 → 268), показы +13,4%, позиция улучшилась (13,3 → 13,1), визиты GA4 +9,6%, лиды +1,4%. Однако техническое состояние ухудшилось: Site Audit Health Score упал с 86 до 80/100 (новый краул нашёл на 25 страниц больше с ошибками), Domain Rating снизился с 11 до 10, а объём бэклинков и реферальных доменов сократился. Органический поиск по-прежнему держится в основном на одном брендовом запросе, а мобильный LCP остаётся критической проблемой — более того, впервые доступные реальные данные пользователей (CrUX) подтверждают её на живом трафике: 4,7 сек против нормы ≤2,5 сек. Наибольший практический эффект в моменте по-прежнему даст исправление мобильного LCP и базовая SEO-гигиена (H1/meta description на 60+ страницах, устранение внутренних редиректов); дополнительно стоит разобраться в причине роста числа технических ошибок и продолжающегося снижения ссылочной массы.
     </p>
   </section>
 
   <footer>
-    Источники: Google Analytics 4 (property decorativearchitecturalshapes.com), Google Search Console (https://decorativearchitecturalshapes.com/), PageSpeed Insights (19.08.2026), Ahrefs Site Explorer / Site Audit (проект DAShapes, краул от 07.08.2026). Отчёт сформирован Claude на основе данных, открытых в подключённом браузере пользователя.
+    Источники: Google Analytics 4 (property decorativearchitecturalshapes.com), Google Search Console (https://decorativearchitecturalshapes.com/), PageSpeed Insights (26.08.2026), Ahrefs Site Explorer / Site Audit (проект DAShapes, краул от 21.08.2026). Первая версия отчёта — 19.08.2026, обновлено 26.08.2026. Отчёт сформирован Claude на основе данных, открытых в подключённом браузере пользователя.
   </footer>
 
 </div>
