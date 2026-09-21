@@ -1,0 +1,789 @@
+{
+ "version": 1,
+ "rules": [
+  {
+   "id": "DP-001",
+   "site": "DP",
+   "path": "/faux-wood-trusses-the-complete-expert-guide-to-polyurethane-architectural-trusses/",
+   "mode": "replace",
+   "phrase": "faux wood trusses",
+   "url": "https://decorativearchitecturalproducts.com/services/faux-wood-trusses/"
+  },
+  {
+   "id": "DP-002",
+   "site": "DP",
+   "path": "/faux-wood-trusses-the-complete-expert-guide-to-polyurethane-architectural-trusses/",
+   "mode": "append",
+   "phrase": "custom polyurethane trusses",
+   "url": "https://decorativearchitecturalproducts.com/services/faux-wood-trusses/"
+  },
+  {
+   "id": "DP-003",
+   "site": "DP",
+   "path": "/front-door-surround-kits-the-complete-expert-guide-to-eps-hard-coat-architectural-entry-surround-systems/",
+   "mode": "replace",
+   "phrase": "front door surround kits",
+   "url": "https://decorativearchitecturalproducts.com/services/front-door-surrounds-kits/"
+  },
+  {
+   "id": "DP-004",
+   "site": "DP",
+   "path": "/front-door-surround-kits-the-complete-expert-guide-to-eps-hard-coat-architectural-entry-surround-systems/",
+   "mode": "append",
+   "phrase": "custom entry surround systems",
+   "url": "https://decorativearchitecturalproducts.com/services/front-door-surrounds-kits/"
+  },
+  {
+   "id": "DP-005",
+   "site": "DP",
+   "path": "/faux-wood-beams-made-of-polyurethane-2/",
+   "mode": "replace",
+   "phrase": "faux wood beams",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-faux-wood-beams/"
+  },
+  {
+   "id": "DP-006",
+   "site": "DP",
+   "path": "/faux-wood-beams-made-of-polyurethane-2/",
+   "mode": "append",
+   "phrase": "polyurethane beams",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-faux-wood-beams/"
+  },
+  {
+   "id": "DP-007",
+   "site": "DP",
+   "path": "/architectural-column-kits-the-complete-expert-guide-to-eps-hard-coat-column-systems-shafts-capitals-and-bases/",
+   "mode": "replace",
+   "phrase": "architectural column kits",
+   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
+  },
+  {
+   "id": "DP-008",
+   "site": "DP",
+   "path": "/architectural-column-kits-the-complete-expert-guide-to-eps-hard-coat-column-systems-shafts-capitals-and-bases/",
+   "mode": "append",
+   "phrase": "EPS column systems",
+   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
+  },
+  {
+   "id": "DP-009",
+   "site": "DP",
+   "path": "/architectural-column-kits-the-complete-expert-guide-to-eps-hard-coat-column-systems-shafts-capitals-and-bases/",
+   "mode": "append",
+   "phrase": "custom column capitals and bases",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
+  },
+  {
+   "id": "DP-010",
+   "site": "DP",
+   "path": "/exterior-polyurethane-trim-and-molding-for-homes-benefits-waterproof-properties-durability-and-painting-guide/",
+   "mode": "append",
+   "phrase": "decorative architectural products",
+   "url": "https://decorativearchitecturalproducts.com/services/"
+  },
+  {
+   "id": "DP-011",
+   "site": "DP",
+   "path": "/ceiling-faux-wood-planks-the-smart-alternative-to-real-timber-for-any-interior/",
+   "mode": "replace",
+   "phrase": "ceiling faux wood planks",
+   "url": "https://decorativearchitecturalproducts.com/services/ceiling-faux-wood-planks/"
+  },
+  {
+   "id": "DP-012",
+   "site": "DP",
+   "path": "/ceiling-faux-wood-planks-the-smart-alternative-to-real-timber-for-any-interior/",
+   "mode": "append",
+   "phrase": "faux wood planks for ceilings",
+   "url": "https://decorativearchitecturalproducts.com/services/ceiling-faux-wood-planks/"
+  },
+  {
+   "id": "DP-013",
+   "site": "DP",
+   "path": "/ceiling-dome-design-systems-the-expert-guide-to-eps-hard-coat-architectural-domes-and-ceiling-medallions/",
+   "mode": "replace",
+   "phrase": "ceiling dome design systems",
+   "url": "https://decorativearchitecturalproducts.com/services/ceiling-dome-design-systems/"
+  },
+  {
+   "id": "DP-014",
+   "site": "DP",
+   "path": "/ceiling-dome-design-systems-the-expert-guide-to-eps-hard-coat-architectural-domes-and-ceiling-medallions/",
+   "mode": "append",
+   "phrase": "architectural domes and medallions",
+   "url": "https://decorativearchitecturalproducts.com/services/ceiling-dome-design-systems/"
+  },
+  {
+   "id": "DP-015",
+   "site": "DP",
+   "path": "/carved-foam-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-carved-ceiling-systems/",
+   "mode": "replace",
+   "phrase": "carved foam ceilings",
+   "url": "https://decorativearchitecturalproducts.com/services/carved-foam-ceilings/"
+  },
+  {
+   "id": "DP-016",
+   "site": "DP",
+   "path": "/carved-foam-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-carved-ceiling-systems/",
+   "mode": "append",
+   "phrase": "custom carved ceiling systems",
+   "url": "https://decorativearchitecturalproducts.com/services/carved-foam-ceilings/"
+  },
+  {
+   "id": "DP-017",
+   "site": "DP",
+   "path": "/coffered-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-ceiling-systems/",
+   "mode": "replace",
+   "phrase": "coffered ceilings",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-coffered-ceilings/"
+  },
+  {
+   "id": "DP-018",
+   "site": "DP",
+   "path": "/coffered-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-ceiling-systems/",
+   "mode": "append",
+   "phrase": "custom coffered ceiling systems",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-coffered-ceilings/"
+  },
+  {
+   "id": "DP-019",
+   "site": "DP",
+   "path": "/custom-column-capitals-bases-the-complete-expert-guide-to-architectural-eps-hard-coat-systems/",
+   "mode": "replace",
+   "phrase": "custom column capitals and bases",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
+  },
+  {
+   "id": "DP-020",
+   "site": "DP",
+   "path": "/custom-column-capitals-bases-the-complete-expert-guide-to-architectural-eps-hard-coat-systems/",
+   "mode": "append",
+   "phrase": "capitals and bases for columns",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
+  },
+  {
+   "id": "DP-021",
+   "site": "DP",
+   "path": "/case-collection/chatelaine-fence-project/",
+   "mode": "replace",
+   "phrase": "stucco architectural fencing system",
+   "url": "https://decorativearchitecturalproducts.com/services/stucco-architectural-fencing-systems/"
+  },
+  {
+   "id": "DP-023",
+   "site": "DP",
+   "path": "/case-collection/custom-lightweight-fence-panel-system-with-integrated-lighting/",
+   "mode": "replace",
+   "phrase": "lightweight fence panel system",
+   "url": "https://decorativearchitecturalproducts.com/services/stucco-architectural-fencing-systems/"
+  },
+  {
+   "id": "DP-025",
+   "site": "DP",
+   "path": "/case-collection/custom-3d-monument-sign-with-realistic-pine-trees/",
+   "mode": "append",
+   "phrase": "custom architectural products",
+   "url": "https://decorativearchitecturalproducts.com/services/"
+  },
+  {
+   "id": "DP-026",
+   "site": "DP",
+   "path": "/case-collection/decorative-custom-shutters-for-commercial-project/",
+   "mode": "append",
+   "phrase": "custom architectural products",
+   "url": "https://decorativearchitecturalproducts.com/services/"
+  },
+  {
+   "id": "DP-027",
+   "site": "DP",
+   "path": "/case-collection/custom-decorative-wall-panels-for-outdoor-zoning/",
+   "mode": "append",
+   "phrase": "custom architectural products",
+   "url": "https://decorativearchitecturalproducts.com/services/"
+  },
+  {
+   "id": "DP-028",
+   "site": "DP",
+   "path": "/case-collection/custom-fireplace-surround-luxury-residential-mantel-design/",
+   "mode": "replace",
+   "phrase": "fireplace surround kits",
+   "url": "https://decorativearchitecturalproducts.com/services/fireplace-surround-kits/"
+  },
+  {
+   "id": "DP-030",
+   "site": "DP",
+   "path": "/case-collection/custom-fireplace-surround-luxury-residential-mantel-design/",
+   "mode": "append",
+   "phrase": "faux wood mantels",
+   "url": "https://decorativearchitecturalproducts.com/services/faux-wood-mantels/"
+  },
+  {
+   "id": "DP-031",
+   "site": "DP",
+   "path": "/case-collection/custom-faux-brick-mailbox-for-residential-project/",
+   "mode": "replace",
+   "phrase": "stucco mailboxes",
+   "url": "https://decorativearchitecturalproducts.com/services/stucco-mailboxes-and-lamp-posts-kits/"
+  },
+  {
+   "id": "DP-033",
+   "site": "DP",
+   "path": "/case-collection/custom-columns-and-trellis-for-residential-project/",
+   "mode": "replace",
+   "phrase": "architectural column kits",
+   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
+  },
+  {
+   "id": "DP-035",
+   "site": "DP",
+   "path": "/case-collection/custom-decorative-corbels-for-residential-project/",
+   "mode": "replace",
+   "phrase": "carved corbels",
+   "url": "https://decorativearchitecturalproducts.com/services/carved-corbels/"
+  },
+  {
+   "id": "DP-037",
+   "site": "DP",
+   "path": "/case-collection/xxl-corinthian-column-capitals-for-20-architectural-columns/",
+   "mode": "replace",
+   "phrase": "Corinthian column capitals",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
+  },
+  {
+   "id": "DP-039",
+   "site": "DP",
+   "path": "/case-collection/xxl-corinthian-column-capitals-for-20-architectural-columns/",
+   "mode": "append",
+   "phrase": "20-foot architectural columns",
+   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
+  },
+  {
+   "id": "ART-001",
+   "site": "ART",
+   "path": "/in-the-beginning-was-the-idea-how-we-turn-sketches-into-custom-monument-signs/",
+   "mode": "replace",
+   "phrase": "custom monument signs",
+   "url": "https://royalfoam.art/services/foam-monument-signs/"
+  },
+  {
+   "id": "ART-002",
+   "site": "ART",
+   "path": "/in-the-beginning-was-the-idea-how-we-turn-sketches-into-custom-monument-signs/",
+   "mode": "append",
+   "phrase": "order a custom monument sign",
+   "url": "https://royalfoam.art/services/foam-monument-signs/"
+  },
+  {
+   "id": "ART-003",
+   "site": "ART",
+   "path": "/custom-3d-props-that-turn-events-into-shareable-moments/",
+   "mode": "replace",
+   "phrase": "custom 3D props",
+   "url": "https://royalfoam.art/services/brand-activation-props/"
+  },
+  {
+   "id": "ART-004",
+   "site": "ART",
+   "path": "/custom-3d-props-that-turn-events-into-shareable-moments/",
+   "mode": "append",
+   "phrase": "3D props for events",
+   "url": "https://royalfoam.art/services/brand-activation-props/"
+  },
+  {
+   "id": "ART-005",
+   "site": "ART",
+   "path": "/commercial-monument-signs/",
+   "mode": "replace",
+   "phrase": "commercial monument signs",
+   "url": "https://royalfoam.art/services/foam-monument-signs/"
+  },
+  {
+   "id": "ART-006",
+   "site": "ART",
+   "path": "/commercial-monument-signs/",
+   "mode": "append",
+   "phrase": "monument signage on a deadline",
+   "url": "https://royalfoam.art/services/foam-monument-signs/"
+  },
+  {
+   "id": "ART-008",
+   "site": "ART",
+   "path": "/custom-architectural-foam-elements-design-process-manufacturing-materials-and-applications/",
+   "mode": "append",
+   "phrase": "custom architectural shapes",
+   "url": "https://royalfoam.art/services/architectural-shapes/"
+  },
+  {
+   "id": "ART-009",
+   "site": "ART",
+   "path": "/custom-prop-fabrication-how-foam-props-are-made-for-film-theater-and-events/",
+   "mode": "replace",
+   "phrase": "custom prop fabrication",
+   "url": "https://royalfoam.art/services/foam-stage-movie-props/"
+  },
+  {
+   "id": "ART-010",
+   "site": "ART",
+   "path": "/custom-prop-fabrication-how-foam-props-are-made-for-film-theater-and-events/",
+   "mode": "append",
+   "phrase": "foam props for film and theater",
+   "url": "https://royalfoam.art/services/foam-stage-movie-props/"
+  },
+  {
+   "id": "ART-011",
+   "site": "ART",
+   "path": "/case/living-stream-church-creating-atmosphere-with-architectural-foam-solutions/",
+   "mode": "replace",
+   "phrase": "architectural foam solutions for churches",
+   "url": "https://royalfoam.art/services/designs-for-places-of-worship/"
+  },
+  {
+   "id": "ART-013",
+   "site": "ART",
+   "path": "/case/the-big-red-hat-mobile-activation/",
+   "mode": "replace",
+   "phrase": "mobile brand activation",
+   "url": "https://royalfoam.art/services/brand-activation-props/"
+  },
+  {
+   "id": "ART-015",
+   "site": "ART",
+   "path": "/case/giant-foam-props-large-scale-3d-boombox-installation-for-casino-event/",
+   "mode": "replace",
+   "phrase": "large-scale event props",
+   "url": "https://royalfoam.art/services/event-props-decor/"
+  },
+  {
+   "id": "ART-017",
+   "site": "ART",
+   "path": "/case/dynamics-of-color-and-light-comprehensive-3d-dimensional-decor-for-living-stream-kids/",
+   "mode": "replace",
+   "phrase": "3D dimensional decor for kids spaces",
+   "url": "https://royalfoam.art/services/designs-for-places-of-worship/"
+  },
+  {
+   "id": "ART-019",
+   "site": "ART",
+   "path": "/case/custom-striped-m-letters-accent-pillars/",
+   "mode": "replace",
+   "phrase": "custom 3D letters",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-021",
+   "site": "ART",
+   "path": "/case/8-foot-freestanding-branded-n-letter-for-n-able-event/",
+   "mode": "replace",
+   "phrase": "freestanding branded letters",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-023",
+   "site": "ART",
+   "path": "/case/oset-2025-update/",
+   "mode": "replace",
+   "phrase": "event letter signage",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-025",
+   "site": "ART",
+   "path": "/case/5-foot-interactive-you-letters-with-writable-surface/",
+   "mode": "replace",
+   "phrase": "interactive 3D letters",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-027",
+   "site": "ART",
+   "path": "/case/xxl-3d-castle-installations-for-casino-summer-campaign/",
+   "mode": "replace",
+   "phrase": "XXL event props",
+   "url": "https://royalfoam.art/services/event-props-decor/"
+  },
+  {
+   "id": "ART-029",
+   "site": "ART",
+   "path": "/case/freestanding-3d-amazon-logo-signage-installation/",
+   "mode": "replace",
+   "phrase": "3D logo signage installation",
+   "url": "https://royalfoam.art/services/3d-logo-branding-installations/"
+  },
+  {
+   "id": "ART-031",
+   "site": "ART",
+   "path": "/case/floating-camp-poosh-pool-letters/",
+   "mode": "replace",
+   "phrase": "floating pool letters",
+   "url": "https://royalfoam.art/services/floating-pool-letters/"
+  },
+  {
+   "id": "ART-033",
+   "site": "ART",
+   "path": "/case/hunter-conference-sign/",
+   "mode": "replace",
+   "phrase": "custom monument signs",
+   "url": "https://royalfoam.art/services/foam-monument-signs/"
+  },
+  {
+   "id": "ART-035",
+   "site": "ART",
+   "path": "/case/custom-3d-swirl-logo-element-for-xumo-expo-booth/",
+   "mode": "replace",
+   "phrase": "custom 3D logo elements",
+   "url": "https://royalfoam.art/services/3d-logo-branding-installations/"
+  },
+  {
+   "id": "ART-037",
+   "site": "ART",
+   "path": "/case/1-billion-beyond-letters/",
+   "mode": "replace",
+   "phrase": "oversized 3D letters",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-039",
+   "site": "ART",
+   "path": "/case/interactive-phone-booth-installation/",
+   "mode": "replace",
+   "phrase": "interactive brand installations",
+   "url": "https://royalfoam.art/services/brand-activation-props/"
+  },
+  {
+   "id": "ART-041",
+   "site": "ART",
+   "path": "/case/custom-outdoor-dwc-letters-5-branded-letter-installation/",
+   "mode": "replace",
+   "phrase": "outdoor branded letters",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-043",
+   "site": "ART",
+   "path": "/case/engineering-giant-mobile-3d-signs/",
+   "mode": "replace",
+   "phrase": "mobile 3D signs",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-045",
+   "site": "ART",
+   "path": "/case/large-scale-3d-logo-installation-for-abc-convention/",
+   "mode": "replace",
+   "phrase": "large-scale 3D logo displays",
+   "url": "https://royalfoam.art/services/3d-logo-branding-installations/"
+  },
+  {
+   "id": "ART-047",
+   "site": "ART",
+   "path": "/case/custom-experiential-installation-for-pandora/",
+   "mode": "replace",
+   "phrase": "custom foam sculptures",
+   "url": "https://royalfoam.art/services/custom-foam-sculptures/"
+  },
+  {
+   "id": "ART-049",
+   "site": "ART",
+   "path": "/case/custom-experiential-installation-for-pandora/",
+   "mode": "append",
+   "phrase": "event props and decor",
+   "url": "https://royalfoam.art/services/event-props-decor/"
+  },
+  {
+   "id": "ART-050",
+   "site": "ART",
+   "path": "/case/oversized-3d-pcma-letters-logo/",
+   "mode": "replace",
+   "phrase": "oversized 3D letters and logo",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "ART-052",
+   "site": "ART",
+   "path": "/case/oversized-3d-pcma-letters-logo/",
+   "mode": "append",
+   "phrase": "3D logo installations",
+   "url": "https://royalfoam.art/services/3d-logo-branding-installations/"
+  },
+  {
+   "id": "ART-053",
+   "site": "ART",
+   "path": "/case/oversized-perfume-bottle-display-for-brand-activation/",
+   "mode": "replace",
+   "phrase": "oversized product replicas",
+   "url": "https://royalfoam.art/services/foam-product-replicas/"
+  },
+  {
+   "id": "ART-055",
+   "site": "ART",
+   "path": "/case/the-modern-versailles-project/",
+   "mode": "replace",
+   "phrase": "architectural foam elements",
+   "url": "https://royalfoam.art/services/architectural-shapes/"
+  },
+  {
+   "id": "ART-057",
+   "site": "ART",
+   "path": "/case/large-scale-3d-logo-installation-at-college-of-education/",
+   "mode": "replace",
+   "phrase": "large-scale 3D logo installation",
+   "url": "https://royalfoam.art/services/3d-logo-branding-installations/"
+  },
+  {
+   "id": "ART-059",
+   "site": "ART",
+   "path": "/case/freestanding-love-letter-installation-for-wedding-events/",
+   "mode": "replace",
+   "phrase": "freestanding 3D letter installations",
+   "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "DS-001",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-architectural-columns-capitals-bases/",
+   "mode": "replace",
+   "phrase": "architectural columns",
+   "url": "https://decorativearchitecturalshapes.com/services/architectural-columns/"
+  },
+  {
+   "id": "DS-002",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-architectural-columns-capitals-bases/",
+   "mode": "append",
+   "phrase": "custom column kits",
+   "url": "https://decorativearchitecturalshapes.com/services/architectural-columns/"
+  },
+  {
+   "id": "DS-003",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-architectural-columns-capitals-bases/",
+   "mode": "append",
+   "phrase": "column capitals",
+   "url": "https://decorativearchitecturalshapes.com/services/column-capitals/"
+  },
+  {
+   "id": "DS-004",
+   "site": "DS",
+   "path": "/easy-installation-why-pre-assembled-solutions-s/",
+   "mode": "replace",
+   "phrase": "arches and keystones",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-architectural-arches/"
+  },
+  {
+   "id": "DS-005",
+   "site": "DS",
+   "path": "/easy-installation-why-pre-assembled-solutions-s/",
+   "mode": "append",
+   "phrase": "custom architectural arches",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-architectural-arches/"
+  },
+  {
+   "id": "DS-006",
+   "site": "DS",
+   "path": "/juliet-balcony-functional-kits/",
+   "mode": "replace",
+   "phrase": "juliet balcony kits",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-juliet-balconies/"
+  },
+  {
+   "id": "DS-007",
+   "site": "DS",
+   "path": "/juliet-balcony-functional-kits/",
+   "mode": "append",
+   "phrase": "functional juliet balconies",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-juliet-balconies/"
+  },
+  {
+   "id": "DS-008",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-decorative-modern-dormer-windows/",
+   "mode": "replace",
+   "phrase": "dormer windows",
+   "url": "https://decorativearchitecturalshapes.com/services/dormer-windows/"
+  },
+  {
+   "id": "DS-009",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-decorative-modern-dormer-windows/",
+   "mode": "append",
+   "phrase": "custom dormer surrounds",
+   "url": "https://decorativearchitecturalshapes.com/services/dormer-windows/"
+  },
+  {
+   "id": "DS-010",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-exterior-corbels-and-brackets/",
+   "mode": "replace",
+   "phrase": "exterior corbels and brackets",
+   "url": "https://decorativearchitecturalshapes.com/services/exterior-corbels-brackets/"
+  },
+  {
+   "id": "DS-011",
+   "site": "DS",
+   "path": "/decorative-architectural-shapes-exterior-corbels-and-brackets/",
+   "mode": "append",
+   "phrase": "decorative corbels",
+   "url": "https://decorativearchitecturalshapes.com/services/exterior-corbels-brackets/"
+  },
+  {
+   "id": "DS-012",
+   "site": "DS",
+   "path": "/how-to-choose-exterior-polyurethane-trim-for-your-home/",
+   "mode": "append",
+   "phrase": "exterior decorative trim",
+   "url": "https://decorativearchitecturalshapes.com/services/exterior-decorative-trims/"
+  },
+  {
+   "id": "DS-013",
+   "site": "DS",
+   "path": "/interior-foam-crown-molding-and-decorative-trim-styles-design-ideas-installation-and-benefits/",
+   "mode": "replace",
+   "phrase": "crown moldings",
+   "url": "https://decorativearchitecturalshapes.com/services/crown-moldings/"
+  },
+  {
+   "id": "DS-014",
+   "site": "DS",
+   "path": "/interior-foam-crown-molding-and-decorative-trim-styles-design-ideas-installation-and-benefits/",
+   "mode": "append",
+   "phrase": "foam crown molding",
+   "url": "https://decorativearchitecturalshapes.com/services/crown-moldings/"
+  },
+  {
+   "id": "DS-015",
+   "site": "DS",
+   "path": "/interior-foam-crown-molding-and-decorative-trim-styles-design-ideas-installation-and-benefits/",
+   "mode": "append",
+   "phrase": "decorative moldings",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-moldings/"
+  },
+  {
+   "id": "DS-016",
+   "site": "DS",
+   "path": "/how-to-install-foam-molding-step-by-step-guide-tools-adhesives-and-common-mistakes/",
+   "mode": "replace",
+   "phrase": "decorative moldings",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-moldings/"
+  },
+  {
+   "id": "DS-017",
+   "site": "DS",
+   "path": "/how-to-install-foam-molding-step-by-step-guide-tools-adhesives-and-common-mistakes/",
+   "mode": "append",
+   "phrase": "foam molding",
+   "url": "https://decorativearchitecturalshapes.com/services/decorative-moldings/"
+  },
+  {
+   "id": "DS-018",
+   "site": "DS",
+   "path": "/exterior-window-shutters-styles-materials-custom-options-and-installation-guide/",
+   "mode": "replace",
+   "phrase": "exterior louvers",
+   "url": "https://decorativearchitecturalshapes.com/services/exterior-louvers/"
+  },
+  {
+   "id": "DS-019",
+   "site": "DS",
+   "path": "/exterior-window-shutters-styles-materials-custom-options-and-installation-guide/",
+   "mode": "append",
+   "phrase": "louver and shutter systems",
+   "url": "https://decorativearchitecturalshapes.com/services/exterior-louvers/"
+  },
+  {
+   "id": "DS-020",
+   "site": "DS",
+   "path": "/case-collection/private-residence-privacy-wall-sarasota-fl/",
+   "mode": "replace",
+   "phrase": "architectural privacy walls",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-022",
+   "site": "DS",
+   "path": "/case-collection/6-foot-high-decorative-stucco-wall-fence-for-a-corner-lot-home/",
+   "mode": "replace",
+   "phrase": "decorative stucco wall fence",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-024",
+   "site": "DS",
+   "path": "/case-collection/private-residence-privacy-wall-ponte-vedra-beach-fl/",
+   "mode": "replace",
+   "phrase": "residential privacy walls",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-026",
+   "site": "DS",
+   "path": "/case-collection/luxury-residence-privacy-wall-naples-fl/",
+   "mode": "replace",
+   "phrase": "luxury privacy walls",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-028",
+   "site": "DS",
+   "path": "/case-collection/architectural-stucco-privacy-wall-for-a-new-construction-home-tampa-fl/",
+   "mode": "replace",
+   "phrase": "privacy walls for new construction",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-030",
+   "site": "DS",
+   "path": "/case-collection/private-residence-stucco-fence-fort-myers-fl/",
+   "mode": "replace",
+   "phrase": "residential stucco fences",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-032",
+   "site": "DS",
+   "path": "/case-collection/the-concrete-illusion/",
+   "mode": "replace",
+   "phrase": "prefab stucco wall systems",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-034",
+   "site": "DS",
+   "path": "/case-collection/beyond-the-block/",
+   "mode": "replace",
+   "phrase": "architectural fencing systems",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-036",
+   "site": "DS",
+   "path": "/case-collection/private-residence-stucco-fence/",
+   "mode": "replace",
+   "phrase": "decorative stucco fences",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-038",
+   "site": "DS",
+   "path": "/case-collection/hoa-residential-development-privacy-wall-jacksonville-fl/",
+   "mode": "replace",
+   "phrase": "HOA privacy walls",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-040",
+   "site": "DS",
+   "path": "/case-collection/hoa-gated-community-orlando-fl/",
+   "mode": "replace",
+   "phrase": "community privacy walls",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  },
+  {
+   "id": "DS-042",
+   "site": "DS",
+   "path": "/case-collection/6-foot-high-decorative-stucco-wall-fence-for-an-estate-residence/",
+   "mode": "replace",
+   "phrase": "estate privacy fences",
+   "url": "https://decorativearchitecturalshapes.com/services/custom-stucco-wall-fence-systems/"
+  }
+ ]
+}

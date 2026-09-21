@@ -49,6 +49,17 @@
 | DS пост Keystones, Shutters, Install-guide | Ближайшие соответствия: Arches / Louvers / Moldings (P1) | Опционально создать Keystones/Shutters |
 | DP пост Porch Columns (404) | Строк нет — сначала восстановить или редирект | Восстановить + 2 ссылки по шаблону статьи |
 
+## Автоматизация (вариант A — сниппет на лету)
+
+Покрывает 98 ссылок с placement `body-intro` / `body-final-cta` (DP 32, ART 35, DS 31):
+
+- `build-interlink-map.py` — генератор (CSV → JSON + сниппеты), запускать из корня репо;
+- `interlink-map.json` — машиночитаемый маппинг (98 правил);
+- `interlink-snippet-template.php` — общий шаблон сниппета;
+- `interlink-snippet-dp.php`, `interlink-snippet-art.php`, `interlink-snippet-ds.php` — готовые файлы для вставки в WPCode (по одному на сайт), режим по умолчанию DRY-RUN (только лог, без изменений).
+
+Не покрыты сниппетом (шаблоны/ручная работа): `case-cta-button` (48 кнопок через ACF-поле `related_service`), блоки `related-guides-block` / `related-cases-block` (72 ссылки), `fix-existing` ART-007 (1 ссылка вручную).
+
 ## Контроль качества после внедрения
 
 1. Перепроверить выборку: по 1 статье, 1 кейсу, 1 услуге с каждого сайта — все ссылки из CSV на месте, анкоры точные.
