@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Build interlink-map.json + per-site WPCode snippets from interlink-scheme.csv.
+"""Build interlink-map.json + per-site WPCode snippets from a scheme CSV.
+
+Usage: python3 build-interlink-map.py [scheme-csv]  (default: interlink-scheme.csv)
 
 Covers placements body-intro (mode=replace) and body-final-cta (mode=append).
 Placements case-cta-button / related-*-block / fix-existing are template/manual
 work (see interlink-scheme.md) and are excluded here.
+Variant C (client decision 2026-09-22): content->service = intro links only,
+so build from interlink-scheme-c.csv (no body-final-cta rows => 64 rules).
 """
-import csv, json
+import csv, json, sys
 from urllib.parse import urlparse
 
-CSV = "interlink-scheme.csv"
+CSV = sys.argv[1] if len(sys.argv) > 1 else "interlink-scheme.csv"
 HOSTS = {
     "DP": "decorativearchitecturalproducts.com",
     "ART": "royalfoam.art",
