@@ -2,134 +2,6 @@
  "version": 1,
  "rules": [
   {
-   "id": "DP-001",
-   "site": "DP",
-   "path": "/faux-wood-trusses-the-complete-expert-guide-to-polyurethane-architectural-trusses/",
-   "mode": "replace",
-   "phrase": "faux wood trusses",
-   "url": "https://decorativearchitecturalproducts.com/services/faux-wood-trusses/"
-  },
-  {
-   "id": "DP-003",
-   "site": "DP",
-   "path": "/front-door-surround-kits-the-complete-expert-guide-to-eps-hard-coat-architectural-entry-surround-systems/",
-   "mode": "replace",
-   "phrase": "front door surround kits",
-   "url": "https://decorativearchitecturalproducts.com/services/front-door-surrounds-kits/"
-  },
-  {
-   "id": "DP-005",
-   "site": "DP",
-   "path": "/faux-wood-beams-made-of-polyurethane-2/",
-   "mode": "replace",
-   "phrase": "faux wood beams",
-   "url": "https://decorativearchitecturalproducts.com/services/custom-faux-wood-beams/"
-  },
-  {
-   "id": "DP-007",
-   "site": "DP",
-   "path": "/architectural-column-kits-the-complete-expert-guide-to-eps-hard-coat-column-systems-shafts-capitals-and-bases/",
-   "mode": "replace",
-   "phrase": "architectural column kits",
-   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
-  },
-  {
-   "id": "DP-011",
-   "site": "DP",
-   "path": "/ceiling-faux-wood-planks-the-smart-alternative-to-real-timber-for-any-interior/",
-   "mode": "replace",
-   "phrase": "ceiling faux wood planks",
-   "url": "https://decorativearchitecturalproducts.com/services/ceiling-faux-wood-planks/"
-  },
-  {
-   "id": "DP-013",
-   "site": "DP",
-   "path": "/ceiling-dome-design-systems-the-expert-guide-to-eps-hard-coat-architectural-domes-and-ceiling-medallions/",
-   "mode": "replace",
-   "phrase": "ceiling dome design systems",
-   "url": "https://decorativearchitecturalproducts.com/services/ceiling-dome-design-systems/"
-  },
-  {
-   "id": "DP-015",
-   "site": "DP",
-   "path": "/carved-foam-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-carved-ceiling-systems/",
-   "mode": "replace",
-   "phrase": "carved foam ceilings",
-   "url": "https://decorativearchitecturalproducts.com/services/carved-foam-ceilings/"
-  },
-  {
-   "id": "DP-017",
-   "site": "DP",
-   "path": "/coffered-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-ceiling-systems/",
-   "mode": "replace",
-   "phrase": "coffered ceilings",
-   "url": "https://decorativearchitecturalproducts.com/services/custom-coffered-ceilings/"
-  },
-  {
-   "id": "DP-019",
-   "site": "DP",
-   "path": "/custom-column-capitals-bases-the-complete-expert-guide-to-architectural-eps-hard-coat-systems/",
-   "mode": "replace",
-   "phrase": "custom column capitals and bases",
-   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
-  },
-  {
-   "id": "DP-021",
-   "site": "DP",
-   "path": "/case-collection/chatelaine-fence-project/",
-   "mode": "replace",
-   "phrase": "stucco architectural fencing system",
-   "url": "https://decorativearchitecturalproducts.com/services/stucco-architectural-fencing-systems/"
-  },
-  {
-   "id": "DP-023",
-   "site": "DP",
-   "path": "/case-collection/custom-lightweight-fence-panel-system-with-integrated-lighting/",
-   "mode": "replace",
-   "phrase": "lightweight fence panel system",
-   "url": "https://decorativearchitecturalproducts.com/services/stucco-architectural-fencing-systems/"
-  },
-  {
-   "id": "DP-028",
-   "site": "DP",
-   "path": "/case-collection/custom-fireplace-surround-luxury-residential-mantel-design/",
-   "mode": "replace",
-   "phrase": "fireplace surround kits",
-   "url": "https://decorativearchitecturalproducts.com/services/fireplace-surround-kits/"
-  },
-  {
-   "id": "DP-031",
-   "site": "DP",
-   "path": "/case-collection/custom-faux-brick-mailbox-for-residential-project/",
-   "mode": "replace",
-   "phrase": "stucco mailboxes",
-   "url": "https://decorativearchitecturalproducts.com/services/stucco-mailboxes-and-lamp-posts-kits/"
-  },
-  {
-   "id": "DP-033",
-   "site": "DP",
-   "path": "/case-collection/custom-columns-and-trellis-for-residential-project/",
-   "mode": "replace",
-   "phrase": "architectural column kits",
-   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
-  },
-  {
-   "id": "DP-035",
-   "site": "DP",
-   "path": "/case-collection/custom-decorative-corbels-for-residential-project/",
-   "mode": "replace",
-   "phrase": "carved corbels",
-   "url": "https://decorativearchitecturalproducts.com/services/carved-corbels/"
-  },
-  {
-   "id": "DP-037",
-   "site": "DP",
-   "path": "/case-collection/xxl-corinthian-column-capitals-for-20-architectural-columns/",
-   "mode": "replace",
-   "phrase": "Corinthian column capitals",
-   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
-  },
-  {
    "id": "ART-001",
    "site": "ART",
    "path": "/in-the-beginning-was-the-idea-how-we-turn-sketches-into-custom-monument-signs/",
@@ -152,6 +24,14 @@
    "mode": "replace",
    "phrase": "commercial monument signs",
    "url": "https://royalfoam.art/services/foam-monument-signs/"
+  },
+  {
+   "id": "ART-007",
+   "site": "ART",
+   "path": "/custom-architectural-foam-elements-design-process-manufacturing-materials-and-applications/",
+   "mode": "replace",
+   "phrase": "architectural foam elements",
+   "url": "https://royalfoam.art/services/architectural-shapes/"
   },
   {
    "id": "ART-009",
@@ -352,6 +232,134 @@
    "mode": "replace",
    "phrase": "freestanding 3D letter installations",
    "url": "https://royalfoam.art/services/oversize-foam-letters-logos/"
+  },
+  {
+   "id": "DP-001",
+   "site": "DP",
+   "path": "/faux-wood-trusses-the-complete-expert-guide-to-polyurethane-architectural-trusses/",
+   "mode": "replace",
+   "phrase": "faux wood trusses",
+   "url": "https://decorativearchitecturalproducts.com/services/faux-wood-trusses/"
+  },
+  {
+   "id": "DP-003",
+   "site": "DP",
+   "path": "/front-door-surround-kits-the-complete-expert-guide-to-eps-hard-coat-architectural-entry-surround-systems/",
+   "mode": "replace",
+   "phrase": "front door surround kits",
+   "url": "https://decorativearchitecturalproducts.com/services/front-door-surrounds-kits/"
+  },
+  {
+   "id": "DP-005",
+   "site": "DP",
+   "path": "/faux-wood-beams-made-of-polyurethane-2/",
+   "mode": "replace",
+   "phrase": "faux wood beams",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-faux-wood-beams/"
+  },
+  {
+   "id": "DP-007",
+   "site": "DP",
+   "path": "/architectural-column-kits-the-complete-expert-guide-to-eps-hard-coat-column-systems-shafts-capitals-and-bases/",
+   "mode": "replace",
+   "phrase": "architectural column kits",
+   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
+  },
+  {
+   "id": "DP-011",
+   "site": "DP",
+   "path": "/ceiling-faux-wood-planks-the-smart-alternative-to-real-timber-for-any-interior/",
+   "mode": "replace",
+   "phrase": "ceiling faux wood planks",
+   "url": "https://decorativearchitecturalproducts.com/services/ceiling-faux-wood-planks/"
+  },
+  {
+   "id": "DP-013",
+   "site": "DP",
+   "path": "/ceiling-dome-design-systems-the-expert-guide-to-eps-hard-coat-architectural-domes-and-ceiling-medallions/",
+   "mode": "replace",
+   "phrase": "ceiling dome design systems",
+   "url": "https://decorativearchitecturalproducts.com/services/ceiling-dome-design-systems/"
+  },
+  {
+   "id": "DP-015",
+   "site": "DP",
+   "path": "/carved-foam-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-carved-ceiling-systems/",
+   "mode": "replace",
+   "phrase": "carved foam ceilings",
+   "url": "https://decorativearchitecturalproducts.com/services/carved-foam-ceilings/"
+  },
+  {
+   "id": "DP-017",
+   "site": "DP",
+   "path": "/coffered-ceilings-the-complete-expert-guide-to-eps-hard-coat-custom-ceiling-systems/",
+   "mode": "replace",
+   "phrase": "coffered ceilings",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-coffered-ceilings/"
+  },
+  {
+   "id": "DP-019",
+   "site": "DP",
+   "path": "/custom-column-capitals-bases-the-complete-expert-guide-to-architectural-eps-hard-coat-systems/",
+   "mode": "replace",
+   "phrase": "custom column capitals and bases",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
+  },
+  {
+   "id": "DP-021",
+   "site": "DP",
+   "path": "/case-collection/chatelaine-fence-project/",
+   "mode": "replace",
+   "phrase": "stucco architectural fencing system",
+   "url": "https://decorativearchitecturalproducts.com/services/stucco-architectural-fencing-systems/"
+  },
+  {
+   "id": "DP-023",
+   "site": "DP",
+   "path": "/case-collection/custom-lightweight-fence-panel-system-with-integrated-lighting/",
+   "mode": "replace",
+   "phrase": "lightweight fence panel system",
+   "url": "https://decorativearchitecturalproducts.com/services/stucco-architectural-fencing-systems/"
+  },
+  {
+   "id": "DP-028",
+   "site": "DP",
+   "path": "/case-collection/custom-fireplace-surround-luxury-residential-mantel-design/",
+   "mode": "replace",
+   "phrase": "fireplace surround kits",
+   "url": "https://decorativearchitecturalproducts.com/services/fireplace-surround-kits/"
+  },
+  {
+   "id": "DP-031",
+   "site": "DP",
+   "path": "/case-collection/custom-faux-brick-mailbox-for-residential-project/",
+   "mode": "replace",
+   "phrase": "stucco mailboxes",
+   "url": "https://decorativearchitecturalproducts.com/services/stucco-mailboxes-and-lamp-posts-kits/"
+  },
+  {
+   "id": "DP-033",
+   "site": "DP",
+   "path": "/case-collection/custom-columns-and-trellis-for-residential-project/",
+   "mode": "replace",
+   "phrase": "architectural column kits",
+   "url": "https://decorativearchitecturalproducts.com/services/architectural-columns-kits/"
+  },
+  {
+   "id": "DP-035",
+   "site": "DP",
+   "path": "/case-collection/custom-decorative-corbels-for-residential-project/",
+   "mode": "replace",
+   "phrase": "carved corbels",
+   "url": "https://decorativearchitecturalproducts.com/services/carved-corbels/"
+  },
+  {
+   "id": "DP-037",
+   "site": "DP",
+   "path": "/case-collection/xxl-corinthian-column-capitals-for-20-architectural-columns/",
+   "mode": "replace",
+   "phrase": "Corinthian column capitals",
+   "url": "https://decorativearchitecturalproducts.com/services/custom-column-capitals-and-bases/"
   },
   {
    "id": "DS-001",
