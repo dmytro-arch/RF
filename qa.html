@@ -56,7 +56,7 @@
   h3{font-size:16.5px;font-family:var(--font-head);margin:0 0 6px;}
   section{margin-bottom:26px;}
 
-  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 6px;}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:18px 0 6px;}
   .kpi .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-card);padding:16px;box-shadow:var(--shadow);}
   .kpi .value{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;}
   .kpi .label{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
@@ -160,7 +160,8 @@
     <div class="card"><div class="value">126</div><div class="label">URL в инвентаре сайта</div></div>
     <div class="card bad"><div class="value">7</div><div class="label">Критичных дефектов</div></div>
     <div class="card warn"><div class="value">10</div><div class="label">Важных</div></div>
-    <div class="card ok"><div class="value">4</div><div class="label">Косметика / SEO</div></div>
+    <div class="card bad"><div class="value">3</div><div class="label">Контент: не та компания / тема</div></div>
+    <div class="card ok"><div class="value">6</div><div class="label">Косметика / SEO</div></div>
   </div>
 
   <div class="callout">
@@ -369,7 +370,66 @@ ijijijijijijijijijijijijklklklklklklklklklklklkl</pre>
     <div class="fix"><b>Что делать:</b> <code>noindex</code> на служебные страницы, ссылку на Privacy Policy — в футер.</div>
   </div>
 
-  <h2 class="sec">4. Проверенные страницы и результат</h2>
+  <h2 class="sec">4. Контент: компания, тематика, «косяки» в текстах</h2>
+  <p class="sub">Проверка по REST&nbsp;API сайта (товары, кейсы, портфолио, услуги, города) плюс живое чтение ~10 страниц.
+  Важная оговорка: внутренний поиск WordPress не видит текст, который рендерит Breakdance (проверено: опечатка «op-quality»
+  с главной через <code>/wp-json/wp/v2/search</code> не находится), поэтому глобальные блоки проверялись только на открытых страницах.</p>
+
+  <div class="finding crit">
+    <div class="head"><h3>4.1. В описаниях товаров указана чужая компания — «3D Sign Factory»</h3><span class="badge crit">Критично</span></div>
+    <p>В карточках магазина вместо <b>Royal Foam Art Design</b> стоит название другой компании:</p>
+    <pre>Foam Sculptures MOD001:
+«At <b>3D Sign Factory</b>, foam sculpting is based on HDU foam…»
+
+Illuminated Letters &amp; Logos MOD001:
+«At <b>3D Sign Factory</b>, production begins with a 3D model and accurate vector files…»</pre>
+    <ul>
+      <li>Подтверждено на двух товарах из разных категорий; слово «Factory» встречается в <b>100+</b> товарах (выдача поиска обрезана на 100 записях и продолжается) — то есть шаблон описаний скопирован целиком.</li>
+      <li>Сейчас это не видно посетителям: любой товар (<code>/store/foam-sculptures/foam-sculptures-mod001/</code>) редиректит на <code>/under-construction/</code>. Но тексты лежат в базе и в <code>product-sitemap.xml</code> — как только магазин откроют, чужой бренд появится на витрине.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> массовая замена «3D Sign Factory» → «Royal Foam Art Design» в описаниях товаров (в WP это делается плагином типа Better Search Replace по таблице <code>wp_posts</code>), затем пересобрать sitemap.</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>4.2. У товара «Monument Sign MS 016» описание про перголу</h3><span class="badge crit">Критично</span></div>
+    <p>Карточка монументной вывески описывает совершенно другой продукт:</p>
+    <pre>«This monument sign model is enhanced with a decorative <b>pergola</b> that adds a stylish
+and distinctive accent to the structure. It pairs perfectly with wooden canopies,
+<b>poolside areas, and lounge spaces</b>…»</pre>
+    <p>Это текст из линейки пергол и арок (тема сайта decorativearchitecturalshapes.com), вставленный в товар про вывеску.
+    По запросу «pergola» на royalfoam.art находится ровно один объект — этот товар.</p>
+    <div class="fix"><b>Что делать:</b> переписать описание под монументную вывеску; заодно проверить остальные товары категории <code>/store/foam-monument-signs/</code> — если описание копировали пакетом, перголы могут быть и у соседей.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>4.3. Бренд в title-тегах пишется по-разному</h3><span class="badge high">Важно</span></div>
+    <ul>
+      <li>Главная: <code>Custom 3D Foam Fabrication | Architectural Signs &amp; Large Props</code> — названия компании в title нет вообще.</li>
+      <li><code>/contact/</code>, <code>/portfolio/</code>, <code>/special-deals/</code>: суффикс <code>| Royal Foam Art Design</code>.</li>
+      <li><code>/under-construction/</code> (сюда ведёт <code>/store/</code>): суффикс <code>| Royal Foam</code> — shortened вариант.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> единый шаблон title: «{Тема} | Royal Foam Art Design», на главной — добавить бренд.</div>
+  </div>
+
+  <div class="finding low">
+    <div class="head"><h3>4.4. Мусор в заголовках кейсов</h3><span class="badge low">Низкий приоритет</span></div>
+    <ul>
+      <li><code>The “Modern Versailles” Project<b>"</b></code> — лишняя кавычка в конце заголовка (видно и в списке кейсов, и в title страницы).</li>
+      <li><code>Interactive Phone Booth Installation&nbsp;</code> — неразрывный пробел в конце заголовка.</li>
+      <li>Услуги и города проверены по REST: у всех 10 страниц <code>/location/*</code> в заголовке назван свой город (San Francisco, Washington DC, Chicago, Los Angeles, Dallas, Atlanta, Miami, Orlando, New York, Jacksonville) — подмены города нет.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> убрать кавычку и пробел в заголовках кейсов.</div>
+  </div>
+
+  <div class="finding low">
+    <div class="head"><h3>4.5. Адрес не соответствует содержимому (портфолио)</h3><span class="badge low">Низкий приоритет</span></div>
+    <p>То же, что описано в п. 1.7, но с контентной стороны: у 9 проектов URL говорит «monument sign», а заголовок и текст —
+    про сценические реквизиты, торговые дисплеи, реплики продуктов и т.д. Для пользователя, пришедшего по ссылке, это выглядит
+    как ошибка: адрес обещает одно, страница показывает другое.</p>
+    <div class="fix"><b>Что делать:</b> переименовать slug'и и поставить 301 (см. п. 1.7).</div>
+  </div>
+
+  <h2 class="sec">5. Проверенные страницы и результат</h2>
   <div class="tbl-wrap">
     <table>
       <thead><tr><th>Страница</th><th>Открывается</th><th>Что найдено</th></tr></thead>
@@ -389,7 +449,7 @@ ijijijijijijijijijijijijklklklklklklklklklklklkl</pre>
     </table>
   </div>
 
-  <h2 class="sec">5. Как добить проверку (формы, консоль, вёрстка)</h2>
+  <h2 class="sec">6. Как добить проверку (формы, консоль, вёрстка)</h2>
   <div class="callout">
     <p>В папке <code>qa/</code> лежит готовый прогон на Playwright — он закрывает то, что нельзя проверить без браузера:
     ошибки в консоли, упавшие запросы, статус каждой ссылки, горизонтальный скролл на 1440/1024/768/390&nbsp;px,
@@ -413,10 +473,10 @@ node summarize.mjs out/full.json   # разбор готового отчёта 
     если нашлась битая ссылка, ошибка консоли или «поехавшая» вёрстка — его можно поставить в CI.</p>
   </div>
 
-  <h2 class="sec">6. Порядок работ</h2>
+  <h2 class="sec">7. Порядок работ</h2>
   <div class="callout">
-    <p><b>Сегодня:</b> 1.1 (Store), 1.3 (CTA на /special-deals/), 1.4 (карточка 3D Logo), 1.6 (tel:), 1.2 (текст-заполнитель на /cases/).</p>
-    <p><b>На этой неделе:</b> 1.5 (точки слайдеров), 1.7 (slug'и портфолио + 301), 2.1 (/service/ → /services/), 2.4 (фильтры), 2.5 (дубль формы), 2.6 (картинка кейса).</p>
+    <p><b>Сегодня:</b> 1.1 (Store), 1.3 (CTA на /special-deals/), 1.4 (карточка 3D Logo), 1.6 (tel:), 1.2 (текст-заполнитель на /cases/), 4.1 («3D Sign Factory» в товарах), 4.2 (пергола у монументной вывески).</p>
+    <p><b>На этой неделе:</b> 1.5 (точки слайдеров), 1.7 (slug'и портфолио + 301), 2.1 (/service/ → /services/), 2.4 (фильтры), 2.5 (дубль формы), 2.6 (картинка кейса), 4.3 (единый бренд в title), 4.4 (заголовки кейсов).</p>
     <p><b>Потом:</b> остальное из раздела 2 и вся косметика из раздела 3; после правок — прогнать <code>npm run audit:full</code> и сверить отчёт.</p>
   </div>
 
