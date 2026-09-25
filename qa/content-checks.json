@@ -1,0 +1,19 @@
+{
+  "_comment": "Правила контентной проверки. forbidden — чего на сайте быть не должно; required — что должно быть на каждой странице.",
+  "forbidden": [
+    { "text": "3D Sign Factory", "why": "чужая компания в описаниях товаров" },
+    { "text": "Decorative Architectural Shapes", "why": "бренд другого сайта (decorativearchitecturalshapes.com)" },
+    { "text": "Decorative Architectural Products", "why": "бренд другого сайта (decorativearchitecturalproducts.com)" },
+    { "text": "abababab", "why": "текст-заполнитель, замечен на /cases/" },
+    { "text": "lorem ipsum", "why": "рыба" },
+    { "text": "TODO", "why": "служебная пометка" },
+    { "text": "Found 0 projects", "why": "служебная строка фильтра" },
+    { "text": "BACKSHOW", "why": "служебная строка фильтра" },
+    { "text": "Jacksonwile", "why": "опечатка в названии города" },
+    { "text": "op-quality", "why": "опечатка: должно быть top-quality" },
+    { "text": "pergola", "why": "чужая продуктовая линейка (перголы) — на royalfoam.art этого нет" }
+  ],
+  "required": [
+    { "text": "Royal Foam", "why": "бренд компании должен присутствовать на странице" }
+  ]
+}

@@ -271,3 +271,33 @@ function key0(s) {
 export function slowestPages(timings, n = 10) {
   return [...timings].sort((a, b) => b.ms - a.ms).slice(0, n);
 }
+
+/* ------------------------------------------------------------------ */
+/* Контентные проверки: чужой бренд, leftover-текст, обязательные слова */
+/* ------------------------------------------------------------------ */
+
+/**
+ * rules: [{ text, why }] — что НЕ должно встречаться.
+ * Возвращает список сработавших правил. Регистр не учитывается.
+ */
+export function findForbidden(text, rules = []) {
+  const hay = String(text || '').toLowerCase();
+  const hits = [];
+  for (const r of rules) {
+    if (!r || !r.text) continue;
+    if (hay.includes(String(r.text).toLowerCase())) hits.push(r);
+  }
+  return hits;
+}
+
+/** Убирает теги и схлопывает пробелы — чтобы искать по тексту в HTML-режиме. */
+export function stripTags(html) {
+  return String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}

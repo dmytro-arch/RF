@@ -24,6 +24,8 @@ import {
   urlPattern,
   normalizeError,
   slowestPages,
+  findForbidden,
+  stripTags,
 } from './lib.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -156,6 +158,16 @@ const formsIn = [
 eq('groupForms: 3 экземпляра -> 2 конфигурации', groupForms(formsIn).length, 2);
 eq('groupForms: счётчик', groupForms(formsIn)[0].count, 2);
 eq('slowestPages сортирует', slowestPages([{ page: 'a', ms: 10 }, { page: 'b', ms: 900 }, { page: 'c', ms: 300 }], 2)[0].page, 'b');
+
+
+/* ------------------------------------------------------------------ */
+/* Контентные проверки                                                 */
+/* ------------------------------------------------------------------ */
+eq('findForbidden находит без учёта регистра', findForbidden('At 3D SIGN FACTORY we make foam', [{ text: '3D Sign Factory', why: 'x' }]).length, 1);
+eq('findForbidden не находит лишнего', findForbidden('Royal Foam Art Design', [{ text: '3D Sign Factory', why: 'x' }]).length, 0);
+eq('findForbidden: несколько правил', findForbidden('TODO: lorem ipsum', [{ text: 'todo' }, { text: 'lorem' }]).length, 2);
+check('stripTags убирает теги и скрипты', stripTags('<p>Привет</p><script>var x="3D Sign Factory"</script>  <b>мир</b>').includes('3D Sign Factory') === false);
+check('stripTags оставляет текст', stripTags('<p>Привет&nbsp;мир</p>') === 'Привет мир');
 
 if (failures.length) {
   console.error(`✗ Провалено ${failures.length} из ${passed + failures.length}:`);

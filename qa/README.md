@@ -77,11 +77,28 @@ Windows (PowerShell) — те же команды, только `cd qa` и `npm 
 - `out/report.md` — то же самое в виде текста, удобно вставлять в тикеты.
 - Папка `out/` в git не коммитится.
 
+## Контентные проверки (чужой бренд, leftover-текст)
+
+В `content-checks.json` лежат правила: что на страницах **не должно** встречаться
+(«3D Sign Factory», «Decorative Architectural Shapes», «abababab», «BACKSHOW», «op-quality»,
+«pergola» и т.д.) и что **должно** быть везде («Royal Foam»). Оба режима прогона читают
+видимый текст каждой страницы и пишут находки как `FORBIDDEN_TEXT` / `MISSING_REQUIRED_TEXT`
+(уровень error/warn), поэтому они попадают и в отчёт, и в `summarize.mjs`.
+
+Правила можно править под себя — файл обычный JSON:
+
+```json
+{ "forbidden": [ { "text": "3D Sign Factory", "why": "чужая компания" } ],
+  "required":  [ { "text": "Royal Foam",     "why": "бренд компании" } ] }
+```
+
 ## Файлы
 
 - `audit.mjs` — сам прогон (краулер + проверки).
 - `lib.mjs` — чистые функции: разбор ссылок/картинок/форм, классификация статусов, генерация отчёта.
 - `selftest.mjs` + `fixtures/sample.html` — проверки `lib.mjs`, работают офлайн.
+- `summarize.mjs` — разбор готового отчёта без повторного обхода.
+- `content-checks.json` — правила контентных проверок.
 
 ## Если что-то не так
 

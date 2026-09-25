@@ -38,6 +38,8 @@ import {
   groupLinks,
   groupConsole,
   groupForms,
+  findForbidden,
+  stripTags,
 } from './lib.mjs';
 
 const SITE = arg('site', 'https://royalfoam.art/');
@@ -56,6 +58,21 @@ function arg(name, def) {
 }
 
 const origin = new URL(SITE).origin;
+
+// Правила контентной проверки (чужой бренд, leftover-текст, обязательные слова).
+const RULES_PATH = path.join(path.dirname(new URL(import.meta.url).pathname), 'content-checks.json');
+const RULES = fs.existsSync(RULES_PATH) ? JSON.parse(fs.readFileSync(RULES_PATH, 'utf8')) : { forbidden: [], required: [] };
+
+function checkContent(pageUrl, text) {
+  for (const r of findForbidden(text, RULES.forbidden)) {
+    linkRows.push({ url: r.text, level: 'error', code: 'FORBIDDEN_TEXT', from: pageUrl, detail: r.why });
+  }
+  for (const r of RULES.required || []) {
+    if (!String(text || '').toLowerCase().includes(String(r.text).toLowerCase())) {
+      linkRows.push({ url: `нет «${r.text}»`, level: 'warn', code: 'MISSING_REQUIRED_TEXT', from: pageUrl, detail: r.why });
+    }
+  }
+}
 const startedAt = new Date().toISOString();
 
 const linkRows = [];
@@ -112,6 +129,8 @@ async function crawlHttp() {
         }
       }
     }
+
+    checkContent(url, stripTags(html));
 
     // ссылки
     const internal = new Set();
@@ -231,6 +250,8 @@ async function crawlBrowser() {
         }
       }
     }
+
+    checkContent(url, await page.evaluate(() => document.body.innerText));
 
     // картинки без alt
     const imgs = await page.evaluate(() =>
