@@ -18,6 +18,12 @@ import {
   isSelfLink,
   summarize,
   renderMarkdown,
+  groupLinks,
+  groupConsole,
+  groupForms,
+  urlPattern,
+  normalizeError,
+  slowestPages,
 } from './lib.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -114,6 +120,42 @@ const md = renderMarkdown({
 check('в отчёте есть раздел про ссылки', md.includes('## Ссылки'));
 check('в отчёте есть консольные ошибки', md.includes('boom'));
 check('в отчёте есть вёрстка', md.includes('Горизонтальный скролл'));
+
+
+/* ------------------------------------------------------------------ */
+/* Агрегация результатов (summarize.mjs)                               */
+/* ------------------------------------------------------------------ */
+const aggRows = [];
+for (let p = 0; p < 3; p++) {
+  const from = `https://royalfoam.art/page-${p}/`;
+  for (const s of ['a', 'b']) aggRows.push({ url: `https://royalfoam.art/service/${s}/`, level: 'warn', code: 'REDIRECT', from, detail: `https://royalfoam.art/services/${s}/` });
+  aggRows.push({ url: 'https://royalfoam.art/dead/', level: 'error', code: 'HTTP_404', from });
+  aggRows.push({ url: 'https://royalfoam.art/page-0/', level: 'info', code: 'EXTERNAL', from });
+}
+eq('groupLinks: уникальных редиректов', groupLinks(aggRows.filter((r) => r.code === 'REDIRECT')).length, 2);
+eq('groupLinks: счётчик повторов', groupLinks(aggRows.filter((r) => r.code === 'REDIRECT'))[0].count, 3);
+eq('groupLinks byPattern: один шаблон', groupLinks(aggRows.filter((r) => r.code === 'REDIRECT'), { byPattern: true }).length, 1);
+eq('groupLinks byPattern: сумма', groupLinks(aggRows.filter((r) => r.code === 'REDIRECT'), { byPattern: true })[0].count, 6);
+eq('groupLinks: from не раздувается', groupLinks(aggRows)[0].from.length, 3);
+eq('urlPattern', urlPattern('https://royalfoam.art/services/brand-activation-props/'), 'https://royalfoam.art/services/*');
+eq('normalizeError убирает числа и URL', normalizeError('GET https://x.com/a.js 404 at line 12'), 'GET <url> <n> at line <n>');
+
+const errs = [
+  { page: 'https://royalfoam.art/', type: 'error', text: 'Uncaught TypeError: x is undefined at main.js:42' },
+  { page: 'https://royalfoam.art/faq/', type: 'error', text: 'Uncaught TypeError: x is undefined at main.js:42' },
+  { page: 'https://royalfoam.art/', type: 'requestfailed', text: 'GET https://royalfoam.art/a.webp net::ERR_ABORTED 404' },
+];
+eq('groupConsole: 3 записи -> 2 уникальных', groupConsole(errs).length, 2);
+eq('groupConsole: самая частая первая', groupConsole(errs)[0].count, 2);
+
+const formsIn = [
+  { page: 'https://royalfoam.art/', method: 'POST', action: '/wp-admin/admin-ajax.php', fields: [{ name: 'email', type: 'email' }] },
+  { page: 'https://royalfoam.art/faq/', method: 'POST', action: '/wp-admin/admin-ajax.php', fields: [{ name: 'email', type: 'email' }] },
+  { page: 'https://royalfoam.art/', method: 'GET', action: '', fields: [{ name: 's', type: 'text' }] },
+];
+eq('groupForms: 3 экземпляра -> 2 конфигурации', groupForms(formsIn).length, 2);
+eq('groupForms: счётчик', groupForms(formsIn)[0].count, 2);
+eq('slowestPages сортирует', slowestPages([{ page: 'a', ms: 10 }, { page: 'b', ms: 900 }, { page: 'c', ms: 300 }], 2)[0].page, 'b');
 
 if (failures.length) {
   console.error(`✗ Провалено ${failures.length} из ${passed + failures.length}:`);

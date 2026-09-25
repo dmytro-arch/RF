@@ -35,6 +35,9 @@ import {
   classifyLink,
   isSelfLink,
   renderMarkdown,
+  groupLinks,
+  groupConsole,
+  groupForms,
 } from './lib.mjs';
 
 const SITE = arg('site', 'https://royalfoam.art/');
@@ -347,15 +350,18 @@ fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, JSON.stringify(report, null, 2));
 fs.writeFileSync(outPath.replace(/\.json$/, '.md'), renderMarkdown(report));
 
-const errors = report.links.filter((l) => l.level === 'error').length;
-const warnings = report.links.filter((l) => l.level === 'warn').length;
+const errors = report.links.filter((l) => l.level === 'error');
+const warnings = report.links.filter((l) => l.level === 'warn');
+// Одна и та же ссылка встречается на каждой странице — показываем и записи, и уникальные адреса.
+const uniq = (arr) => groupLinks(arr).length;
 console.log('');
 console.log(`Режим: ${report.mode}`);
 console.log(`Страниц проверено: ${pagesVisited.length}`);
-console.log(`Битых ссылок: ${errors}`);
-console.log(`Редиректов / ссылок «в никуда»: ${warnings}`);
-console.log(`Ошибок в консоли: ${consoleErrors.length}${HTTP_ONLY ? ' (в режиме --no-browser не проверяется)' : ''}`);
-console.log(`Проблем с вёрсткой: ${overflow.length}${HTTP_ONLY ? ' (в режиме --no-browser не проверяется)' : ''}`);
-console.log(`Форм найдено: ${formsFound.length}`);
+console.log(`Битых ссылок: ${errors.length} записей / ${uniq(errors)} уникальных`);
+console.log(`Редиректов и ссылок «в никуда»: ${warnings.length} записей / ${uniq(warnings)} уникальных адресов`);
+console.log(`Ошибок в консоли: ${consoleErrors.length} записей / ${groupConsole(consoleErrors).length} уникальных${HTTP_ONLY ? ' (в режиме --no-browser не проверяется)' : ''}`);
+console.log(`Проблем с вёрсткой: ${overflow.length}`);
+console.log(`Форм: ${formsFound.length} экземпляров / ${groupForms(formsFound).length} уникальных конфигураций`);
 console.log(`Отчёт: ${outPath}`);
-process.exit(errors || consoleErrors.length || overflow.length ? 1 : 0);
+console.log(`Разбор без дублей: node summarize.mjs ${OUT}`);
+process.exit(errors.length || consoleErrors.length || overflow.length ? 1 : 0);

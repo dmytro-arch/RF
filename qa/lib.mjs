@@ -193,3 +193,81 @@ export function renderMarkdown({ site, startedAt, pages, links, consoleErrors, o
   for (const t of timings) out.push(`- ${t.page}: ${t.ms} мс`);
   return out.join('\n');
 }
+
+/* ------------------------------------------------------------------ */
+/* Агрегация результатов прогона (для summarize.mjs)                   */
+/* ------------------------------------------------------------------ */
+
+/** /services/brand-activation-props/ → /services/* — чтобы схлопнуть однотипные находки. */
+export function urlPattern(url) {
+  try {
+    const u = new URL(url);
+    const seg = u.pathname.split('/').filter(Boolean);
+    if (seg.length <= 1) return u.origin + u.pathname;
+    return u.origin + '/' + seg[0] + '/*';
+  } catch {
+    return url;
+  }
+}
+
+/**
+ * Схлопывает дубли: одна и та же ссылка на 200 страницах = одна строка со счётчиком.
+ * byPattern=true группирует ещё и по первому сегменту пути (/service/*).
+ */
+export function groupLinks(rows, { byPattern = false } = {}) {
+  const map = new Map();
+  for (const r of rows) {
+    if (!r || r.code === 'FOUND') continue;
+    const key = byPattern ? `${r.code}|${urlPattern(r.url)}` : `${r.code}|${r.url}`;
+    if (!map.has(key)) {
+      map.set(key, { code: r.code, level: r.level, url: byPattern ? urlPattern(r.url) : r.url, count: 0, from: [], detail: r.detail });
+    }
+    const g = map.get(key);
+    g.count += 1;
+    if (r.from && g.from.length < 5 && !g.from.includes(r.from)) g.from.push(r.from);
+    if (!g.detail && r.detail) g.detail = r.detail;
+  }
+  return [...map.values()].sort((a, b) => b.count - a.count);
+}
+
+/** Нормализуем текст ошибки, чтобы «одна и та же ошибка на 200 страницах» не считалась 200 раз. */
+export function normalizeError(text) {
+  return String(text || '')
+    .replace(/https?:\/\/\S+/g, '<url>')
+    .replace(/\d+/g, '<n>')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 160);
+}
+
+export function groupConsole(errors) {
+  const map = new Map();
+  for (const e of errors) {
+    const key = `${e.type}|${normalizeError(e.text)}`;
+    if (!map.has(key)) map.set(key, { type: e.type, text: normalizeError(e.text), count: 0, pages: [] });
+    const g = map.get(key);
+    g.count += 1;
+    if (g.pages.length < 5 && !g.pages.includes(e.page)) g.pages.push(e.page);
+  }
+  return [...map.values()].sort((a, b) => b.count - a.count);
+}
+
+/** Уникальные формы: одинаковый набор полей на 200 страницах — это одна форма. */
+export function groupForms(forms) {
+  const map = new Map();
+  for (const f of forms) {
+    const sig = `${f.method}|${f.action}|${(f.fields || []).map((x) => `${x.name || x.type}:${x.type}`).join(',')}`;
+    if (!map.has(key0(sig))) map.set(key0(sig), { signature: sig, count: 0, pages: [], fields: f.fields || [] });
+    const g = map.get(key0(sig));
+    g.count += 1;
+    if (g.pages.length < 5 && !g.pages.includes(f.page)) g.pages.push(f.page);
+  }
+  return [...map.values()].sort((a, b) => b.count - a.count);
+}
+function key0(s) {
+  return s;
+}
+
+export function slowestPages(timings, n = 10) {
+  return [...timings].sort((a, b) => b.ms - a.ms).slice(0, n);
+}
