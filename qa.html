@@ -175,6 +175,19 @@
     к royalfoam.art из браузера — для этой части в репозиторий добавлен скрипт <code>qa/audit.mjs</code> (раздел «Как добить проверку»).</p>
   </div>
 
+  <div class="callout">
+    <p><b>Повторная проверка сайта (25.09.2026, после прогона тестов).</b> Из всего списка исправлен один пункт:
+    на <a href="https://royalfoam.art/cases/">/cases/</a> убран текст-заполнитель «abababab…cdcdcd…efefef…» —
+    страница теперь идёт от капчи сразу к форме. Сам архив при этом остался «сырым» («Archives: Cases» + пагинация).</p>
+    <p><b>Остальное на месте, проверено заново:</b> <code>/store/</code> по-прежнему отдаёт <code>/under-construction/</code>
+    (title «Custom Architectural Foam Products | Royal Foam»); CTA «Let's Bring Your Project to Life…» на <code>/special-deals/</code>
+    всё ещё ссылается на <code>https://royalfoam.art/special-deals/</code>; карточка «3D Logo &amp; Branding Installations» ведёт на
+    <code>/service/escape-room-theme-park-props/</code>; в описаниях товаров те же «At 3D Sign Factory…» и пергола у
+    «Monument Sign MS 016»; 9 slug'ов <code>monument-sign-for-elite-community-copy-*</code> без изменений.</p>
+    <p>Важно: «тесты прошли» означает, что отработал скрипт, а не что сайт чист. <code>npm test</code> проверяет парсеры
+    и проходит всегда; состояние сайта показывает только прогон <code>audit.mjs</code> + <code>summarize.mjs</code>.</p>
+  </div>
+
   <h2 class="sec">1. Критично — ломает сценарии пользователя</h2>
 
   <div class="finding crit">
