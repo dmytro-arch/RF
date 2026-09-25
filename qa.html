@@ -394,13 +394,17 @@ ijijijijijijijijijijijijklklklklklklklklklklklkl</pre>
     <p>В папке <code>qa/</code> лежит готовый прогон на Playwright — он закрывает то, что нельзя проверить без браузера:
     ошибки в консоли, упавшие запросы, статус каждой ссылки, горизонтальный скролл на 1440/1024/768/390&nbsp;px,
     состав форм и их отправку, время загрузки страниц.</p>
+    <p>Нужен Node.js 18+ (<code>node -v</code>). Два режима: полноценный браузерный и <code>--no-browser</code> —
+    только HTTP-проверки ссылок, статусов и <code>alt</code>, он работает без установки Chromium.</p>
     <pre>cd qa
-npm install
-npx playwright install chromium
-npm run audit          # быстрый прогон: 25 страниц
-npm run audit:full     # полный обход (до 200 страниц)
-npm run audit:form     # заполнить и отправить форму на /contact/
-npm test               # юнит-проверки парсеров (без сети)</pre>
+npm install                        # ставит playwright
+npx playwright install chromium    # добирает Chromium
+
+npm test                           # юнит-проверки парсеров (без сети и браузера)
+npm run audit                      # быстрый прогон: 25 страниц
+npm run audit:full                 # полный обход (до 200 страниц)
+npm run audit:form                 # заполнить и отправить форму на /contact/
+node audit.mjs --no-browser        # без Chromium: ссылки, статусы, alt</pre>
     <p>Результат складывается в <code>qa/out/report.json</code> и <code>qa/out/report.md</code>. Скрипт завершается кодом 1,
     если нашлась битая ссылка, ошибка консоли или «поехавшая» вёрстка — его можно поставить в CI.</p>
   </div>
