@@ -1,0 +1,16 @@
+{
+  "name": "royalfoam-qa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Функциональный QA-аудит royalfoam.art: битые ссылки, ошибки консоли, формы, вёрстка",
+  "scripts": {
+    "test": "node selftest.mjs",
+    "audit": "node audit.mjs",
+    "audit:full": "node audit.mjs --max-pages 200",
+    "audit:form": "node audit.mjs --max-pages 5 --submit-form"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

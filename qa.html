@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA-аудит royalfoam.art — функциональная проверка страниц</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1b2338; --border:#2a3352;
+    --text:#e8ecf5; --muted:#9aa5c0; --accent:#5b8cff; --good:#3ecf8e;
+    --warn:#f5b942; --bad:#f0576a; --chip:#232c47;
+    --radius-badge:999px; --radius-card:14px; --radius-btn:8px;
+    --font-head:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --shadow:none;
+  }
+  html[data-theme="light"]{
+    --bg:#ffffff; --panel:#f7f7f7; --panel2:#f1f2ec; --border:#e2e3e0;
+    --text:#181717; --muted:#6d6d6b; --accent:#6f8a4e; --good:#5c7f3f;
+    --warn:#a8761f; --bad:#b33f3f; --chip:#eef0e6;
+    --radius-badge:3px; --radius-card:4px; --radius-btn:2px;
+    --font-head:'Merriweather',Georgia,serif;
+    --shadow:0 1px 3px rgba(24,23,23,.06);
+  }
+  *{box-sizing:border-box;}
+  html{transition:background-color .25s ease;-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:104px;}
+  body{margin:0;background:linear-gradient(180deg,#0b0f1a,#0f1420 400px,#0f1420);color:var(--text);
+    font-family:var(--font-body);font-size:16px;line-height:1.65;letter-spacing:.005em;
+    transition:background .25s ease,color .25s ease;-webkit-font-smoothing:antialiased;}
+  html[data-theme="light"] body{background:var(--bg);}
+  img,svg{max-width:100%;height:auto;}
+  code{overflow-wrap:anywhere;font-size:.92em;background:var(--panel2);border:1px solid var(--border);
+    border-radius:4px;padding:1px 5px;}
+
+  .topnav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
+  .topnav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .topnav-brand{font-weight:700;font-size:14.5px;color:var(--text);text-decoration:none;letter-spacing:.02em;margin-right:auto;font-family:var(--font-head);}
+  .topnav-links{display:flex;gap:4px;flex-wrap:wrap;}
+  .topnav-link{color:var(--muted);text-decoration:none;font-size:14px;padding:7px 12px;border-radius:var(--radius-btn);transition:background .15s,color .15s;min-height:34px;display:inline-flex;align-items:center;}
+  .topnav-link:hover{color:var(--text);background:var(--chip);}
+  .topnav-link.active{color:var(--text);background:var(--chip);font-weight:600;}
+  .nav-short{display:none;}
+  .theme-toggle{display:inline-flex;align-items:center;gap:8px;background:var(--chip);border:1px solid var(--border);
+    color:var(--text);font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:var(--radius-btn);cursor:pointer;
+    font-family:var(--font-body);transition:background .2s,color .2s,border-color .2s;flex-shrink:0;min-height:38px;}
+  .theme-toggle:hover{border-color:var(--accent);}
+
+  .wrap{max-width:1020px;margin:0 auto;padding:44px 20px 80px;}
+  .eyebrow{color:var(--accent);font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+  h1{font-size:31px;margin:8px 0 6px;font-family:var(--font-head);font-weight:700;line-height:1.25;}
+  .sub{color:var(--muted);font-size:16px;margin-bottom:22px;max-width:760px;}
+  h2.sec{font-size:21px;font-family:var(--font-head);margin:46px 0 6px;padding-top:8px;}
+  h3{font-size:16.5px;font-family:var(--font-head);margin:0 0 6px;}
+  section{margin-bottom:26px;}
+
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0 6px;}
+  .kpi .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-card);padding:16px;box-shadow:var(--shadow);}
+  .kpi .value{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;}
+  .kpi .label{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+  .kpi .card.bad .value{color:var(--bad);}
+  .kpi .card.warn .value{color:var(--warn);}
+  .kpi .card.ok .value{color:var(--good);}
+
+  .finding{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--muted);
+    border-radius:var(--radius-card);padding:16px 18px;margin:14px 0;box-shadow:var(--shadow);}
+  .finding.crit{border-left-color:var(--bad);}
+  .finding.high{border-left-color:var(--warn);}
+  .finding.low{border-left-color:var(--accent);}
+  .finding .head{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}
+  .finding h3{flex:1 1 320px;}
+  .badge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 9px;border-radius:var(--radius-badge);border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+  .badge.crit{color:var(--bad);border-color:var(--bad);}
+  .badge.high{color:var(--warn);border-color:var(--warn);}
+  .badge.low{color:var(--accent);border-color:var(--accent);}
+  .finding p{margin:8px 0 0;color:var(--muted);font-size:14.8px;}
+  .finding p b, .finding li b{color:var(--text);}
+  .finding ul{margin:8px 0 0;padding-left:20px;color:var(--muted);font-size:14.8px;}
+  .finding ul li{margin:4px 0;}
+  .finding .fix{margin-top:10px;padding:10px 12px;background:var(--panel2);border:1px solid var(--border);
+    border-radius:var(--radius-btn);font-size:14.2px;color:var(--text);}
+  .finding .fix b{color:var(--good);}
+  .finding a{color:var(--accent);overflow-wrap:anywhere;}
+
+  .tbl-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-card);padding:4px 12px;box-shadow:var(--shadow);scrollbar-width:thin;}
+  table{border-collapse:collapse;width:100%;font-size:14.3px;}
+  th,td{text-align:left;padding:10px;border-bottom:1px solid var(--border);vertical-align:top;overflow-wrap:break-word;}
+  th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;}
+  tr:last-child td{border-bottom:none;}
+  td.ok{color:var(--good);white-space:nowrap;}
+  td.warn{color:var(--warn);white-space:nowrap;}
+  td.bad{color:var(--bad);white-space:nowrap;}
+
+  .callout{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-card);padding:16px 18px;margin:16px 0;}
+  .callout p{margin:0 0 8px;font-size:14.8px;color:var(--muted);}
+  .callout p:last-child{margin-bottom:0;}
+  .callout b{color:var(--text);}
+  pre{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-btn);padding:12px 14px;
+    overflow-x:auto;font-size:13.4px;line-height:1.6;color:var(--text);margin:10px 0 0;}
+
+  footer{color:var(--muted);font-size:13px;margin-top:52px;border-top:1px solid var(--border);padding-top:16px;}
+
+  @media (max-width:880px){
+    .topnav-inner{padding:11px 16px;gap:10px;row-gap:8px;}
+    .topnav-links{order:3;width:100%;gap:5px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;}
+    .topnav-links::-webkit-scrollbar{display:none;}
+    .topnav-link{flex-shrink:0;white-space:nowrap;padding:7px 11px;}
+    .theme-toggle{order:2;}
+    .nav-full{display:none;}
+    .nav-short{display:inline;}
+    h1{font-size:26px;}
+    .kpi{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .wrap{padding:26px 14px 56px;}
+    #themeLabel{display:none;}
+    .theme-toggle{padding:9px 12px;}
+    h1{font-size:23px;}
+    .sub{font-size:15px;}
+    h2.sec{font-size:19px;margin-top:36px;}
+    .finding{padding:14px;}
+    th,td{padding:9px 8px;}
+    table{font-size:13.6px;}
+  }
+  @media (max-width:460px){
+    .kpi{grid-template-columns:1fr 1fr;gap:10px;}
+    .topnav-link{font-size:13px;padding:7px 9px;}
+    .topnav-brand{font-size:13.5px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">Royal Foam · SEO Audits</a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link">Главная</a>
+      <a href="shapes.html" class="topnav-link"><span class="nav-full">decorativearchitecturalshapes.com</span><span class="nav-short">shapes.com</span></a>
+      <a href="royalfoam.html" class="topnav-link">royalfoam.art</a>
+      <a href="products.html" class="topnav-link"><span class="nav-full">decorativearchitecturalproducts.com</span><span class="nav-short">products.com</span></a>
+      <a href="qa.html" class="topnav-link active">QA-аудит</a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()">
+      <span class="ico" id="themeIco">☀</span><span id="themeLabel">Светлая тема</span>
+    </button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Функциональный QA · 25 сентября 2026</div>
+  <h1>royalfoam.art — проверка всех страниц: ссылки, кнопки, формы, вёрстка</h1>
+  <p class="sub">Обход сайта по sitemap и REST&nbsp;API WordPress (126 URL), ручная проверка отрендеренного HTML ключевых страниц.
+  Ниже — подтверждённые дефекты с адресами и тем, что именно нужно поправить.</p>
+
+  <div class="kpi">
+    <div class="card"><div class="value">126</div><div class="label">URL в инвентаре сайта</div></div>
+    <div class="card bad"><div class="value">7</div><div class="label">Критичных дефектов</div></div>
+    <div class="card warn"><div class="value">10</div><div class="label">Важных</div></div>
+    <div class="card ok"><div class="value">4</div><div class="label">Косметика / SEO</div></div>
+  </div>
+
+  <div class="callout">
+    <p><b>Инвентарь сайта (по данным самого сайта):</b> 27 страниц, 31 услуга, 10 городов, 29 портфолио, 24 кейса, 5 статей блога.
+    Все эти URL существуют и отдают контент — «мёртвых» страниц внутри инвентаря нет.</p>
+    <p><b>Проверено вживую (отрендеренный HTML):</b> главная, <code>/special-deals/</code>, <code>/contact/</code>, <code>/portfolio/</code>,
+    <code>/case-collection/</code>, <code>/cases/</code>, <code>/store/</code>, <code>/under-construction/</code>,
+    <code>/blog/</code>, <code>/services/brand-activation-props/</code>.</p>
+    <p><b>Чего этот отчёт не покрывает:</b> ошибки в консоли браузера, фактическую отправку форм через Cloudflare Turnstile,
+    поведение слайдеров/попапов и вёрстку на живых разрешениях. Песочница, в которой делался аудит, не имеет сетевого доступа
+    к royalfoam.art из браузера — для этой части в репозиторий добавлен скрипт <code>qa/audit.mjs</code> (раздел «Как добить проверку»).</p>
+  </div>
+
+  <h2 class="sec">1. Критично — ломает сценарии пользователя</h2>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.1. «Магазин» ведёт на страницу «Under Construction»</h3><span class="badge crit">Критично</span></div>
+    <p>Запрос <a href="https://royalfoam.art/store/">royalfoam.art/store/</a> отдаёт страницу
+    <a href="https://royalfoam.art/under-construction/">/under-construction/</a> с заголовком «Our Digital Platform is Undergoing an Upgrade»
+    и title-тегом «Custom Architectural Foam Products | Royal Foam».</p>
+    <ul>
+      <li><b>Где видно:</b> любой пункт меню/ссылка на Store; <code>/store/</code> при этом лежит в <code>page-sitemap.xml</code> — Google ходит по редиректу в тупик.</li>
+      <li><b>Побочно:</b> как опубликованные страницы существуют <code>/cart/</code>, <code>/checkout/</code>, <code>/my-account/</code> — их стоит проверить отдельно, они не входят в sitemap.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> если магазин сознательно на паузе — убрать <code>/store/</code> из sitemap, поставить
+    <code>noindex</code> на <code>/under-construction/</code> и убрать Store из меню. Если нет — вернуть магазин и проверить связку корзина → оформление → <code>/thank-you/</code>.</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.2. /cases/ — «сырой» архив WordPress с мусорным текстом на странице</h3><span class="badge crit">Критично</span></div>
+    <p>Страница <a href="https://royalfoam.art/cases/">royalfoam.art/cases/</a> отдаёт дефолтный шаблон архива: заголовок «Archives: Cases»,
+    простой список кейсов с датами и пагинацией <code>/cases/page/2/</code>, <code>/cases/page/3/</code>. Внизу страницы отрендерен
+    служебный текст-заполнитель:</p>
+    <pre>ababababababababababababcdcdcdcdcdcdcdcdcdcdcdcd
+efefefefefefefefefefefefghghghghghghghghghghghgh
+ijijijijijijijijijijijijklklklklklklklklklklklkl</pre>
+    <ul>
+      <li>URL есть в <code>case-sitemap.xml</code> → индексируется и конкурирует с нормальной витриной <a href="https://royalfoam.art/case-collection/">/case-collection/</a>.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> удалить текст-заполнитель из шаблона/глобального элемента, а сам архив <code>/cases/</code>
+    закрыть 301-редиректом на <code>/case-collection/</code> и убрать из sitemap.</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.3. Главная кнопка на /special-deals/ ведёт сама на себя</h3><span class="badge crit">Критично</span></div>
+    <p>Блок-призыв «<b>Let's Bring Your Project to Life … Don't miss your opportunity</b>» на странице
+    <a href="https://royalfoam.art/special-deals/">/special-deals/</a> ссылается на <code>https://royalfoam.art/special-deals/</code>,
+    то есть на текущую страницу. Это основной CTA посадочной страницы скидок — клик не даёт ничего.</p>
+    <div class="fix"><b>Что делать:</b> направить кнопку на форму (<code>/contact/</code> или якорь на форму на этой же странице) либо сделать скролл к форме, а не ссылку.</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.4. Карточка «3D Logo &amp; Branding Installations» ведёт на страницу Escape Room</h3><span class="badge crit">Критично</span></div>
+    <p>В сетке услуг «From Concept to Creation, We Build It All» карточка <b>3D Logo &amp; Branding Installations</b> ссылается на
+    <code>/service/escape-room-theme-park-props/</code> — ровно туда же, куда следующая карточка «Escape Room &amp; Theme Park Props».
+    Правильная страница существует: <a href="https://royalfoam.art/services/3d-logo-branding-installations/">/services/3d-logo-branding-installations/</a>.</p>
+    <ul>
+      <li>Дефект повторяется на главной и на <code>/under-construction/</code> — значит, сетка собрана из глобального элемента, правится в одном месте.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> в глобальном элементе сетки услуг заменить ссылку на <code>/services/3d-logo-branding-installations/</code>.</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.5. Точки-переключатели слайдеров — это ссылки на ту же страницу</h3><span class="badge crit">Критично</span></div>
+    <p>Пагинация слайдеров сделана ссылками <code>&lt;a href="…текущая страница…"&gt;</code>: на главной — «Slide 1…Slide 6» со ссылками на
+    <code>https://royalfoam.art/</code>, на <code>/special-deals/</code> — «Slide 1…Slide 4» со ссылками на <code>https://royalfoam.art/special-deals/</code>.
+    Клик по точке перезагружает страницу вместо перехода к слайду; на мобильном это ещё и потеря скролла.</p>
+    <div class="fix"><b>Что делать:</b> заменить на <code>&lt;button type="button"&gt;</code> с JS-переключением слайда (или на <code>href="#slide-N"</code>), ссылки с текущим URL убрать.</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.6. Телефон в неверном формате tel-ссылки</h3><span class="badge crit">Критично</span></div>
+    <p>На <a href="https://royalfoam.art/contact/">/contact/</a> номер оформлен как <code>&lt;a href="tel:(904) 712-1995"&gt;</code> —
+    в URI стоят пробел и скобки. По RFC&nbsp;3966 в <code>tel:</code> допустимы цифры и разделители <code>-</code> <code>.</code>; пробел и скобки
+    делают ссылку невалидной, и на части устройств (особенно iOS/Android-звонилки) набор номера не срабатывает.</p>
+    <div class="fix"><b>Что делать:</b> <code>href="tel:+19047121995"</code>, а видимый текст оставить «(904) 712-1995».</div>
+  </div>
+
+  <div class="finding crit">
+    <div class="head"><h3>1.7. Девять страниц портфолио живут по URL «…-copy»</h3><span class="badge crit">Критично</span></div>
+    <p>По данным REST&nbsp;API сайта (<code>/wp-json/wp/v2/portfolio</code>) у 9 из 29 проектов URL остался от копирования одной записи,
+    а заголовки уже другие:</p>
+    <ul>
+      <li><code>/portfolio/monument-sign-for-elite-community-copy-7/</code> — «Custom Foam Stage &amp; Movie Props»</li>
+      <li><code>/portfolio/monument-sign-for-elite-community-copy-copy/</code> — «Custom Foam Trade Show Displays»</li>
+      <li><code>…-copy-6/</code> — «Giant 3D Product Replicas»; <code>…-copy-5/</code> — «Custom 3D Foam Characters»;
+          <code>…-copy-4/</code> — «Large-Scale Custom Foam Sculptures»; <code>…-copy-3/</code> — «High-Impact Visual Merchandising In Retail»;
+          <code>…-copy-2/</code> — «Custom 3D Window Displays»; <code>…-copy/</code> — «Custom Mall Activation Props»;
+          <code>…/monument-sign-for-elite-community/</code> — «Custom Brand Activation Props»</li>
+      <li>Все они лежат в <code>portfolio-sitemap.xml</code>, а рядом есть «настоящая» страница <code>/portfolio/custom-foam-monument-signs/</code> — получается конфликт по запросу monument signs.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> переименовать slug'и под контент (например <code>/portfolio/foam-stage-movie-props/</code>) и поставить 301 со старых URL.</div>
+  </div>
+
+  <h2 class="sec">2. Важно — работает, но не так, как задумано</h2>
+
+  <div class="finding high">
+    <div class="head"><h3>2.1. Все карточки услуг ведут через лишний редирект /service/ → /services/</h3><span class="badge high">Важно</span></div>
+    <p>На главной и на <code>/under-construction/</code> все 28 карточек услуг ссылаются на <code>/service/&lt;slug&gt;/</code> (единственное число),
+    тогда как канонические адреса — <code>/services/&lt;slug&gt;/</code>. Проверено: запрос
+    <code>/service/brand-activation-props/</code> приходит на <code>/services/brand-activation-props/</code>. То есть каждый клик — это дополнительный
+    серверный запрос, а Google видит цепочку редиректов вместо прямых ссылок.</p>
+    <div class="fix"><b>Что делать:</b> в сетке услуг заменить <code>/service/</code> на <code>/services/</code>.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.2. «More blog posts» идёт через редирект</h3><span class="badge high">Важно</span></div>
+    <p>Ссылка на главной <code>/blog/</code> приводит на <code>/blog-b2b-custom-foam-fabrication/</code>. Работает, но лишний хоп;
+    в sitemap-ах и в меню лучше использовать один адрес.</p>
+    <div class="fix"><b>Что делать:</b> везде ссылаться на <code>/blog-b2b-custom-foam-fabrication/</code> либо сделать <code>/blog/</code> основным адресом и поменять каноникал.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.3. Блок «Our work»: семь одинаковых кнопок, ведущих на одну страницу</h3><span class="badge high">Важно</span></div>
+    <p>На главной и на <code>/special-deals/</code> в блоке «The Proof Is in the Projects» стоят 7 одинаковых картинок
+    <code>/wp-content/uploads/2025/11/Кнопка.png</code> (в URL — <code>%D0%9A%D0%BD%D0%BE%D0%BF%D0%BA%D0%B0.png</code>), все со ссылкой на
+    <code>/portfolio/</code> и без <code>alt</code> (в разметке атрибут пустой либо отсутствует). Пользователь видит семь разных «проектов», а попадает всегда на общую страницу портфолио;
+    для скринридеров и картинок в поиске это семь пустых элементов.</p>
+    <div class="fix"><b>Что делать:</b> подставить реальные превью проектов со ссылками на конкретные кейсы/портфолио, дать <code>alt</code>, файл переименовать в латиницу.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.4. Фильтры на /portfolio/ и в блоге показывают служебные строки и неверные счётчики</h3><span class="badge high">Важно</span></div>
+    <ul>
+      <li>На <a href="https://royalfoam.art/portfolio/">/portfolio/</a> и <a href="https://royalfoam.art/blog-b2b-custom-foam-fabrication/">в блоге</a> отрендерены строки <b>«Found 0 projects»</b> и <b>«BACKSHOW»</b>, а также «FILTER(0)» — служебные подписи видны пользователю.</li>
+      <li>В блоге в панели категорий счётчики (<code>3D Logo &amp; Branding Installations(12)</code>, <code>Oversize Foam Letters &amp; Logos(7)</code> и т.д.) в сумме дают 56, тогда как опубликованных статей — 5 (<code>/wp-json/wp/v2/posts</code>). Список категорий сверху (29 пунктов, включая «Uncategorized») не совпадает со списком в панели (18 пунктов).</li>
+      <li>На странице блога счётчик говорит «projects», хотя речь про статьи.</li>
+    </ul>
+    <div class="fix"><b>Что делать:</b> убрать дефолтные строки из шаблона фильтра, починить источник счётчиков (сейчас они считаются не по статьям), скрыть пустые категории и «Uncategorized».</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.5. На одной странице две одинаковые формы «Let's Get Started» — и две капчи</h3><span class="badge high">Важно</span></div>
+    <p>На главной и на <code>/cases/</code> блок формы «Let's Get Started» встречается дважды, причём каждая копия тянет свой
+    виджет Cloudflare Turnstile (в HTML два разных адреса <code>challenges.cloudflare.com/turnstile/…</code> с разными ключами).
+    Итог: двойная загрузка капчи, две точки отказа при отправке и лишний вес страницы. Тот же глобальный блок стоит и на
+    <code>/special-deals/</code>, и на <code>/contact/</code>.</p>
+    <div class="fix"><b>Что делать:</b> оставить одну форму на страницу (либо одну глобальную + попап), второй экземпляр убрать.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.6. У кейса «Floating “CAMP POOSH” Pool Letters» нет картинки-превью</h3><span class="badge high">Важно</span></div>
+    <p>Подтверждено тремя способами: в <code>case-sitemap.xml</code> у <code>/case/floating-camp-poosh-pool-letters/</code> нет блока
+    <code>&lt;image:image&gt;</code> (у всех остальных кейсов он есть), а на <code>/case-collection/</code> и <code>/cases/</code> карточка
+    идёт без миниатюры. В сетке получается «дыра» — карточка ниже остальных.</p>
+    <div class="fix"><b>Что делать:</b> задать featured image для кейса.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.7. Дубль страницы «Sandblasted &amp; V Carved Signs» в sitemap</h3><span class="badge high">Важно</span></div>
+    <p>В <code>page-sitemap.xml</code> есть <a href="https://royalfoam.art/sandblasted-v-carved-signs-10/">/sandblasted-v-carved-signs-10/</a> —
+    обычная страница с тем же заголовком, что и услуга <a href="https://royalfoam.art/services/sandblasted-signs/">/services/sandblasted-signs/</a>
+    и портфолио <code>/portfolio/sandblasted-and-v-carved-signs/</code>. Slug с суффиксом <code>-10</code> говорит о том, что это копия.</p>
+    <div class="fix"><b>Что делать:</b> удалить страницу (или снять с публикации) и исключить из sitemap; при входящих ссылках — 301 на услугу.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.8. В плитке «Mall Activation» стоит иконка вместо фотографии</h3><span class="badge high">Важно</span></div>
+    <p>В сетке услуг у карточки «Mall Activation» картинка — <code>/wp-content/uploads/2025/10/icon@3x.png</code> без <code>alt</code>,
+    тогда как у всех соседних карточек стоят тематические файлы (<code>Brand-Activation.png</code>, <code>Window-Display-Design.png</code> и т.д.).
+    Похоже на незаменённый плейсхолдер.</p>
+    <div class="fix"><b>Что делать:</b> заменить на фото mall-активации, заполнить <code>alt</code>.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.9. Неправильные подсказки у городов (title-атрибуты)</h3><span class="badge high">Важно</span></div>
+    <p>В блоке «Areas We Service» (главная и <code>/contact/</code>) у ссылки <b>Jacksonville</b> стоит <code>title="Jacksonwile"</code> — опечатка,
+    а у <b>New York City</b> — тоже <code>title="Jacksonwile"</code>, то есть подсказка скопирована с другого города.</p>
+    <div class="fix"><b>Что делать:</b> поправить title'ы (Jacksonville, New York) — правка в одном глобальном блоке.</div>
+  </div>
+
+  <div class="finding high">
+    <div class="head"><h3>2.10. Опечатка в тексте на главной</h3><span class="badge high">Важно</span></div>
+    <p>«Delivering <b>op-quality</b> custom architectural components since 1999» — пропущена «t», должно быть <b>top-quality</b>.</p>
+    <div class="fix"><b>Что делать:</b> поправить текст в блоке «Royal Foam Art Design».</div>
+  </div>
+
+  <h2 class="sec">3. Косметика, доступность и SEO-гигиена</h2>
+
+  <div class="finding low">
+    <div class="head"><h3>3.1. Файлы с кириллическими именами</h3><span class="badge low">Низкий приоритет</span></div>
+    <p><code>Кнопка.png</code> (главная, <code>/special-deals/</code>) и <code>Картинка-карта.png</code> (<code>/contact/</code>) в URL выглядят как
+    <code>%D0%9A%D0%BD%D0%BE%D0%BF%D0%BA%D0%B0.png</code>. Работает, но ломает читаемость ссылок, часть мессенджеров/CDN и SEO-описание картинок.</p>
+    <div class="fix"><b>Что делать:</b> переименовать в латиницу (<code>cta-button.webp</code>, <code>usa-coverage-map.webp</code>) с 301 со старых адресов.</div>
+  </div>
+
+  <div class="finding low">
+    <div class="head"><h3>3.2. Поля формы на /contact/ без понятных подписей</h3><span class="badge low">Низкий приоритет</span></div>
+    <p>В форме есть группы «<b>Installation</b> — Yes/No» и «<b>Environment</b> — Yes/No» без пояснения, о чём вопрос.
+    Пользователь не понимает, что выбирает (нужен ли монтаж? внутреннее или внешнее размещение?).</p>
+    <div class="fix"><b>Что делать:</b> переформулировать, например «Do you need installation? Yes/No» и «Indoor or outdoor environment?».</div>
+  </div>
+
+  <div class="finding low">
+    <div class="head"><h3>3.3. Дублирование контента в DOM</h3><span class="badge low">Низкий приоритет</span></div>
+    <p>Герой-блок главной («Custom 3D Foam Fabrication / Limitless design / Effortless installation») встречается в HTML трижды,
+    блок отзывов и блок преимуществ — по два раза (клоны-слайды слайдера). Это утяжеляет страницу и даёт поисковику повторяющийся текст.</p>
+    <div class="fix"><b>Что делать:</b> проверить настройку слайдера (клонирование слайдов) — при возможности рендерить один экземпляр.</div>
+  </div>
+
+  <div class="finding low">
+    <div class="head"><h3>3.4. Технические страницы доступны напрямую</h3><span class="badge low">Низкий приоритет</span></div>
+    <p>Опубликованы (видны в REST&nbsp;API сайта) и не закрыты от прямого обращения: <code>/under-construction/</code>, <code>/cart/</code>, <code>/checkout/</code>, <code>/my-account/</code>,
+    <code>/thank-you/</code>, <code>/subscribe/</code>, <code>/cookies-page/</code>, <code>/privacy-policy/</code>. В sitemap из них нет ни одной —
+    это правильно, но стоит убедиться, что <code>/thank-you/</code> и <code>/subscribe/</code> закрыты от индексации, а <code>/privacy-policy/</code> наоборот доступен из футера.</p>
+    <div class="fix"><b>Что делать:</b> <code>noindex</code> на служебные страницы, ссылку на Privacy Policy — в футер.</div>
+  </div>
+
+  <h2 class="sec">4. Проверенные страницы и результат</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Страница</th><th>Открывается</th><th>Что найдено</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://royalfoam.art/">royalfoam.art/</a></td><td class="ok">открывается</td><td class="warn">редиректы /service/, неверная карточка 3D Logo, точки слайдера, 7 одинаковых кнопок, опечатка «op-quality», дубль формы</td></tr>
+        <tr><td><a href="https://royalfoam.art/special-deals/">/special-deals/</a></td><td class="ok">открывается</td><td class="bad">главный CTA ведёт сам на себя; точки слайдера; те же 7 кнопок; дубль формы</td></tr>
+        <tr><td><a href="https://royalfoam.art/contact/">/contact/</a></td><td class="ok">открывается</td><td class="warn">невалидный tel:, непонятные поля формы, «Jacksonwile», кириллическое имя карты</td></tr>
+        <tr><td><a href="https://royalfoam.art/portfolio/">/portfolio/</a></td><td class="ok">открывается</td><td class="bad">9 URL «…-copy», служебные строки «Found 0 projects» / «BACKSHOW»</td></tr>
+        <tr><td><a href="https://royalfoam.art/case-collection/">/case-collection/</a></td><td class="ok">открывается</td><td class="warn">кейс CAMP POOSH без картинки</td></tr>
+        <tr><td><a href="https://royalfoam.art/cases/">/cases/</a></td><td class="ok">открывается</td><td class="bad">сырой архив WP + мусорный текст, дубль витрины кейсов</td></tr>
+        <tr><td><a href="https://royalfoam.art/store/">/store/</a></td><td class="warn">редирект</td><td class="bad">ведёт на /under-construction/</td></tr>
+        <tr><td><a href="https://royalfoam.art/under-construction/">/under-construction/</a></td><td class="ok">открывается</td><td class="warn">публичная страница «платформа на реконструкции», доступна всем</td></tr>
+        <tr><td><a href="https://royalfoam.art/blog/">/blog/</a></td><td class="warn">редирект</td><td class="warn">→ /blog-b2b-custom-foam-fabrication/; счётчики категорий и «Found 0 projects»</td></tr>
+        <tr><td><a href="https://royalfoam.art/services/brand-activation-props/">/services/brand-activation-props/</a></td><td class="ok">открывается</td><td class="ok">контент и перелинковка в порядке</td></tr>
+        <tr><td>31 × /services/*, 10 × /location/*, 24 × /case/*, 29 × /portfolio/*, 5 статей, 27 страниц</td><td class="ok">есть</td><td>инвентарь сверен по REST API и sitemap: все записи опубликованы и отдают постоянные ссылки</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="sec">5. Как добить проверку (формы, консоль, вёрстка)</h2>
+  <div class="callout">
+    <p>В папке <code>qa/</code> лежит готовый прогон на Playwright — он закрывает то, что нельзя проверить без браузера:
+    ошибки в консоли, упавшие запросы, статус каждой ссылки, горизонтальный скролл на 1440/1024/768/390&nbsp;px,
+    состав форм и их отправку, время загрузки страниц.</p>
+    <pre>cd qa
+npm install
+npx playwright install chromium
+npm run audit          # быстрый прогон: 25 страниц
+npm run audit:full     # полный обход (до 200 страниц)
+npm run audit:form     # заполнить и отправить форму на /contact/
+npm test               # юнит-проверки парсеров (без сети)</pre>
+    <p>Результат складывается в <code>qa/out/report.json</code> и <code>qa/out/report.md</code>. Скрипт завершается кодом 1,
+    если нашлась битая ссылка, ошибка консоли или «поехавшая» вёрстка — его можно поставить в CI.</p>
+  </div>
+
+  <h2 class="sec">6. Порядок работ</h2>
+  <div class="callout">
+    <p><b>Сегодня:</b> 1.1 (Store), 1.3 (CTA на /special-deals/), 1.4 (карточка 3D Logo), 1.6 (tel:), 1.2 (текст-заполнитель на /cases/).</p>
+    <p><b>На этой неделе:</b> 1.5 (точки слайдеров), 1.7 (slug'и портфолио + 301), 2.1 (/service/ → /services/), 2.4 (фильтры), 2.5 (дубль формы), 2.6 (картинка кейса).</p>
+    <p><b>Потом:</b> остальное из раздела 2 и вся косметика из раздела 3; после правок — прогнать <code>npm run audit:full</code> и сверить отчёт.</p>
+  </div>
+
+  <footer>Источник данных: отрендеренный HTML страниц royalfoam.art, <code>/wp-json/wp/v2/*</code>, <code>sitemap_index.xml</code> и его части
+  (page, service, location, case, portfolio). Дата проверки — 25.09.2026. Отчёт подготовлен агентом Arena.ai.</footer>
+</div>
+
+<script>
+  function toggleTheme(){
+    var html = document.documentElement;
+    var isLight = html.getAttribute('data-theme') === 'light';
+    var ico = document.getElementById('themeIco');
+    var label = document.getElementById('themeLabel');
+    if(isLight){
+      html.removeAttribute('data-theme');
+      ico.textContent = '☀';
+      label.textContent = 'Светлая тема';
+    }else{
+      html.setAttribute('data-theme','light');
+      ico.textContent = '🌙';
+      label.textContent = 'Тёмная тема';
+    }
+  }
+</script>
+</body>
+</html>
