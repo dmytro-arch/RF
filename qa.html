@@ -176,16 +176,30 @@
   </div>
 
   <div class="callout">
-    <p><b>Повторная проверка сайта (25.09.2026, после прогона тестов).</b> Из всего списка исправлен один пункт:
-    на <a href="https://royalfoam.art/cases/">/cases/</a> убран текст-заполнитель «abababab…cdcdcd…efefef…» —
-    страница теперь идёт от капчи сразу к форме. Сам архив при этом остался «сырым» («Archives: Cases» + пагинация).</p>
-    <p><b>Остальное на месте, проверено заново:</b> <code>/store/</code> по-прежнему отдаёт <code>/under-construction/</code>
-    (title «Custom Architectural Foam Products | Royal Foam»); CTA «Let's Bring Your Project to Life…» на <code>/special-deals/</code>
-    всё ещё ссылается на <code>https://royalfoam.art/special-deals/</code>; карточка «3D Logo &amp; Branding Installations» ведёт на
-    <code>/service/escape-room-theme-park-props/</code>; в описаниях товаров те же «At 3D Sign Factory…» и пергола у
-    «Monument Sign MS 016»; 9 slug'ов <code>monument-sign-for-elite-community-copy-*</code> без изменений.</p>
-    <p>Важно: «тесты прошли» означает, что отработал скрипт, а не что сайт чист. <code>npm test</code> проверяет парсеры
-    и проходит всегда; состояние сайта показывает только прогон <code>audit.mjs</code> + <code>summarize.mjs</code>.</p>
+    <p><b>Проверка №3 — 25.09.2026, после правок на сайте.</b> Часть замечаний закрыта, часть осталась, pojawiлась одна новая.</p>
+    <p><b>Исправлено:</b></p>
+    <ul style="margin:6px 0 10px;padding-left:20px;color:var(--muted);font-size:14.8px">
+      <li>п. 1.7 — все 9 slug'ов портфолио переименованы: вместо <code>monument-sign-for-elite-community-copy-*</code> теперь
+        <code>/portfolio/custom-foam-stage-movie-props/</code>, <code>/portfolio/custom-foam-trade-show-displays/</code>,
+        <code>/portfolio/giant-3d-product-replicas/</code>, <code>/portfolio/custom-3d-foam-characters/</code>,
+        <code>/portfolio/large-scale-custom-foam-sculptures/</code>, <code>/portfolio/high-impact-visual-merchandising-in-retail/</code>,
+        <code>/portfolio/custom-3d-window-displays/</code>, <code>/portfolio/custom-mall-activation-props/</code>,
+        <code>/portfolio/custom-brand-activation-props/</code>; <code>portfolio-sitemap.xml</code> обновлён.</li>
+      <li>п. 2.1 — сетка услуг переведена на <code>/services/…</code>, лишних редиректов через <code>/service/</code> больше нет.</li>
+      <li>п. 1.4 — карточка «3D Logo &amp; Branding Installations» ведёт на <code>/services/3d-logo-branding-installations/</code>.</li>
+      <li>бонус — в сетку добавлены недостающие услуги: Sandblasted &amp; V Carved Signs, Molds for Cast Stone Signs, Outdoor LED signs и ссылка «All Services».</li>
+      <li>п. 4.1 частично — «3D Sign Factory» вычищен из большинства товаров: было 100+ совпадений по слову «Factory», осталось 11.</li>
+      <li>п. 1.2 (прошлая проверка) — текст-заполнитель «abababab…» на <code>/cases/</code> убран.</li>
+    </ul>
+    <p><b>Новое:</b> старые адреса портфолио отдают 404 — <code>/portfolio/monument-sign-for-elite-community-copy-7/</code> показывает
+    «Page not found - Royal Foam Art Design». Редиректы 301 со старых URL не поставлены (9 адресов). Из sitemap они убраны,
+    но проиндексированные и расшаренные ссылки теперь битые. Заодно на 404-странице пустые блоки меню («Our Company», «More», «Services» без пунктов).</p>
+    <p><b>Осталось без изменений:</b> <code>/store/</code> → <code>/under-construction/</code> (п. 1.1); CTA «Let's Bring Your Project to Life…»
+    на <code>/special-deals/</code> ссылается сам на себя (п. 1.3); 4 точки слайдера там же — тоже сами на себя (п. 1.5);
+    7 одинаковых <code>Кнопка.png</code> → <code>/portfolio/</code> (п. 2.3); <code>icon@3x.png</code> у Mall Activation (п. 2.8);
+    «3D Sign Factory» остался в 11 товарах — «3D Logo &amp; Branding Installations MOD001…MOD010» и «Monument Sign MS 015» (п. 4.1);
+    описание перголы у «Monument Sign MS 016» (п. 4.2).</p>
+    <p>В этом раунде не перепроверялись: п. 1.6 (<code>tel:</code>), 2.4 (фильтры), 2.5 (дубль формы), 2.9 («Jacksonwile»), 2.10 («op-quality»).</p>
   </div>
 
   <h2 class="sec">1. Критично — ломает сценарии пользователя</h2>
