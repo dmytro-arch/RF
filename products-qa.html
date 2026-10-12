@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA-аудит сайта — decorativearchitecturalproducts.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1b2338; --border:#2a3352;
+    --text:#e8ecf5; --muted:#9aa5c0; --accent:#5b8cff; --accent2:#5b8cff; --good:#3ecf8e;
+    --warn:#f5b942; --bad:#f0576a; --chip:#232c47;
+    --radius-badge:999px; --radius-card:14px; --radius-btn:8px;
+    --font-head:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --shadow:none;
+  }
+  html[data-theme="light"]{
+    --bg:#ffffff; --panel:#f7f7f7; --panel2:#f1f2ec; --border:#e2e3e0;
+    --text:#181717; --muted:#6d6d6b; --accent:#6f8a4e; --accent2:#c79a4b; --good:#5c7f3f;
+    --warn:#a8761f; --bad:#b33f3f; --chip:#eef0e6;
+    --radius-badge:3px; --radius-card:4px; --radius-btn:2px;
+    --font-head:'Merriweather',Georgia,serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --shadow:0 1px 3px rgba(24,23,23,.06);
+  }
+  *{box-sizing:border-box;}
+  html{transition:background-color .25s ease;}
+  body{
+    margin:0; background:linear-gradient(180deg,#0b0f1a,#0f1420 400px, #0f1420);
+    color:var(--text); font-family:var(--font-body);
+    font-size:16px; line-height:1.65; letter-spacing:.005em;
+    transition:background .25s ease, color .25s ease;
+  }
+  html[data-theme="light"] body{background:var(--bg);}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px;}
+  header.top{margin-bottom:28px;}
+  header.top .eyebrow{color:var(--accent);font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-family:var(--font-body);}
+  header.top h1{font-size:31px;margin:6px 0 4px;font-family:var(--font-head);font-weight:700;}
+  header.top .sub{color:var(--muted);font-size:15px;}
+
+  .topnav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
+  .topnav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .topnav-brand{font-weight:700;font-size:14.5px;color:var(--text);text-decoration:none;letter-spacing:.02em;margin-right:auto;font-family:var(--font-head);}
+  .topnav-links{display:flex;gap:4px;flex-wrap:wrap;}
+  .topnav-link{color:var(--muted);text-decoration:none;font-size:14px;padding:7px 12px;border-radius:var(--radius-btn);transition:background .15s,color .15s;}
+  .topnav-link:hover{color:var(--text);background:var(--chip);}
+  .topnav-link.active{color:var(--text);background:var(--chip);font-weight:600;}
+
+  .theme-toggle{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--chip); border:1px solid var(--border); color:var(--text);
+    font-size:13.5px; font-weight:600; padding:8px 14px; border-radius:var(--radius-btn);
+    cursor:pointer; font-family:var(--font-body); transition:background .2s ease, color .2s ease, border-color .2s ease;
+    flex-shrink:0;
+  }
+  .theme-toggle:hover{border-color:var(--accent);}
+  .theme-toggle .ico{font-size:14px;}
+
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .badge{background:var(--chip);border:1px solid var(--border);color:var(--muted);font-size:13px;padding:5px 10px;border-radius:var(--radius-badge);}
+  .badge.ok{color:var(--good);border-color:#1f4d3c;}
+  .badge.warn{color:var(--warn);border-color:#4d3f1f;}
+  .badge.bad{color:var(--bad);border-color:#4d1f28;}
+  html[data-theme="light"] .badge.ok{border-color:#c9d6bb;}
+  html[data-theme="light"] .badge.warn{border-color:#e6d3ae;}
+  html[data-theme="light"] .badge.bad{border-color:#e8c9c9;}
+
+  .change-banner{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-card);padding:18px 20px;margin-bottom:34px;}
+  .change-banner h2{font-size:17.5px;margin:0 0 12px;font-family:var(--font-head);font-weight:700;display:flex;align-items:center;gap:8px;}
+  .change-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
+  .chg-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+  .chg-card .lbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+  .chg-card .val{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .chg-card .d{font-size:13.5px;margin-top:4px;font-variant-numeric:tabular-nums;font-weight:600;}
+  .d.up{color:var(--good);} .d.down{color:var(--bad);} .d.flat{color:var(--muted);}
+  .stale-note{color:var(--muted);font-size:13px;font-style:italic;margin:0 0 14px;}
+  .check-delta{font-size:13px;margin-top:4px;padding-top:4px;border-top:1px dashed var(--border);color:var(--muted);}
+  .check-delta b{font-variant-numeric:tabular-nums;}
+  .check-delta .u{color:var(--good);} .check-delta .dn{color:var(--bad);} .check-delta .f{color:var(--muted);}
+
+  section{margin-bottom:34px;}
+  h2.sec{font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;}
+  h2.sec .num{color:var(--accent);font-variant-numeric:tabular-nums;}
+  p.sec-note{color:var(--muted);font-size:14px;margin:0 0 16px;}
+
+  .grid{display:grid;gap:14px;}
+  .grid.kpi{grid-template-columns:repeat(auto-fit,minmax(185px,1fr));}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius-card);
+    padding:16px 18px; box-shadow:var(--shadow);
+  }
+  .card .label{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+  .card .value{font-size:29px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .card .delta{font-size:13.5px;margin-top:6px;font-variant-numeric:tabular-nums;}
+  .delta.up{color:var(--good);}
+  .delta.down{color:var(--bad);}
+  .delta.flat{color:var(--muted);}
+
+  table{width:100%;border-collapse:collapse;font-size:14.5px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em;}
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-card);padding:6px 16px;overflow:auto;box-shadow:var(--shadow);}
+
+  .two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
+  @media (max-width:820px){.two-col{grid-template-columns:1fr;}}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin:10px 0;}
+  .bar-row .name{width:170px;font-size:14px;color:var(--muted);flex-shrink:0;}
+  .bar-track{flex:1;background:#0c1120;border-radius:6px;height:10px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#5b8cff,#7aa2ff);}
+  .bar-val{width:110px;text-align:right;font-size:14px;font-variant-numeric:tabular-nums;flex-shrink:0;}
+
+  .score-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .score{
+    width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;border:6px solid var(--border);
+    font-weight:700;font-size:24px;
+  }
+  .score.good{border-color:#1f4d3c;color:var(--good);}
+  .score.mid{border-color:#4d3f1f;color:var(--warn);}
+  .score.bad{border-color:#4d1f28;color:var(--bad);}
+  html[data-theme="light"] .score.good{border-color:#cddcbc;}
+  html[data-theme="light"] .score.mid{border-color:#eddbb5;}
+  html[data-theme="light"] .score.bad{border-color:#eaccc8;}
+  .score .lbl{font-size:11.5px;font-weight:500;color:var(--muted);margin-top:2px;}
+  .score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .score-block .cap{font-size:13px;color:var(--muted);}
+
+  .metric-mini{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 0;border-bottom:1px dashed var(--border);}
+  .metric-mini:last-child{border-bottom:none;}
+  .metric-mini .v{font-variant-numeric:tabular-nums;font-weight:600;}
+  .v.bad{color:var(--bad);}
+  .v.good{color:var(--good);}
+
+  .issue{
+    display:flex; gap:12px; padding:12px 14px; border-radius:10px; background:var(--panel2);
+    border:1px solid var(--border); margin-bottom:10px; align-items:flex-start;
+  }
+  .issue .sev{
+    flex-shrink:0; width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;
+  }
+  .sev.crit{background:#4d1f28;color:#ff8a9a;}
+  .sev.high{background:#4d3f1f;color:#ffcf6b;}
+  .sev.med{background:#1f2e4d;color:#8fb2ff;}
+  html[data-theme="light"] .sev.crit{background:#f4dcda;color:#9c3a34;}
+  html[data-theme="light"] .sev.high{background:#f4e6cd;color:#8a5e17;}
+  html[data-theme="light"] .sev.med{background:#e3e8da;color:#4c6237;}
+  .issue .body h4{margin:0 0 3px;font-size:15.5px;font-family:var(--font-head);}
+  .issue .body p{margin:0;color:var(--muted);font-size:14.5px;}
+
+  .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:820px){.rec-grid{grid-template-columns:1fr;}}
+  .rec-col h3{font-size:15px;margin:0 0 10px;color:var(--accent);font-family:var(--font-head);}
+  .rec-col ol{margin:0;padding-left:18px;font-size:14.5px;}
+  .rec-col li{margin-bottom:10px;color:var(--text);}
+  .rec-col li b{color:var(--text);}
+  .rec-col li span.why{display:block;color:var(--muted);font-size:13.5px;margin-top:2px;}
+
+  .callout{
+    background:var(--panel2); border:1px solid #4d1f28; border-left:4px solid var(--bad);
+    border-radius:10px; padding:16px 18px; margin-bottom:14px;
+  }
+  .callout h4{margin:0 0 6px;font-size:15.5px;color:#ff8a9a;font-family:var(--font-head);}
+  .callout p{margin:0 0 8px;color:var(--text);font-size:14.5px;}
+  .callout p:last-child{margin-bottom:0;}
+  .spam-chip{display:inline-block;background:#231a1a;border:1px solid #4d1f28;color:#ff9a9a;font-size:12px;padding:2px 8px;border-radius:6px;margin:2px 4px 2px 0;font-family:ui-monospace,Consolas,monospace;}
+  html[data-theme="light"] .callout{border-color:#e8c9c9;}
+  html[data-theme="light"] .callout h4{color:#b33f3f;}
+  html[data-theme="light"] .spam-chip{background:#faf0f0;border-color:#e8c9c9;color:#b33f3f;}
+
+  footer{color:var(--muted);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px;}
+
+  /* ===================== ЧИТАЕМОСТЬ ===================== */
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:104px;}
+  body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  img,svg,video{max-width:100%;height:auto;}
+  code{overflow-wrap:anywhere;font-size:.94em;}
+  .badge{max-width:100%;line-height:1.45;}
+  /* grid-колонка не должна распираться содержимым — иначе таблица ломает вёрстку */
+  .two-col>*, .rec-grid>*, .grid>*, .change-grid>*, .score-row>*{min-width:0;}
+  th,td{overflow-wrap:break-word;}
+  td.num{white-space:nowrap;}
+  .tbl-wrap table{min-width:100%;}
+  .tbl-wrap{scrollbar-width:thin;scrollbar-color:var(--border) transparent;-webkit-overflow-scrolling:touch;}
+  .tbl-wrap::-webkit-scrollbar{height:9px;}
+  .tbl-wrap::-webkit-scrollbar-track{background:transparent;}
+  .tbl-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+  .scroll-hint{font-size:12.5px;color:var(--muted);margin:0 0 7px;display:flex;align-items:center;gap:6px;opacity:.9;}
+  .nav-short{display:none;}
+  .theme-toggle{min-height:38px;}
+  .topnav-link{min-height:34px;display:inline-flex;align-items:center;}
+
+  /* ===================== АДАПТИВНОСТЬ ===================== */
+  @media (max-width:1024px){
+    .wrap{padding:28px 18px 64px;}
+    .topnav-inner{padding:13px 18px;gap:14px;}
+  }
+
+  @media (max-width:880px){
+    .topnav-inner{padding:11px 16px;gap:10px;row-gap:8px;}
+    .topnav-links{order:3;width:100%;gap:5px;flex-wrap:nowrap;overflow-x:auto;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+    .topnav-links::-webkit-scrollbar{display:none;}
+    .topnav-link{flex-shrink:0;white-space:nowrap;}
+    .theme-toggle{order:2;}
+    .nav-full{display:none;}
+    .nav-short{display:inline;}
+    .topnav-link{padding:7px 11px;}
+    header.top h1{font-size:27px;}
+  }
+
+  @media (max-width:640px){
+    .wrap{padding:22px 14px 56px;}
+    .topnav-inner{padding:10px 14px;}
+    #themeLabel{display:none;}
+    .theme-toggle{padding:9px 12px;}
+    header.top{margin-bottom:22px;}
+    header.top h1{font-size:24px;line-height:1.25;overflow-wrap:break-word;}
+    header.top .sub{font-size:14.5px;}
+    section{margin-bottom:28px;}
+    h2.sec{font-size:18.5px;}
+    .grid.kpi{grid-template-columns:1fr 1fr;gap:10px;}
+    .card{padding:14px;}
+    .card .value{font-size:26px;}
+    .change-banner{padding:16px 14px;}
+    .change-grid{grid-template-columns:1fr 1fr;gap:10px;}
+    .chg-card{padding:11px 12px;}
+    .chg-card .val{font-size:21px;}
+    .tbl-wrap{padding:4px 10px;}
+    th,td{padding:8px 6px;}
+    table{font-size:14px;}
+    /* на узком экране переносим где угодно, но первую колонку не даём смять */
+    th,td{overflow-wrap:anywhere;}
+    tr>th:first-child, tr>td:first-child{min-width:88px;}
+    td.num{min-width:0;white-space:normal;overflow-wrap:break-word;}
+    th.num{overflow-wrap:break-word;}
+    .score-row{gap:10px;justify-content:space-between;}
+    .score{width:76px;height:76px;font-size:21px;border-width:5px;}
+    .score-block{gap:6px;}
+    .score-block .cap{font-size:12px;text-align:center;line-height:1.3;}
+    .bar-row{flex-wrap:wrap;gap:6px;margin:12px 0;}
+    .bar-row .name{width:100%;}
+    .bar-val{width:auto;min-width:56px;}
+    .issue{padding:12px;gap:10px;}
+    .rec-col ol{padding-left:20px;}
+    .callout{padding:14px;}
+  }
+
+  @media (max-width:380px){
+    .change-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:460px){
+    .grid.kpi{grid-template-columns:1fr;}
+    .score-row{justify-content:space-between;row-gap:16px;}
+    .score-block{width:calc(50% - 6px);}
+    .score{width:80px;height:80px;}
+    header.top h1{font-size:22px;}
+    .topnav-brand{font-size:13.5px;}
+    .topnav-link{font-size:13px;padding:7px 9px;}
+    .topnav-links{gap:3px;}
+  }
+</style>
+</head>
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2e; --panel2:#1b2338; --border:#2a3352;
+    --text:#e8ecf5; --muted:#9aa5c0; --accent:#5b8cff; --accent2:#5b8cff; --good:#3ecf8e;
+    --warn:#f5b942; --bad:#f0576a; --chip:#232c47;
+    --radius-badge:999px; --radius-card:14px; --radius-btn:8px;
+    --font-head:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --shadow:none;
+  }
+  html[data-theme="light"]{
+    --bg:#ffffff; --panel:#f7f7f7; --panel2:#f1f2ec; --border:#e2e3e0;
+    --text:#181717; --muted:#6d6d6b; --accent:#6f8a4e; --accent2:#c79a4b; --good:#5c7f3f;
+    --warn:#a8761f; --bad:#b33f3f; --chip:#eef0e6;
+    --radius-badge:3px; --radius-card:4px; --radius-btn:2px;
+    --font-head:'Merriweather',Georgia,serif;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --shadow:0 1px 3px rgba(24,23,23,.06);
+  }
+  *{box-sizing:border-box;}
+  html{transition:background-color .25s ease;}
+  body{
+    margin:0; background:linear-gradient(180deg,#0b0f1a,#0f1420 400px, #0f1420);
+    color:var(--text); font-family:var(--font-body);
+    font-size:16px; line-height:1.65; letter-spacing:.005em;
+    transition:background .25s ease, color .25s ease;
+  }
+  html[data-theme="light"] body{background:var(--bg);}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 20px 80px;}
+  header.top{margin-bottom:28px;}
+  header.top .eyebrow{color:var(--accent);font-size:13.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-family:var(--font-body);}
+  header.top h1{font-size:31px;margin:6px 0 4px;font-family:var(--font-head);font-weight:700;}
+  header.top .sub{color:var(--muted);font-size:15px;}
+
+  .topnav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--border);}
+  .topnav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .topnav-brand{font-weight:700;font-size:14.5px;color:var(--text);text-decoration:none;letter-spacing:.02em;margin-right:auto;font-family:var(--font-head);}
+  .topnav-links{display:flex;gap:4px;flex-wrap:wrap;}
+  .topnav-link{color:var(--muted);text-decoration:none;font-size:14px;padding:7px 12px;border-radius:var(--radius-btn);transition:background .15s,color .15s;}
+  .topnav-link:hover{color:var(--text);background:var(--chip);}
+  .topnav-link.active{color:var(--text);background:var(--chip);font-weight:600;}
+
+  .theme-toggle{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--chip); border:1px solid var(--border); color:var(--text);
+    font-size:13.5px; font-weight:600; padding:8px 14px; border-radius:var(--radius-btn);
+    cursor:pointer; font-family:var(--font-body); transition:background .2s ease, color .2s ease, border-color .2s ease;
+    flex-shrink:0;
+  }
+  .theme-toggle:hover{border-color:var(--accent);}
+  .theme-toggle .ico{font-size:14px;}
+
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .badge{background:var(--chip);border:1px solid var(--border);color:var(--muted);font-size:13px;padding:5px 10px;border-radius:var(--radius-badge);}
+  .badge.ok{color:var(--good);border-color:#1f4d3c;}
+  .badge.warn{color:var(--warn);border-color:#4d3f1f;}
+  .badge.bad{color:var(--bad);border-color:#4d1f28;}
+  html[data-theme="light"] .badge.ok{border-color:#c9d6bb;}
+  html[data-theme="light"] .badge.warn{border-color:#e6d3ae;}
+  html[data-theme="light"] .badge.bad{border-color:#e8c9c9;}
+
+  .change-banner{background:var(--panel2);border:1px solid var(--border);border-radius:var(--radius-card);padding:18px 20px;margin-bottom:34px;}
+  .change-banner h2{font-size:17.5px;margin:0 0 12px;font-family:var(--font-head);font-weight:700;display:flex;align-items:center;gap:8px;}
+  .change-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
+  .chg-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+  .chg-card .lbl{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:6px;}
+  .chg-card .val{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .chg-card .d{font-size:13.5px;margin-top:4px;font-variant-numeric:tabular-nums;font-weight:600;}
+  .d.up{color:var(--good);} .d.down{color:var(--bad);} .d.flat{color:var(--muted);}
+  .stale-note{color:var(--muted);font-size:13px;font-style:italic;margin:0 0 14px;}
+  .check-delta{font-size:13px;margin-top:4px;padding-top:4px;border-top:1px dashed var(--border);color:var(--muted);}
+  .check-delta b{font-variant-numeric:tabular-nums;}
+  .check-delta .u{color:var(--good);} .check-delta .dn{color:var(--bad);} .check-delta .f{color:var(--muted);}
+
+  section{margin-bottom:34px;}
+  h2.sec{font-size:20px;margin:0 0 4px;display:flex;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;}
+  h2.sec .num{color:var(--accent);font-variant-numeric:tabular-nums;}
+  p.sec-note{color:var(--muted);font-size:14px;margin:0 0 16px;}
+
+  .grid{display:grid;gap:14px;}
+  .grid.kpi{grid-template-columns:repeat(auto-fit,minmax(185px,1fr));}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius-card);
+    padding:16px 18px; box-shadow:var(--shadow);
+  }
+  .card .label{color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+  .card .value{font-size:29px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .card .delta{font-size:13.5px;margin-top:6px;font-variant-numeric:tabular-nums;}
+  .delta.up{color:var(--good);}
+  .delta.down{color:var(--bad);}
+  .delta.flat{color:var(--muted);}
+
+  table{width:100%;border-collapse:collapse;font-size:14.5px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em;}
+  tr:last-child td{border-bottom:none;}
+  td.num, th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .tbl-wrap{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius-card);padding:6px 16px;overflow:auto;box-shadow:var(--shadow);}
+
+  .two-col{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
+  @media (max-width:820px){.two-col{grid-template-columns:1fr;}}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin:10px 0;}
+  .bar-row .name{width:170px;font-size:14px;color:var(--muted);flex-shrink:0;}
+  .bar-track{flex:1;background:#0c1120;border-radius:6px;height:10px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#5b8cff,#7aa2ff);}
+  .bar-val{width:110px;text-align:right;font-size:14px;font-variant-numeric:tabular-nums;flex-shrink:0;}
+
+  .score-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .score{
+    width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;border:6px solid var(--border);
+    font-weight:700;font-size:24px;
+  }
+  .score.good{border-color:#1f4d3c;color:var(--good);}
+  .score.mid{border-color:#4d3f1f;color:var(--warn);}
+  .score.bad{border-color:#4d1f28;color:var(--bad);}
+  html[data-theme="light"] .score.good{border-color:#cddcbc;}
+  html[data-theme="light"] .score.mid{border-color:#eddbb5;}
+  html[data-theme="light"] .score.bad{border-color:#eaccc8;}
+  .score .lbl{font-size:11.5px;font-weight:500;color:var(--muted);margin-top:2px;}
+  .score-block{display:flex;flex-direction:column;align-items:center;gap:8px;}
+  .score-block .cap{font-size:13px;color:var(--muted);}
+
+  .metric-mini{display:flex;justify-content:space-between;font-size:14.5px;padding:6px 0;border-bottom:1px dashed var(--border);}
+  .metric-mini:last-child{border-bottom:none;}
+  .metric-mini .v{font-variant-numeric:tabular-nums;font-weight:600;}
+  .v.bad{color:var(--bad);}
+  .v.good{color:var(--good);}
+
+  .issue{
+    display:flex; gap:12px; padding:12px 14px; border-radius:10px; background:var(--panel2);
+    border:1px solid var(--border); margin-bottom:10px; align-items:flex-start;
+  }
+  .issue .sev{
+    flex-shrink:0; width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;
+  }
+  .sev.crit{background:#4d1f28;color:#ff8a9a;}
+  .sev.high{background:#4d3f1f;color:#ffcf6b;}
+  .sev.med{background:#1f2e4d;color:#8fb2ff;}
+  html[data-theme="light"] .sev.crit{background:#f4dcda;color:#9c3a34;}
+  html[data-theme="light"] .sev.high{background:#f4e6cd;color:#8a5e17;}
+  html[data-theme="light"] .sev.med{background:#e3e8da;color:#4c6237;}
+  .issue .body h4{margin:0 0 3px;font-size:15.5px;font-family:var(--font-head);}
+  .issue .body p{margin:0;color:var(--muted);font-size:14.5px;}
+
+  .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:820px){.rec-grid{grid-template-columns:1fr;}}
+  .rec-col h3{font-size:15px;margin:0 0 10px;color:var(--accent);font-family:var(--font-head);}
+  .rec-col ol{margin:0;padding-left:18px;font-size:14.5px;}
+  .rec-col li{margin-bottom:10px;color:var(--text);}
+  .rec-col li b{color:var(--text);}
+  .rec-col li span.why{display:block;color:var(--muted);font-size:13.5px;margin-top:2px;}
+
+  .callout{
+    background:var(--panel2); border:1px solid #4d1f28; border-left:4px solid var(--bad);
+    border-radius:10px; padding:16px 18px; margin-bottom:14px;
+  }
+  .callout h4{margin:0 0 6px;font-size:15.5px;color:#ff8a9a;font-family:var(--font-head);}
+  .callout p{margin:0 0 8px;color:var(--text);font-size:14.5px;}
+  .callout p:last-child{margin-bottom:0;}
+  .spam-chip{display:inline-block;background:#231a1a;border:1px solid #4d1f28;color:#ff9a9a;font-size:12px;padding:2px 8px;border-radius:6px;margin:2px 4px 2px 0;font-family:ui-monospace,Consolas,monospace;}
+  html[data-theme="light"] .callout{border-color:#e8c9c9;}
+  html[data-theme="light"] .callout h4{color:#b33f3f;}
+  html[data-theme="light"] .spam-chip{background:#faf0f0;border-color:#e8c9c9;color:#b33f3f;}
+
+  footer{color:var(--muted);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px;}
+
+  /* ===================== ЧИТАЕМОСТЬ ===================== */
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:104px;}
+  body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  img,svg,video{max-width:100%;height:auto;}
+  code{overflow-wrap:anywhere;font-size:.94em;}
+  .badge{max-width:100%;line-height:1.45;}
+  /* grid-колонка не должна распираться содержимым — иначе таблица ломает вёрстку */
+  .two-col>*, .rec-grid>*, .grid>*, .change-grid>*, .score-row>*{min-width:0;}
+  th,td{overflow-wrap:break-word;}
+  td.num{white-space:nowrap;}
+  .tbl-wrap table{min-width:100%;}
+  .tbl-wrap{scrollbar-width:thin;scrollbar-color:var(--border) transparent;-webkit-overflow-scrolling:touch;}
+  .tbl-wrap::-webkit-scrollbar{height:9px;}
+  .tbl-wrap::-webkit-scrollbar-track{background:transparent;}
+  .tbl-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+  .scroll-hint{font-size:12.5px;color:var(--muted);margin:0 0 7px;display:flex;align-items:center;gap:6px;opacity:.9;}
+  .nav-short{display:none;}
+  .theme-toggle{min-height:38px;}
+  .topnav-link{min-height:34px;display:inline-flex;align-items:center;}
+
+  /* ===================== АДАПТИВНОСТЬ ===================== */
+  @media (max-width:1024px){
+    .wrap{padding:28px 18px 64px;}
+    .topnav-inner{padding:13px 18px;gap:14px;}
+  }
+
+  @media (max-width:880px){
+    .topnav-inner{padding:11px 16px;gap:10px;row-gap:8px;}
+    .topnav-links{order:3;width:100%;gap:5px;flex-wrap:nowrap;overflow-x:auto;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;}
+    .topnav-links::-webkit-scrollbar{display:none;}
+    .topnav-link{flex-shrink:0;white-space:nowrap;}
+    .theme-toggle{order:2;}
+    .nav-full{display:none;}
+    .nav-short{display:inline;}
+    .topnav-link{padding:7px 11px;}
+    header.top h1{font-size:27px;}
+  }
+
+  @media (max-width:640px){
+    .wrap{padding:22px 14px 56px;}
+    .topnav-inner{padding:10px 14px;}
+    #themeLabel{display:none;}
+    .theme-toggle{padding:9px 12px;}
+    header.top{margin-bottom:22px;}
+    header.top h1{font-size:24px;line-height:1.25;overflow-wrap:break-word;}
+    header.top .sub{font-size:14.5px;}
+    section{margin-bottom:28px;}
+    h2.sec{font-size:18.5px;}
+    .grid.kpi{grid-template-columns:1fr 1fr;gap:10px;}
+    .card{padding:14px;}
+    .card .value{font-size:26px;}
+    .change-banner{padding:16px 14px;}
+    .change-grid{grid-template-columns:1fr 1fr;gap:10px;}
+    .chg-card{padding:11px 12px;}
+    .chg-card .val{font-size:21px;}
+    .tbl-wrap{padding:4px 10px;}
+    th,td{padding:8px 6px;}
+    table{font-size:14px;}
+    /* на узком экране переносим где угодно, но первую колонку не даём смять */
+    th,td{overflow-wrap:anywhere;}
+    tr>th:first-child, tr>td:first-child{min-width:88px;}
+    td.num{min-width:0;white-space:normal;overflow-wrap:break-word;}
+    th.num{overflow-wrap:break-word;}
+    .score-row{gap:10px;justify-content:space-between;}
+    .score{width:76px;height:76px;font-size:21px;border-width:5px;}
+    .score-block{gap:6px;}
+    .score-block .cap{font-size:12px;text-align:center;line-height:1.3;}
+    .bar-row{flex-wrap:wrap;gap:6px;margin:12px 0;}
+    .bar-row .name{width:100%;}
+    .bar-val{width:auto;min-width:56px;}
+    .issue{padding:12px;gap:10px;}
+    .rec-col ol{padding-left:20px;}
+    .callout{padding:14px;}
+  }
+
+  @media (max-width:380px){
+    .change-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:460px){
+    .grid.kpi{grid-template-columns:1fr;}
+    .score-row{justify-content:space-between;row-gap:16px;}
+    .score-block{width:calc(50% - 6px);}
+    .score{width:80px;height:80px;}
+    header.top h1{font-size:22px;}
+    .topnav-brand{font-size:13.5px;}
+    .topnav-link{font-size:13px;padding:7px 9px;}
+    .topnav-links{gap:3px;}
+  }
+</style>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="topnav-brand" href="index.html">Royal Foam · SEO Audits</a>
+    <div class="topnav-links">
+      <a href="index.html" class="topnav-link">Главная</a>
+      <a href="shapes.html" class="topnav-link"><span class="nav-full">decorativearchitecturalshapes.com</span><span class="nav-short">shapes.com</span></a>
+      <a href="royalfoam.html" class="topnav-link">royalfoam.art</a>
+      <a href="products.html" class="topnav-link"><span class="nav-full">decorativearchitecturalproducts.com</span><span class="nav-short">products.com</span></a>
+      <a href="products-qa.html" class="topnav-link active"><span class="nav-full">products.com · QA-аудит сайта</span><span class="nav-short">products QA</span></a>
+    </div>
+    <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()">
+      <span class="ico" id="themeIco">☀</span><span id="themeLabel">Светлая тема</span>
+    </button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">QA / UX / Content Audit</div>
+    <h1>decorativearchitectural<wbr>products.com</h1>
+    <div class="sub">Полный аудит качества сайта · Проверено 28 страниц из 137 URL в карте сайта · Проверены: ссылки, кнопки и их цели, формы, редиректы, 404, названия компании, достоверность текстов, грамматика, вёрстка · <b>Первая проверка: 27 сентября 2026 · Повторная проверка: 12 октября 2026</b></div>
+    <p style="margin:16px 0 0"><a class="badge ok" href="decorativearchitecturalproducts-QA-audit.zip" download style="display:inline-block;padding:10px 16px;font-size:14px;text-decoration:none">⬇ Скачать этот отчёт и остальные в ZIP (77 КБ)</a></p>
+
+  <div class="badges">
+      <span class="badge ok">6 из 10 критических — исправлено за 15 дней</span>
+      <span class="badge warn">3 критических — исправлены частично</span>
+      <span class="badge bad">1 критическая — открыта</span>
+      <span class="badge warn">13 проблем высокого приоритета — в работе</span>
+      <span class="badge warn">6 новых находок при повторной проверке</span>
+      <span class="badge ok">Все 20 услуг и 15 локаций отвечают 200</span>
+      <span class="badge ok">404-страница настроена корректно</span>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="sec"><span class="num">★</span> Что изменилось с прошлой проверки (27 сентября → 12 октября)</h2>
+    <p class="sec-note">Сайт активно правится — последние изменения в картах сайта датированы 28 сентября, 1 и 2 октября 2026. Ниже статус каждой критической проблемы на 12.10.2026.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th class="num">#</th><th>Критическая проблема</th><th>Статус на 12.10.2026</th><th>Комментарий</th></tr></thead>
+        <tbody>
+          <tr><td class="num">4</td><td>Тестовые товары в продакшене</td><td><span class="badge ok">✔ Исправлено</span></td><td><code>/product/test-airtable-1/</code> и <code>/product/3dsignfactory-test/</code> убраны из <code>product-sitemap.xml</code>. Товаров стало 42 вместо 44</td></tr>
+          <tr><td class="num">6</td><td>Ссылка на New York</td><td><span class="badge ok">✔ Исправлено</span></td><td>Стало <code>/locations/new-york</code>. Заодно исправлена ссылка на Майами: <code>/locations/miami</code> вместо <code>/locations/miami-2</code></td></tr>
+          <tr><td class="num">7</td><td>Пункт 4 Terms of Service</td><td><span class="badge ok">✔ Исправлено</span></td><td>Текст теперь: «To the fullest extent permitted by applicable law, the Company shall not be liable for…» — ровно как в фикс-паке</td></tr>
+          <tr><td class="num">8</td><td>Картинки с чужого домена</td><td><span class="badge ok">✔ Исправлено</span></td><td>Все SVG Capability Deck перенесены на <code>decorativearchitecturalproducts.com/wp-content/uploads/2026/08/</code></td></tr>
+          <tr><td class="num">10</td><td>Тестовый текст «test1 test4»</td><td><span class="badge ok">✔ Исправлено</span></td><td>Блок показателей на <code>/how-to-order/</code> очищен</td></tr>
+          <tr><td class="num">5</td><td>Кнопки «Submit now» → блог</td><td><span class="badge ok">✔ Исправлено, но с новой дырой</span></td><td>Ссылки на <code>/blog</code> убраны, однако теперь у шагов процесса <b>вообще нет кнопок</b> — см. новую находку Н3</td></tr>
+          <tr><td class="num">1</td><td>Телефон в ссылке</td><td><span class="badge warn">◐ Частично</span></td><td>Исправлено на <code>/faq/</code> и <code>/how-to-order/</code>; на <code>/contact-us/</code> остался старый подвал — см. Н2</td></tr>
+          <tr><td class="num">2</td><td>«Get my catalog» → <code>/my-account</code></td><td><span class="badge warn">◐ Частично</span></td><td>Ссылка на <code>/my-account</code> удалена, но сама кнопка осталась без цели — см. Н4</td></tr>
+          <tr><td class="num">9</td><td>Cookie-баннер и вкладки</td><td><span class="badge warn">◐ Частично</span></td><td>Вкладка «Cookie Settings» на Privacy Policy теперь ведёт на <code>/cookie-settings</code> (было — сама на себя). Механизма согласия по-прежнему нет</td></tr>
+          <tr><td class="num">3</td><td><code>/shop/</code> и <code>/store/</code> → заглушка</td><td><span class="badge bad">✖ Открыто</span></td><td>Без изменений с 27.09. Заглушка по-прежнему собирает трафик из карты сайта и ведёт сама на себя</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>Высокий приоритет (P1)</th><th>Статус на 12.10.2026</th></tr></thead>
+        <tbody>
+          <tr><td>№ 11 — кириллица в текстах и URL</td><td><span class="badge warn">◐ Частично</span> «Sunday: <b>с</b>losed» исправлено (теперь «closed»), но фильтр <code>%D1%81arved-corbels</code> жив, и добавилась <b>новая</b> кириллическая ссылка — см. Н1</td></tr>
+          <tr><td>№ 12 — опечатки</td><td><span class="badge bad">✖ Открыто</span> «Write us or <b>cll</b> us» на <code>/contact-us/</code> на месте</td></tr>
+          <tr><td>№ 15 — «See all FAQ»</td><td><span class="badge ok">✔ Исправлено</span> На <code>/how-to-order/</code> теперь рабочая ссылка</td></tr>
+          <tr><td>№ 18 — плейсхолдер вместо фото</td><td><span class="badge ok">✔ Исправлено</span> У категории «Faux Wood Trusses Systems» теперь реальное изображение</td></tr>
+          <tr><td>№ 22 — обрезанное слово «deve»</td><td><span class="badge ok">✔ Исправлено</span> Стало «across a full multi-unit development.»</td></tr>
+          <tr><td>№ 13, 14, 16, 17, 19, 20, 21, 23</td><td><span class="badge">Без повторной проверки</span> Фильтры, якоря Technical Center, таблица спецификаций, Size Guide, «Our team», Google Calendar, переменные товаров — в этой проверке не открывались</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px;margin:22px 0 10px;color:var(--accent)">Новые находки 12 октября 2026 (6)</h3>
+    <p class="sec-note">Появились как следствие правок — их не было в первой версии отчёта.</p>
+
+    <div class="issue"><div class="sev crit">Н1</div><div class="body">
+      <h4>Дублирующая карточка категории с кириллической «С» в URL</h4>
+      <p>На странице-заглушке теперь две карточки «Architectural Column kits»: латинская <code>?filter_category=architectural-column-kits</code> и вторая — <code>?filter_category=architectural-%D1%81olumn-kits</code>, где <code>%D1%81</code> — кириллическая «С». Заголовок второй карточки тоже написан как «Architectural <b>С</b>olumn kits». Фильтр не сработает никогда, а в каталоге появился лишний дубль.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> удалить дубль; оставшийся slug проверить на кириллицу. Лучше — прогнать все слаги категорий через проверку «только a-z0-9-» и запретить ввод кириллицы в админке.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">Н2</div><div class="body">
+      <h4>На сайте живут две разные копии подвала одновременно</h4>
+      <p>Старая версия: «Write us or call us / <b>Exterior solutions manufacturer</b> with 25+ years' experience. <b>100% Made in USA</b>, factory in Florida» + <code>tel:9043455400</code>. Новая: «<b>Decorative architectural products</b> manufacturer for interior and exterior applications. 25+ years of experience. 100% <b>Made in the USA</b> — factory in Jacksonville, Florida» + <code>tel:9048005651</code>. Новая стоит на <code>/faq/</code> и <code>/how-to-order/</code>, старая — на <code>/contact-us/</code>. То есть правка подвала применяется не во всех шаблонах.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> найти все экземпляры блока «Contact» (в теме их обычно несколько: для страниц, для блога, для товаров) и заменить <b>все</b>. Затем проверить телефон поиском по <code>9043455400</code> по всему коду сайта — где строка ещё осталась, там номер продолжит уводить звонки не туда.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">Н3</div><div class="body">
+      <h4>У шагов процесса на «How to Order» исчезли кнопки</h4>
+      <p>Раньше две кнопки «Submit now» вели в блог. Теперь их нет вообще — шаги «Submit Your Project», «Consultation &amp; Estimate», «Design Review &amp; Approval», «Production», «Delivery &amp; Logistics» идут текстом без единого действия. Ссылка убрана правильно, но страница заказа осталась без точки конверсии.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> поставить одну основную кнопку «Submit Your Project» на первом шаге (на <code>/contact-us/#form</code>), вторую — «Request a Quote» в конце блока. Не больше: пять кнопок в одном блоке выглядят как спам.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">Н4</div><div class="body">
+      <h4>«Get my catalog» превратилась в кнопку без действия</h4>
+      <p>Блок «Get Your Free Catalog» с подписью «Get my catalog» по-прежнему есть на <code>/contact-us/</code> и <code>/how-to-order/</code> (и в шаблонах, которые копируются дальше), но ссылки внутри больше нет. Раньше посетитель попадал на форму входа, теперь — никуда. Лид-магнит, ради которого существует целый раздел <code>/lead-magnet-subscription/</code>, не работает.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> направить на <code>/lead-magnet-subscription/</code> — страница уже существует, уже оформлена под лид-магнит и уже есть в карте сайта. Это готовая цель в один клик.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">Н5</div><div class="body">
+      <h4>Заголовок Capability Deck противоречит его же картинке</h4>
+      <p>Файл иллюстрации переименован в <code>Our-Interior-Product-Line.svg</code> (то есть на интерьер), а заголовок над ним по-прежнему «## Our <b>Façade</b> Product Line», и текст под ним — «Interior architectural elements are the core of what we manufacture». Заголовок не поправили при переносе картинок.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> «## Our Product Line» или «## Our Interior &amp; Exterior Product Line».</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">Н6</div><div class="body">
+      <h4>Юридические страницы меняют текст, но не меняют дату «Last Updated»</h4>
+      <p>Пункт 4 Terms of Service переписан 12 октября, вкладка «Cookie Settings» исправлена — а в подвале обеих страниц по-прежнему «Last Updated: <b>07/14/2026</b>». Формально это сообщает посетителю, что документ не менялся с июля, хотя менялся. Для документа, на который идёт ссылка из согласия под формой, это плохо.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> проставить <code>Last Updated: 10/12/2026</code> на всех трёх юридических страницах после каждой правки — лучше автоматически, из даты последнего сохранения.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">0.</span> Главное за 30 секунд</h2>
+    <p class="sec-note">Сайт выглядит и работает как «почти готовый», но в продакшене лежат хрупкие вещи, которые ломают путь клиента и репутацию бренда.</p>
+    <div class="grid kpi">
+      <div class="card"><div class="label">Критично (P0) — открыто</div><div class="value" style="color:var(--bad)">1</div><div class="delta up">было 10 · исправлено 6 · частично 3</div></div>
+      <div class="card"><div class="label">Частично исправлено</div><div class="value" style="color:var(--warn)">3</div><div class="delta down">ссылка убрана, но следы остались</div></div>
+      <div class="card"><div class="label">Высокий приоритет (P1)</div><div class="value" style="color:var(--warn)">13</div><div class="delta down">2 исправлены, 11 в работе</div></div>
+      <div class="card"><div class="label">Новых находок 12.10</div><div class="value" style="color:var(--accent)">6</div><div class="delta flat">появились при правках сайта</div></div>
+    </div>
+
+    <div class="callout" style="border-color:#4d3f1f;border-left-color:var(--warn);margin-top:16px">
+      <h4 style="color:#ffcf6b">Состояние на 12 октября 2026: что осталось critical</h4>
+      <p><b>1. Телефон — исправлен не везде.</b> На <code>/faq/</code> и <code>/how-to-order/</code> ссылка уже правильная (<code>tel:9048005651</code>), но на <code>/contact-us/</code> подвал остался старой версии (<code>tel:9043455400</code>). То есть на сайте одновременно живут <b>две разные копии подвала</b> — значит, правка идёт по шаблонам вручную и один из них забыт.</p>
+      <p><b>2. «Get my catalog» — ссылку убрали, кнопку оставили.</b> Кнопка перестала вести на форму входа, но теперь не ведёт никуда вообще. Это не починка, а смена одной поломки на другую: призыв остался, действия за ним нет.</p>
+      <p><b>3. Каталог.</b> <code>/shop/</code> и <code>/store/</code> по-прежнему отдают заглушку «Under Construction», а кнопки внутри заглушки ведут обратно на неё. Это единственная критическая проблема, которая не сдвинулась с 27 сентября.</p>
+      <p style="margin-top:4px"><b>Что реально починено за 15 дней:</b> тестовые товары сняты с публикации и убраны из карты сайта, пункт 4 Terms of Service переписан, вкладка «Cookie Settings» на Privacy Policy теперь ведёт на <code>/cookie-settings</code>, картинки Capability Deck перенесены с чужого домена 3dsignfactory.com на свой, удалён тестовый текст «test1 test4», исправлены ссылки на Нью-Йорк и Майами, убраны кнопки «Submit now» (вести в блог), обрезанное слово «deve» дописано, подвал переписан ровно теми формулировками, которые были предложены в этом отчёте.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">1.</span> Методика и границы проверки</h2>
+    <p class="sec-note">Что именно проверялось и какие выводы достоверны на 100%, а какие требуют ручной проверки в браузере.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Проверка</th><th>Как</th><th>Покрытие</th><th>Достоверность</th></tr></thead>
+        <tbody>
+          <tr><td>Инвентаризация страниц</td><td>10 файлов sitemap_index.xml + все дочерние карты</td><td class="num">137 URL</td><td style="color:var(--good)">Подтверждено</td></tr>
+          <tr><td>Ссылки и цели кнопок</td><td>Разбор отдачи каждой страницы, проверка переходов</td><td class="num">28 страниц</td><td style="color:var(--good)">Подтверждено</td></tr>
+          <tr><td>Редиректы</td><td>Проверка фактического адреса после перехода</td><td class="num">6 URL</td><td style="color:var(--good)">Подтверждено</td></tr>
+          <tr><td>404</td><td>Запрос несуществующего адреса</td><td class="num">1</td><td style="color:var(--good)">Страница есть, отдаёт корректный текст</td></tr>
+          <tr><td>Тексты, грамматика, факты</td><td>Ручная вычитка видимого текста</td><td class="num">28 страниц</td><td style="color:var(--good)">Подтверждено</td></tr>
+          <tr><td>Формы (фактическая отправка)</td><td>—</td><td class="num">0</td><td style="color:var(--warn)">Требует браузера — см. раздел 9</td></tr>
+          <tr><td>Рендер, адаптив, переполнения, «подвисание»</td><td>—</td><td class="num">0</td><td style="color:var(--warn)">Требует браузера — см. раздел 9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stale-note" style="margin-top:12px">Ограничение: прямой сетевой доступ к домену из среды проверки закрыт на уровне TLS, поэтому вёрстка и JavaScript-состояние (выпадающие списки вариаций, модальные окна кнопок «Get a consultation», «Claim your bonus», фильтры категорий) анализировались по серверной отдаче. Всё, что видно в исходном HTML, проверено; всё, что рисует JS, вынесено в ручной чек-лист.</p>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">2.</span> Карта сайта: что вообще есть</h2>
+    <p class="sec-note">Полная инвентаризация из sitemap на 12.10.2026. Столбец «Проверено» — сколько страниц этого типа открыто и вычитано. Между проверками (27.09 → 12.10) каталог изменился: сняты 2 тестовых товара, добавлены 4 статьи в блог, обновлены 9 существующих статей (04.10) и 7 страниц раздела pages (28.09 – 02.10).</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Раздел</th><th>Карта сайта</th><th class="num">URL</th><th class="num">Проверено</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td>Основные страницы</td><td><code>page-sitemap.xml</code></td><td class="num">13</td><td class="num">13</td><td><span class="badge bad">/store/ и /shop/ ведут на заглушку</span></td></tr>
+          <tr><td>Услуги</td><td><code>service-sitemap.xml</code></td><td class="num">20</td><td class="num">1 (шаблон общий для 20)</td><td><span class="badge ok">все отвечают 200</span></td></tr>
+          <tr><td>Товары</td><td><code>product-sitemap.xml</code></td><td class="num">42</td><td class="num">2</td><td><span class="badge ok">было 44 · 2 тестовых сняты 12.10</span></td></tr>
+          <tr><td>Локации</td><td><code>locations-sitemap.xml</code></td><td class="num">15</td><td class="num">2</td><td><span class="badge ok">ссылка на Майами исправлена 12.10</span></td></tr>
+          <tr><td>Кейсы</td><td><code>cases-sitemap.xml</code></td><td class="num">12</td><td class="num">1</td><td><span class="badge warn">фильтр категорий пустой</span></td></tr>
+          <tr><td>Портфолио</td><td><code>portfolio-sitemap.xml</code></td><td class="num">21</td><td class="num">0</td><td><span class="badge warn">дублирует услуги 1-в-1</span></td></tr>
+          <tr><td>Блог</td><td><code>post-sitemap.xml</code></td><td class="num">14</td><td class="num">1</td><td><span class="badge ok">было 10 · +4 статьи 06.10</span></td></tr>
+          <tr><td><b>Итого в карте сайта</b></td><td>—</td><td class="num"><b>137</b></td><td class="num"><b>28</b></td><td><span class="badge warn">было 135 на 27.09</span></td></tr>
+          <tr><td><b>Вне карты сайта</b></td><td>—</td><td class="num"><b>5</b></td><td class="num"><b>5</b></td><td><span class="badge warn">/privacy-policy/, /terms-of-service/, /cookie-settings/, /under-construction/, /my-account/</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stale-note" style="margin-top:12px">Пять рабочих страниц — включая все три юридические — <b>не попали в карту сайта</b>. Юридические страницы обязаны быть доступны и обходимы: именно на них ссылаются формы согласия («By clicking the button, you agree to the terms of the Privacy policy»).</p>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">3.</span> P0 — критические проблемы: 6 исправлено, 3 частично, 1 открыта</h2>
+    <p class="sec-note">Статус каждой — на 12.10.2026. Исправленные оставлены в списке, чтобы было видно ход работы и было что перепроверить на следующем круге.</p>
+
+    <div class="issue"><div class="sev crit">1</div><div class="body">
+      <h4><span class="badge warn">◐ Частично</span> Номер телефона в ссылке не совпадает с номером в тексте — на всём сайте</h4>
+      <p>Подвал на всех страницах: <code>[(904) 800-5651](tel:9043455400)</code>. Это разные номера. На страницах локаций: <code>[9048005651](tel:9048005651)</code> — правильно. Итог: половина посетителей (десктоп) звонит не туда, и звонок уходит в никуда, потому что форма заявки и номер телефона — главные каналы конверсии на этом сайте.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> во всех местах заменить <code>tel:9043455400</code> → <code>tel:+19048005651</code> (с `+1` и в E.164 — так работает корректно на всех устройствах). Проверить, что в админке телефона задан один номер и он же подставляется в тему писем.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">2</div><div class="body">
+      <h4><span class="badge warn">◐ Частично</span> Кнопка «Get my catalog» ведёт на страницу входа в аккаунт</h4>
+      <p>Блок «Get Your Free Catalog» стоит минимум на <code>/faq/</code>, <code>/contact-us/</code>, <code>/how-to-order/</code> (и в шаблонах, которые копируются на другие страницы). Ссылка: <code>https://decorativearchitecturalproducts.com/my-account</code> → экран «My account / Login / Register». Человек, который хочет каталог, получает форму логина. Та же ошибка у кнопки «Download PDF» на страницах услуг.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> либо создать страницу <code>/catalog/</code> (защищённую PDF-загрузка) и направить туда все CTA, либо вести на <code>/contact-us/</code> с якорем на форму. Второй вариант надёжнее: лид всё равно нужен, а не регистрация в личном кабинете покупателя, которая этому B2B-сайту вообще не нужна.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">3</div><div class="body">
+      <h4><span class="badge bad">✖ Открыто</span> Каталог /shop/ и /store/ отдают заглушку «Under Construction», но стоят в карте сайта и в меню</h4>
+      <p><code>/shop/</code> и <code>/store/</code> перенаправляют на <code>/under-construction/</code> («We Are Currently Under Construction. Our storefront is temporarily unavailable…»). При этом <code>/under-construction/</code> не находится ни в одной карте сайта, а <code>/shop/</code> — в карте есть. Хуже: все кнопки «View Product Details» на заглушке ведут на <code>/shop/?filter_category=…</code>, то есть <b>обратно на ту же заглушку</b> — пользователь попадает в тупик. При этом 44 карточки товаров живые, с ценами и кнопкой «Add to cart».</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> вернуть <code>/shop/</code> к рабочему каталогу (или сделать 301 на реальную страницу каталога) и убрать <code>/under-construction/</code> из индексации, пока она не нужна.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">4</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Два тестовых товара в продакшене и в индексе поисковиков</h4>
+      <p><code>/product/test-airtable-1/</code> — заголовок «test airtable 1», описание «dfsdfsdfsf», таблица характеристик с текстом «hjghjgh», цена $200.00–$777.00, кнопка «Add to cart», вкладки Specifications/Description/CAD Drawings/Reviews. <code>/product/3dsignfactory-test/</code> — «right block product», «test monument sign», атрибуты Width 3&quot; / Height 6–7&quot; / Length 4'3&quot;–5'9&quot;, «Add to cart». Оба — в <code>product-sitemap.xml</code>, оба показываются в блоке «Similar products» на других товарах.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> снять с публикации + 410 или 301 на ближайший релевантный товар, забрать из карты сайта, удалить из блоков «Similar products».</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">5</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Кнопки «Submit now» на странице «How to Order» ведут в блог</h4>
+      <p>На <code>/how-to-order/</code> два шага процесса — «Submit Your Project» и «Consultation &amp; Estimate» — имеют кнопку <code>[Submit now](https://decorativearchitecturalproducts.com/blog)</code>. Это ключевая конверсионная страница заказа, и обе кнопки уводят посетителя в ленту статей. При этом шаги «Design Review &amp; Approval», «Production», «Delivery &amp; Logistics» вообще не имеют кнопок — блок собран вручную и рассыпался.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> обе кнопки → <code>/contact-us/#form</code> (или на форму заявки). Добавить кнопку на каждый шаг процесса.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">6</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Ссылка на New York в блоке «Areas We Serve» собрана неправильно</h4>
+      <p>На <code>/contact-us/</code> ссылка на Нью-Йорк: <code>https://decorativearchitecturalproducts.com/contact-us/locations/new-york</code> — с приставкой <code>/contact-us/</code>. Адрес не существует, срабатывает 301-редирект на правильную страницу. Для Google это лишний редирект в цепочке внутренней навигации, для пользователя — лишний запрос и возможная задержка.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> заменить на <code>https://decorativearchitecturalproducts.com/locations/new-york</code>.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">7</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Пункт 4 «Terms of Service» — сломанная юридическая формулировка</h4>
+      <p>Сейчас на <code>/terms-of-service/</code> написано: «To the fullest liable for any direct, indirect, incidental, special, or consequential damages <b>for</b> any direct, indirect, incidental, or consequential damages arising from or related to the use of, or inability to use, this Website.» Предложение оборвано (нет «extent the Company shall not be»), а перечисление убытков продублировано. Ограничение ответственности в таком виде юридически ничтожно — оно не исключает ничего.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс (текст для вставки):</b> «To the fullest extent permitted by applicable law, the Company shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from or related to the use of, or inability to use, this Website.»</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">8</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Все картинки страницы «Capability Deck» грузятся с чужого домена 3dsignfactory.com</h4>
+      <p><code>/capability-deck/</code> тянет <b>все</b> изображения (<code>/wp-content/uploads/2026/08/Capability-Deck_*.svg</code>) с <code>https://3dsignfactory.com/</code> — другого бренда/домена. Риски: если на 3dsignfactory.com что-то переедет или ляжет, у вас отвалятся все иллюстрации страницы; в коде страницы виден чужой домен (проблема и для бренда, и для доверия покупателя, и для скорости); это фактически хотлинкинг чужого контента. Там же живёт тестовый товар <code>/product/3dsignfactory-test/</code> — следы незавершённого переезда.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> перекачать все SVG в <code>/wp-content/uploads/</code> этого домена, заменить URL, проверить <code>alt</code>. Заодно решить, что такое 3dsignfactory: если это тот же бизнес — убрать упоминание из кода; если нет — тем более.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">9</div><div class="body">
+      <h4><span class="badge warn">◐ Частично</span> Нет рабочего механизма управления cookie — при этом политика обещает его</h4>
+      <p>На <code>/cookie-settings/</code> написано: «You may accept, reject, or manage technologies like cookies through the browser settings or by using the ‘Cookie Settings’ link available on our website». Но вкладка «Cookie Settings» на всех трёх юридических страницах ведёт <b>сама на себя</b> — кликать нечего, никаких кнопок «принять/отклонить» нет. На <code>/privacy-policy/</code> та же вкладка ведёт вообще на <code>/privacy-policy</code>. Плюс на <code>/terms-of-service/</code> вкладка уже ведёт правильно на <code>/cookie-settings</code> — то есть ссылки просто не синхронизированы. Для штата Калифорнии нет ссылки «Do Not Sell or Share My Personal Information», нет списка реально используемых cookie (аналитика?), нет срока хранения данных. Для сайта, собирающего заявки и данные о проектах, — это риск.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> поставить баннер согласия с кнопками Accept / Reject / Manage, сделать вкладки «Cookie Settings» на всех трёх страницах ссылкой на <code>/cookie-settings/</code>, перечислить конкретные cookie и добавить opt-out для Калифорнии.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev crit">10</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Тестовый текст «test1 test4» на странице «How to Order»</h4>
+      <p>На <code>/how-to-order/</code> в блоке показателей рядом с «7 hours» выводится строка «<b>test1 test4</b>». Видна любому посетителю. Рядом — «3 hours / We’ll get back to you right after we review your request», которое вообще не является показателем.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> удалить. Заодно переписать блок показателей: «3 hours», «7 hours» с подписью «We’ll get back to you right after we review your request» — это не метрики, а недоделанные заглушки.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">4.</span> P1 — высокий приоритет: 4 исправлено, 1 частично, 8 без повторной проверки</h2>
+    <p class="sec-note">Видимые глюки, опечатки в заголовках и нефункциональные элементы интерфейса. Пункты со значком «Без повторной проверки» в этой итерации не открывались — их статус неизменен, но и не подтверждён.</p>
+
+    <div class="issue"><div class="sev high">11</div><div class="body">
+      <h4><span class="badge warn">◐ Частично</span> Кириллические буквы в английских текстах и в URL</h4>
+      <p>Три случая, все видны посетителю: <code>/contact-us/</code> — «Sunday: <b>с</b>losed» (кириллическая «с» вместо латинской); <code>/special-deals/</code> — «<b>С</b>arved foam ceilings» в блоке Before/After; и главное — ссылка фильтра категорий на странице-заглушке: <code>/shop/?filter_category=%D1%81arved-corbels</code>, где <code>%D1%81</code> — это кириллическая «с». Фильтр «Carved Corbels» не сработает никогда. Такой же кириллический «м» в именах файлов картинок отзывов: <code>DAP_Reviews-_-%D0%BC-91.webp</code>.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> кириллицу в текстах заменить на латиницу; слаги категорий привести к латинице и сделать редиректы со старых («с» → «c»); файлы переименовать и перезалить.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">12</div><div class="body">
+      <h4><span class="badge bad">✖ Открыто</span> Опечатки в словах, которые видно на первой странице</h4>
+      <p>Главная: «Forget <b>standart</b>, unreliable decorative architectural products…» → <i>standard</i>. Контакты: «Write us or <b>cll</b> us—we’re here!» → <i>call us</i> и <i>Write to us</i>. Страница услуг (вкладки размеров): «Custom <b>Culumn</b> Bases», «Custom <b>Culumn</b> Capitals» → <i>Column</i>. Фильтры на <code>/faq/</code> и <code>/technical-center/</code>: «Architects &amp; <b>Engineer</b>» → <i>Architects &amp; Engineers</i>. Alt-тексты и подписи карточек: «<b>Fireplaces</b> surrounds» → <i>Fireplace surrounds</i>; «Stucco Mailboxes and Lamp Posts - Decorative Architectural Products<b>Stucco Mailboxes and Lamp Posts - Decorative Architectural Products</b>» — alt продублирован, склеен без разделителя.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">13</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Фильтры и категории, которые ничего не делают</h4>
+      <p>На <code>/faq/</code> и <code>/technical-center/</code> один и тот же блок фильтра: «Filter &amp; Sort» → «Category» → <b>ещё раз</b> «Category» → «FAQ filter» → «Architects &amp; Engineer / Developer &amp; Owner / Resident» → кнопка «Show FAQ» / «Show». То есть подпись «Category» продублирована, у FAQ подпись вообще «FAQ filter», а список из трёх пунктов не имеет отношения к категориям. Категория «Resident» — калька с русского «Резидент» для B2B-сайта в США, покупатель её не поймёт. На <code>/case-collection/</code>: фильтр «Case Category» с 10 пунктами, а под ним — 10 пустых заголовков <code>### Balustrade</code>, <code>### Capitals</code>, <code>### Columns</code> и т.д. без единого кейса внутри. Клик по категории, судя по отдаче, ни к чему не приводит.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> убрать пустые заголовки, починить или снять фильтры, заменить «Resident» на «Homeowners &amp; Remodelers», «Developer &amp; Owner» → «Developers &amp; Owners», привести к единому виду. Пустой блок на <code>/case-collection/</code> выглядит как ошибка вёрстки и подрывает доверие ко всей странице кейсов.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">14</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Блок «See all services» на блоге ведёт в блог</h4>
+      <p>На <code>/blog/</code> в блоке «What We Do» (тот же блок скопирован на <code>/contact-us/</code>, <code>/faq/</code>, <code>/how-to-order/</code>, <code>/special-deals/</code> и др.) кнопка <code>[See all services](https://decorativearchitecturalproducts.com/blog)</code> на самой странице блога ведёт на <code>/blog</code> вместо <code>/services</code>. Кнопка-пустышка на ключевой странице.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">15</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> «See all FAQ» — то ссылка, то просто текст</h4>
+      <p>На <code>/contact-us/</code> — рабочая ссылка <code>[See all FAQ](/faq)</code>. На <code>/special-deals/</code> и <code>/how-to-order/</code> — тот же блок FAQ заканчивается голым текстом «See all FAQ» без ссылки. Пользователь видит призыв и не может нажать.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">16</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Неработающие переменные в карточках товаров</h4>
+      <p>На всех карточках товаров выводится «<b>You save (%)</b>» с пустым значением — на <code>/product/test-airtable-1/</code>, <code>/product/3dsignfactory-test/</code> и в блоке «Similar products». Часть товаров показывает «<b>from</b>» без цены: FWT-MOD001, FWT-MOD005, FWT-MOD006, FWT-MOD008, CCS-MOD004, CCS-MOD008. На странице тестового товара — «Loading options...» и «Choose an option10» (список вариантов не подгрузился, значение склеилось с подписью). Это прямое следствие того, что витрина отключена (P0.3), но товарные страницы остались включены.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">17</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Таблица спецификаций в Technical Center содержит шаблонные заглушки</h4>
+      <p>В таблице «System Architecture» на <code>/technical-center/</code> три строки подряд подписаны «<b>Products</b>» вместо названий элементов: «Top architectural element», «Main cylindrical/tapered body», «Bottom transition element». Это должны быть «Capital», «Column shaft», «Base». В колонке Notes во всех строках — «Our company's working density», «Our company's working thickness», «Can be foam-built or composite» — машинный перевод вместо инженерных примечаний. <b>Плюс вся таблица продублирована дважды</b> на одной странице (второй экземпляр с подписью «Click to expand / swipe -&gt;»).</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> заполнить таблицу по ASTM C578 / Florida Building Code с проверкой инженером, убрать дубликат, и только потом отдавать страницу архитекторам — сейчас это главный документ для спецификаторов, и он выглядит как черновик.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">18</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Пустая карточка товара и плейсхолдер вместо фото</h4>
+      <p>В категории «Faux Wood Trusses Systems» на странице-заглушке — карточка с картинкой <code>woocommerce-placeholder-1024x1024.png.webp</code> и без описания. Дублируются категории: «Faux Wood Truss Systems» и «Faux Wood Trusses Systems»; «Custom Faux Wood Beams» и «Faux Wood Beam Systems». На странице товара <code>3dsignfactory-test</code> сам товар «3D-MOD001» показан в блоке «Similar products» на собственной странице, а отзыв «James P. — Homeowner, Dallas, TX» напечатан дважды подряд, дословно.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">19</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Страница «Our team» без единого человека</h4>
+      <p><code>/team/</code> так и называется «Our team», но на ней нет ни имён, ни фотографий, ни должностей — только описание процесса в 4 шага и блок отзывов. Для B2B-продаж подрядчикам и архитекторам это ключевой блок доверия, и он пустой.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> добавить команду (владелец, главный инженер, менеджер проектов, отдел производства) с фото и реальными именами; если показывать лица нельзя — переименовать страницу в «How we work» и честно объяснить, что производство семейное/командное.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">20</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Size Guide на страницах услуг содержит неправдоподобные значения</h4>
+      <p>На <code>/services/faux-wood-trusses/</code> таблица «Size Guide»: «Length (L), foot / Width (W), in / Height (H), in» со строками вида <code>4 | 6 | 48</code>, <code>8 | 8 | 60</code>, <code>12 | 10 | 60</code>. Балка длиной 4 фута шириной 6 дюймов и высотой 48 дюймов (4 фута) — физически невозможно для несущей балки; похоже, данные сдвинуты или перепутаны местами. Для аудитории, которая считает по этим таблицам, это репутационный удар.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">21</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Ссылки-якоря в Technical Center, которые могут никуда не вести</h4>
+      <p>Со страницы услуг идёт длинный блок ссылок вида <code>/technical-center/#generainformation</code> (опечатка в самом якоре), <code>#epsfoam</code>, <code>#polyurethane</code>, <code>#acousticmetrics</code>, <code>#technicaldata</code>, <code>#firesafety</code>, <code>#windload</code>. Часть из них — ссылки на посадочные разделы Technical Center, но эти разделы скрыты за требованием «Please log in». Клик по такой ссылке либо ничего не делает, либо уводит на требование авторизации посреди страницы услуги. Якорь <code>#generainformation</code> — гарантированный «прыжок в никуда», в HTML он не может совпасть с <code>#generalinformation</code>.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> проверить каждый якорь на <code>/technical-center/</code>, несуществующие — исправить или снять. Документацию для архитекторов лучше отдавать без логина — это реклама, а не закрытый ресурс.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">22</div><div class="body">
+      <h4><span class="badge ok">✔ Исправлено 12.10</span> Обрезанный текст на странице «Capability Deck»</h4>
+      <p>В абзаце про литьё PU: «…identically repeatable unit after unit across a full multi-unit <b>deve</b>». Слово обрезано на середине — «deve…» вместо «development». Обрыв виден читателю.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс (текст):</b> «…identically repeatable unit after unit across a full multi-unit development.»</p>
+    </div></div>
+
+    <div class="issue"><div class="sev high">23</div><div class="body">
+      <h4><span class="badge">Без повторной проверки</span> Странная ссылка «Schedule appointment» в Google Calendar</h4>
+      <p>На <code>/services/faux-wood-trusses/</code> кнопка «Schedule appointment» ведёт на <code>https://calendar.app.google/amPUpVJABVwi5Hgh8</code> — персональный Google-календарь. Клик откроет чужой календарь во вкладке; для B2B-покупателя это выглядит как недоверие и нестабильность (если календарь перестанет открываться, кнопка просто умрёт молча).</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> заменить на встроенную форму бронирования (Calendly/Cal.com на своём домене) с выпадающим списком слотов; в календаре отключить показ личных событий.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">5.</span> P2 — бренд, факты, тематика (16)</h2>
+    <p class="sec-note">Здесь сайт не «сломан», но он противоречит сам себе и подрывает доверие к компании.</p>
+
+    <div class="issue"><div class="sev med">24</div><div class="body">
+      <h4>Название компании используется в четырёх разных вариантах</h4>
+      <p>По всему сайту: <b>«Decorative Architectural Products»</b> (главная, футер, юридические страницы, блог) — <b>«Premier Architectural Products Company»</b> (<code>&lt;title&gt;</code> страницы <code>/about/</code>: «Premier Architectural Products Company | US Manufacturer») — <b>«DA Products»</b> (<code>&lt;title&gt;</code> <code>/services/faux-wood-trusses/</code>: «…| DA Products») — и юридическое лицо <b>«Royal Foam US LLC»</b>, Jacksonville FL (владелец домена, по данным SEO-аудита). Покупатель в первый месяц не понимает, кто перед ним: «Premier» вообще больше нигде не встречается.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> выбрать одно публичное имя (рекомендую <b>Decorative Architectural Products</b> — оно в домене, в футере, в юридических текстах и в блоге) и во всех <code>&lt;title&gt;</code> использовать его. В футере добавить строку вида «Decorative Architectural Products is a division of Royal Foam US LLC, 4225 James E Casey Dr, Unit #5, Jacksonville, FL 32219» — тогда вопросы закрыты, а бренд виден.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">25</div><div class="body">
+      <h4>Цифры и факты противоречат друг другу на разных страницах</h4>
+      <p>Смотри подробную таблицу в разделе 7. Коротко: вес («до 50× легче» против «на 90% легче»), пожарная безопасность (Class A ASTM E84 против «Melts under high heat» в таблице на <code>/services/</code>), гарантия («20 лет, без обслуживания» против «срок службы 15–25+ лет, требует обслуживания финишного покрытия» на <code>/technical-center/</code>), стаж («25+ лет» в футере против «с 1999 года» на <code>/about/</code>), скорость ответа («за 3 часа», «за 24 часа», «за 1 час», «в течение одного рабочего дня»), объём («15 000+ проектов», «500+ партнёрств», «1000+ архитекторов по всему миру»).</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">26</div><div class="body">
+      <h4><span class="badge warn">◐ Частично</span> Позиционирование «exterior» противоречит каталогу</h4>
+      <p>В подвале на всех страницах: «<b>Exterior solutions manufacturer</b> with 25+ years' experience». При этом каталог наполнен внутренними позициями — потолочные балки, кессонные и резьбные потолки, купола, капители, каминные мансарды, акустические панели, подвесные потолки, вертикальные сады. На <code>/capability-deck/</code> прямо сказано: «Interior architectural elements are the core of what we manufacture». Клиент по внутренним потолкам видит подпись «экстерьер» и решает, что попал не туда.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс (текст):</b> «<b>Decorative architectural products manufacturer</b> for interior and exterior applications. 25+ years of experience. Made in the USA — factory in Jacksonville, Florida.»</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">27</div><div class="body">
+      <h4>Title страницы «Special Deals» обещает precast, которого у компании нет</h4>
+      <p><code>&lt;title&gt;</code>: «<b>Architectural Precast Products</b> Deals | Factory Direct Pricing». Компания делает EPS с полиуретановым покрытием, а не precast (бетонные отливки). Кроме несоответствия, это ещё и каннибализация запросов: страница пытается встать под чужую терминологию.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс (текст):</b> «First Order Offer: 10% Off or a Free 3D Rendering | Decorative Architectural Products»</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">28</div><div class="body">
+      <h4>Страница про тестовый блок на русском среди английских</h4>
+      <p>Там же, на <code>/special-deals/</code>, подпись сервиса: «<b>С</b>arved foam ceilings» — русская «С» в английском тексте (см. P1.11). В каталоге также встречается «Green Wall <b>|</b> Vertical Garden Panel Systems» — вертикальная черта вместо слэша или точки.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">29</div><div class="body">
+      <h4><span class="badge bad">✖ Открыто</span> Один и тот же SEO-текст скопирован на шесть страниц</h4>
+      <p>Блок «Why Modern Architectural Building Products Are Changing the Way Projects Are Built» с подзаголовками «The Extras Nobody Else Bothers With» и «Why People Don't Leave» одинаково идёт на <code>/faq/</code>, <code>/contact-us/</code>, <code>/special-deals/</code> и <code>/blog/</code>. В нём вперемешку ключи: «architectural designer products», «architectural promotional products», «advanced architectural products», «architectural products list», «architectural precast products». Часть из них — несуществующие термины, по которым никто не ищет. Плюс фраза «Why People Don't Leave» имитирует отзывы, хотя отзывы на странице уже есть.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> оставить текст на одной странице, на остальных — короткие уникальные блоки под конкретный интент. Ключи «architectural designer / promotional products list» убрать.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">30</div><div class="body">
+      <h4><span class="badge bad">✖ Открыто</span> Отзывы выглядят сгенерированными — риск доверия и рекламных законов</h4>
+      <p>На каждой странице все отзывы датированы <b>одним и тем же днём</b>: <code>/team/</code> — October 16, 2025 (8 отзывов подряд); <code>/partnership/</code> — December 10, 2025; <code>/lead-magnet-subscription/</code> — December 12, 2025; <code>/case-collection/</code> — July 1, 2026; карточки товаров — July 27 и September 4, 2026. Тексты шаблонные («They were easy to reach whenever we had questions»), имена и города меняются, содержание — нет. Ссылок на Google Business Profile нет. Файл аватаров называется «DAP Reviews м 91» — то есть это не отзывы, а картинки. По FTC такие «отзывы» считаются фальсифицированными.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> собрать реальные отзывы с Google Business Profile, поставить на них прямую ссылку и даты. Шаблонные отзывы убрать, а вместо них — блок «Как мы работаем» с цифрами, которые можно подтвердить (сроки производства, объём цеха, число проектов).</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">31</div><div class="body">
+      <h4>Privacy Policy содержит SEO-схему с обязательным бэклинком</h4>
+      <p>Раздел 2 «Media Assets, Image Usage, and Mandatory Backlink Attribution» требует от любого третьего лица, использующего фото с сайта, поставить <b>прямую кликабельную ссылку</b> на сайт и запрещает <code>rel="nofollow"</code>. Юридически это попытка навязать схему ссылок. Для Google это сигнал, связанный с покупкой ссылок (spam policy), а не с защитой авторских прав. Плюс политика не содержит ни адреса, ни email для запросов по персональным данным, ни сроков хранения, ни списка cookie.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> вынести «Mandatory Backlink Attribution» из privacy policy в отдельный документ «Media Usage / Press &amp; Media Kit» (там это нормальная практика для пресс-релизов), а в политике оставить только описание обработки данных: категории данных, цели, сроки хранения, контакты для запросов, opt-out для Калифорнии.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">32</div><div class="body">
+      <h4>Cookie Policy путает «технологии» и «cookie»</h4>
+      <p>Фраза «We may use essential, functional, performance, analytics <b>technologies as cookies</b>» — синтаксически бессмысленна. Кроме того, не перечислено ни одной конкретной cookie, нет сроков, нет способа отозвать согласие.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс (текст):</b> «We use cookies and similar technologies for essential site functions, preferences, analytics and performance measurement. [Table: name / purpose / provider / retention]. You can accept, reject or manage your choices at any time via the ‘Cookie Settings’ link in the footer, and you can delete cookies in your browser settings.»</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">33</div><div class="body">
+      <h4>Страница «Lead Magnet» дублирует страницу «Partnership»</h4>
+      <p>Блок «Partnership Opportunities» с текстом «The best projects are rarely built alone…» и кнопкой «Join our network» одинаково стоит на <code>/lead-magnet-subscription/</code> и на <code>/partnership/</code>. При этом на <code>/lead-magnet-subscription/</code> кнопка «Get my catalog» вообще без цели — в отдаче это просто текст без ссылки, то есть ещё одна неработающая кнопка на странице, которая должна конвертировать в лид.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">34</div><div class="body">
+      <h4>Дублирующий раздел портфолио</h4>
+      <p><code>portfolio-sitemap.xml</code> содержит 20 страниц, которые повторяют услуги один-в-один по URL и по содержанию (<code>/portfolio-collection/faux-wood-trusses/</code> ≈ <code>/services/faux-wood-trusses/</code>). Два раздела с одинаковыми текстами — это каннибализация и размывание сигнала. Плюс один из портфолио-URLов с «-2» на конце: <code>/portfolio-collection/faux-stone-column-wraps-2/</code>.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> оставить один раздел (портфолио как «реализованные проекты» с фото и описаниями, а услуги — как коммерческие страницы). Если оставлять оба — сделать канонизацию на услугу и убрать дубли из индексации.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">35</div><div class="body">
+      <h4>Двойная таблица спецификаций и «липкая» шапка на тяжёлых страницах</h4>
+      <p><code>/technical-center/</code> отдаётся в 26 чанках (самая тяжёлая страница сайта) — таблица продублирована, якоря ведут в скрытые за логином разделы. Это ощущается как «подвисание» при прокрутке. Плюс на <code>/contact-us/</code> телефон один, а WhatsApp — <code>wa.me/12126399675</code>: стоит проверить, что номер реально принадлежит компании и на него отвечают в рабочие часы, иначе это выглядит как подмена контакта.</p>
+    </div></div>
+
+    <div class="issue"><div class="sev med">36</div><div class="body">
+      <h4>Тон текста местами не соответствует аудитории</h4>
+      <p>На <code>/team/</code> и в FAQ-блоке: «Our shop guys hate us sometimes, but customers notice», «Seriously free — no “free estimate that’s really a sales pitch” nonsense», «not the photocopied garbage some companies pass off as marketing materials», «We’ve literally started projects from photos with circles drawn on it». Для аудитории архитекторов, инженеров и GC это фамильярно-снисходительный тон, который читается как заимствованный AI-контент и режет серьёзный B2B-бренд.</p>
+      <p style="margin-top:6px;color:var(--good)"><b>Фикс:</b> заменить на спокойные формулировки: «We’ve rejected entire production runs that didn’t meet spec. Our production team isn’t always thrilled — customers notice the difference.»</p>
+    </div></div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">6.</span> Грамматика и орфография: полный список (было → стало)</h2>
+    <p class="sec-note">Все правки текста готовы к вставке. Английский текст — как его нужно произнести в CMS.</p>
+    <div class="callout" style="border-color:#1f4d3c;border-left-color:var(--good);background:var(--panel)">
+      <h4 style="color:var(--good)">Уже применено на части страниц — нужно дотянуть на остальные</h4>
+      <p>12 октября исправлены: «Sunday: <b>с</b>losed» → «closed»; подпись компании «Exterior solutions manufacturer with 25+ years' experience / 100% Made in USA» → «Decorative architectural products manufacturer for interior and exterior applications / 100% Made in the USA — factory in Jacksonville, Florida»; ссылка на Майами <code>/locations/miami-2</code> → <code>/locations/miami</code>. Это сделано на <code>/faq/</code> и <code>/how-to-order/</code> — <b>те же правки всё ещё нужны на остальных шаблонах</b>, в первую очередь на <code>/contact-us/</code>, где подвал остался старым (см. Н2).</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Страница</th><th>Было (как сейчас)</th><th>Стало (готовая замена)</th><th>Тип</th></tr></thead>
+        <tbody>
+          <tr><td>Главная</td><td>Forget <b>standart</b>, unreliable decorative architectural products…</td><td>Forget <b>standard</b>, unreliable decorative architectural products…</td><td>Опечатка</td></tr>
+          <tr><td>Главная</td><td>protect them with an industrial-grade polyurea coating in a thin yet extremely durable <b>industrial polyurea protective layer</b></td><td>protect them with an industrial-grade polyurea hard coat — a thin but extremely durable protective layer</td><td>Тавтология</td></tr>
+          <tr><td>Главная</td><td>Contact us <b>any way you like</b></td><td>Contact us <b>in any way you like</b></td><td>Грамматика</td></tr>
+          <tr><td>Главная</td><td>Main steps to place an order</td><td>How to place an order</td><td>Калька</td></tr>
+          <tr><td><code>/about/</code></td><td>shapes designed for easy installation<b>.</b></td><td>shapes designed for easy installation<b>.</b> <span class="badge ok">убрать пробел перед точкой</span></td><td>Пробел</td></tr>
+          <tr><td><code>/about/</code></td><td>from your dream and the first idea, technical drawings to production and final delivery</td><td>from the first idea and hand sketch to technical drawings, production and final delivery</td><td>Сломанная фраза</td></tr>
+          <tr><td><code>/about/</code></td><td>Provide estimates, reviews of engineers, and 3D visualizations.</td><td>Provide estimates, engineering reviews, and 3D visualizations.</td><td>Ошибка перевода</td></tr>
+          <tr><td><code>/about/</code></td><td><code>&lt;title&gt;</code> Premier Architectural Products Company | US Manufacturer</td><td>About Us | Decorative Architectural Products — US Manufacturer</td><td>Чужой бренд</td></tr>
+          <tr><td><code>/services/</code></td><td>An engineering solution that looks and performs exactly as you expect</td><td>An engineered solution that looks and performs exactly as you expect</td><td>Грамматика</td></tr>
+          <tr><td>Услуги (табы)</td><td>Custom <b>Culumn</b> Bases / Custom <b>Culumn</b> Capitals</td><td>Custom <b>Column</b> Bases / Custom <b>Column</b> Capitals</td><td>Опечатка</td></tr>
+          <tr><td>Услуги</td><td>Each of our decorative architectural foam <b>product</b> is unique</td><td>Each of our decorative architectural foam <b>product is unique</b> → <b>Every one of our foam products is unique</b></td><td>Числительное</td></tr>
+          <tr><td>Карточки услуг</td><td>Fireplaces surrounds</td><td>Fireplace surrounds</td><td>Опечатка</td></tr>
+          <tr><td>Карточки услуг</td><td>…Products<b>Products</b> (alt склеен)</td><td>…Products</td><td>alt-текст</td></tr>
+          <tr><td><code>/contact-us/</code></td><td>Write us or <b>cll</b> us—we're here!</td><td><b>Write to us or call us</b> — we're here to help!</td><td>Опечатка ×2</td></tr>
+          <tr><td>Подвал (везде)</td><td>Have a question or suggestion? <b>Write us</b> or call us—we're here!</td><td>Have a question or suggestion? <b>Write to us</b> or call us — we're here to help!</td><td>Грамматика</td></tr>
+          <tr><td><code>/contact-us/</code></td><td>Sunday: <b>с</b>losed (кириллическая «с»)</td><td>Sunday: Closed</td><td>Кириллица</td></tr>
+          <tr><td><code>/contact-us/</code></td><td>### Major Cities&nbsp; we serve</td><td>### Major cities we serve</td><td>Регистр + двойной пробел</td></tr>
+          <tr><td><code>/contact-us/</code></td><td>Feel free to contact Decorative Architectural Products</td><td>Get in touch with Decorative Architectural Products</td><td>Стиль</td></tr>
+          <tr><td><code>/contact-us/</code></td><td>Waiting until construction has already started<b>.</b>The earlier we're involved…</td><td>…already started<b>. </b>The earlier we're involved…</td><td>Пропущен пробел</td></tr>
+          <tr><td>Подвал (везде)</td><td>100% <b>Made in USA</b></td><td>100% <b>Made in the USA</b></td><td>Грамматика</td></tr>
+          <tr><td><code>/special-deals/</code></td><td><b>С</b>arved foam ceilings (кириллическая «С»)</td><td>Carved foam ceilings</td><td>Кириллица</td></tr>
+          <tr><td><code>/special-deals/</code></td><td>“Construction schedules change far more often than manufacturing schedules.”<b>Having</b> commonly used…</td><td>…schedules.”<b> </b>Having commonly used…</td><td>Пропущен пробел</td></tr>
+          <tr><td><code>/special-deals/</code></td><td>What's more important—price or production reliability? → «Ask three contractors and you'll probably hear the same answer.»</td><td>Ответ не отвечает на вопрос. <b>Фикс:</b> «Reliability. The cheapest quote that fails on site always costs more than the second-cheapest one that arrives on time and matches the drawings.»</td><td>Контент</td></tr>
+          <tr><td><code>/team/</code></td><td>Every project has its own requirements <b>-</b>and that's exactly how we treat it</td><td>Every project has its own requirements <b>—</b> and that's exactly how we treat it</td><td>Тире + пробел</td></tr>
+          <tr><td><code>/team/</code>, <code>/case-collection/</code></td><td>facade</td><td>facade → <b>façade</b> (в других местах уже с диакритикой — привести к единому виду)</td><td>Орфография</td></tr>
+          <tr><td><code>/case-collection/</code></td><td>XXL Corinthian Column Capitals for <b>20'</b> Architectural Columns</td><td>…for <b>20 ft</b> Architectural Columns</td><td>Единицы</td></tr>
+          <tr><td><code>/faq/</code>, <code>/technical-center/</code></td><td>Architects &amp; <b>Engineer</b> / Developer &amp; Owner / <b>Resident</b></td><td>Architects &amp; <b>Engineers</b> / <b>Developers &amp; Owners</b> / <b>Homeowners &amp; Remodelers</b></td><td>Опечатка + калька</td></tr>
+          <tr><td><code>/faq/</code>, <code>/technical-center/</code></td><td>Category / <b>Category</b></td><td>Category (убрать дубль) / на FAQ — <b>Topic</b></td><td>UI</td></tr>
+          <tr><td><code>/locations/</code> (все)</td><td>Master the sound&nbsp; Don't compromise the skyline</td><td>Master the sound<b>. </b>Don't compromise the skyline.</td><td>Пунктуация</td></tr>
+          <tr><td><code>/cookie-settings/</code></td><td>We may use essential, functional, performance, analytics <b>technologies as cookies</b></td><td>We use cookies and similar technologies for essential functions, preferences, analytics and performance measurement.</td><td>Смысл</td></tr>
+          <tr><td><code>/terms-of-service/</code></td><td>To the fullest liable for … damages <b>for</b> any … damages</td><td>To the fullest extent permitted by applicable law, the Company shall not be liable for any direct, indirect, incidental, special, or consequential damages arising from or related to the use of, or inability to use, this Website.</td><td>Юридический</td></tr>
+          <tr><td>Все страницы</td><td><b>15000+</b> / <b>1000+</b> / <b>500+</b></td><td><b>15,000+</b> / <b>1,000+</b> / <b>500+</b></td><td>Формат чисел</td></tr>
+          <tr><td>Карточки услуг</td><td>Green Wall <b>|</b> Vertical Garden Panel Systems</td><td>Green Wall <b>/</b> Vertical Garden Panel Systems</td><td>Символ</td></tr>
+          <tr><td><code>/partnership/</code></td><td>Whether you are an architect, distributor, contractor, or fabricator<b>.</b></td><td>…or fabricator<b> — tell us which fits you best.</b></td><td>Фрагмент</td></tr>
+          <tr><td><code>/capability-deck/</code></td><td>across a full multi-unit <b>deve</b></td><td>across a full multi-unit <b>development</b></td><td>Обрыв</td></tr>
+          <tr><td>Подвал (везде)</td><td><code>Max size: 5GB</code></td><td><code>Max file size: 25 MB</code> (или фактический лимит хостинга/бэкапа — 5 ГБ через браузер не отправляются)</td><td>Технический</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">7.</span> Факты, которые противоречат друг другу</h2>
+    <p class="sec-note">Собиратель по цифрам, обещаниям и продуктовым утверждениям. Каждая строка — два утверждения на сайте, которые нельзя показать архитектору одновременно.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Тема</th><th>Утверждение A</th><th>Утверждение B</th><th>Риск</th></tr></thead>
+        <tbody>
+          <tr><td>Вес изделий</td><td>Главная: «weighing up to <b>50× less</b> than solid wood»</td><td>Услуги: «<b>Up to 90% lighter</b> than solid timber trusses»</td><td><span class="badge bad">Противоречие</span> 50× легче ≈ −98%, а не −90%</td></tr>
+          <tr><td>Пожарная безопасность</td><td>Главная и услуги: «<b>Class A Fire Rating (ASTM E84)</b>»</td><td><code>/services/</code> таблица: EPS — «<b>Melts under high heat</b>»; дерево — «Burns»</td><td><span class="badge bad">Противоречие</span> Прямое отрицание главного USP</td></tr>
+          <tr><td>Гарантия</td><td>Главная: «<b>20-year warranty with no ongoing maintenance</b>»</td><td><code>/technical-center/</code>: «Service Life 15–25+ years … <b>Requires maintenance of finish</b>»</td><td><span class="badge bad">Юридический</span> Обещание без обслуживания vs требование обслуживания</td></tr>
+          <tr><td>Стаж компании</td><td>Подвал: «<b>25+ years</b>' experience»</td><td><code>/about/</code>: «partnered … <b>since 1999</b>» (27 лет), «Over Two Decades»</td><td><span class="badge warn">Непоследовательно</span></td></tr>
+          <tr><td>Срок ответа на заявку</td><td>Главная: «<b>Within 24 hours</b>»</td><td>Карточки товаров: «<b>1 hour</b> Average quote request»; <code>/how-to-order/</code>: «<b>3 hours</b>» и «7 hours»; услуги: «<b>within one business day</b>»</td><td><span class="badge bad">4 разных ответа</span> на одном сайте</td></tr>
+          <tr><td>Объём бизнеса</td><td>Карточки товаров: «<b>15,000+</b> Projects Completed», «<b>98%</b> Client Satisfaction»</td><td><code>/about/</code>: «<b>92%</b> delivered on time»; <code>/partnership/</code>: «<b>500+</b> collaborations», «<b>1,000+</b> … <b>globally</b>»</td><td><span class="badge warn">Непроверяемо</span> При этом «Made in USA, Jacksonville»</td></tr>
+          <tr><td>Локация производства</td><td>Подвал: «factory in Florida»</td><td><code>/about/</code>: «Every component is designed and fabricated in the <b>United States</b>»</td><td><span class="badge ok">Согласовано</span> <span class="badge warn">но стоит указать адрес цеха</span></td></tr>
+          <tr><td>Назначение продукции</td><td>Подвал: «<b>Exterior</b> solutions manufacturer»</td><td>Каталог: потолки, балки, акустика, зелёные стены — <b>интерьер</b></td><td><span class="badge warn">Позиционирование</span></td></tr>
+          <tr><td>Материал</td><td>Главная: «high-density <b>EPS</b> and protect them with … polyurea»</td><td><code>/services/</code> таблица: «Our Material (<b>EPS</b>)» — без полиуреи; <code>/capability-deck/</code> добавляет литьё <b>PU</b></td><td><span class="badge warn">Смешение</span> В сравнении с «wood / concrete / polyurethane / fiberglass» стоит «Our Material (EPS + Polyurea hard coat)»</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stale-note" style="margin-top:12px">Рекомендация: завести один источник правды — короткий внутренний документ «Claims Sheet» с утверждёнными формулировками и ссылками на лабораторные протоколы. Любой текст на сайте должен собираться из него. Иначе каждая новая страница добавляет новое противоречие.</p>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">8.</span> Карта неверных ссылок и целей кнопок</h2>
+    <p class="sec-note">Полный список того, что нажал бы пользователь и куда он попал бы. Пути «куда ведёт» проверены фактическими переходами.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Где</th><th>Подпись кнопки</th><th>Куда ведёт на самом деле</th><th>Ожидалось</th><th class="num">Приор.</th></tr></thead>
+        <tbody>
+          <tr><td>Подвал, все страницы</td><td>(904) 800-5651</td><td><code>tel:9043455400</code> — <b>другой номер</b></td><td><code>tel:+19048005651</code></td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/faq/</code>, <code>/contact-us/</code>, <code>/how-to-order/</code></td><td>Get my catalog</td><td><code>/my-account</code> — форма входа</td><td>Страница/файл каталога или форма</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td>Страницы услуг</td><td>Download PDF</td><td><code>/my-account</code> — форма входа</td><td>PDF-файл</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/how-to-order/</code></td><td>Submit now (×2)</td><td><code>/blog</code> — лента статей</td><td>Форма заявки</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/blog/</code></td><td>See all services</td><td><code>/blog</code> — сама на себя</td><td><code>/services</code></td><td class="num"><span class="badge bad">P1</span></td></tr>
+          <tr><td><code>/contact-us/</code></td><td>New York (в списке городов)</td><td><code>/contact-us/locations/new-york</code> → 301 → <code>/locations/new-york/</code></td><td>Прямая ссылка</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td>Меню, карта сайта</td><td>Shop / Store</td><td><code>/under-construction/</code> — заглушка</td><td>Рабочий каталог</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/under-construction/</code></td><td>View Product Details (×10)</td><td><code>/shop/?filter_category=…</code> → снова заглушка (тупик)</td><td>Реальный каталог</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/under-construction/</code></td><td>Фильтр «Carved Corbels»</td><td><code>?filter_category=%d1%81arved-corbels</code> — кириллица, фильтр не сработает</td><td><code>?filter_category=carved-corbels</code></td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/privacy-policy/</code></td><td>Cookie Settings</td><td><code>/privacy-policy</code> — сама на себя</td><td><code>/cookie-settings</code></td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td><code>/services/faux-wood-trusses/</code></td><td>Schedule appointment</td><td>Чужой Google-календарь <code>calendar.app.google/…</code></td><td>Форма на своём домене</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td>Страницы услуг</td><td>General Information, Eps Safety Data Sheet, Wind Load…</td><td>Якоря <code>/technical-center/#generainformation</code> и др. — подтверждённой цели нет</td><td>Рабочие якоря</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td><code>/special-deals/</code>, <code>/how-to-order/</code></td><td>See all FAQ</td><td>Просто текст, ссылки нет</td><td><code>/faq</code></td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td><code>/contact-us/</code></td><td>Miami</td><td><code>/locations/miami-2</code> (а <code>/locations/miami/</code> → 301 на него)</td><td>Чистый <code>/locations/miami/</code></td><td class="num"><span class="badge warn">P2</span></td></tr>
+          <tr><td>Карточки товаров</td><td>You save (%)</td><td>Пустое значение — переменная не заполнена</td><td>«Save 13%»</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td>Карточки товаров</td><td>from</td><td>Цена пустая у 6 товаров (FWT-MOD001/005/006/008, CCS-MOD004/008)</td><td>Цена</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td><code>/case-collection/</code></td><td>Фильтр категорий + 10 заголовков</td><td>Заголовки пустые, внутри 0 кейсов</td><td>Работающая фильтрация</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td>Юридические</td><td>Privacy Policy / Terms of Service</td><td>Страницы живые, но <b>нет в карте сайта</b></td><td>В sitemap</td><td class="num"><span class="badge warn">P2</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">9.</span> Что нужно проверить руками в браузере</h2>
+    <p class="sec-note">Эти пункты нельзя подтвердить без JavaScript и реального клика. Проверять с телефона и с десктопа, в инкогнито.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Что проверить</th><th>Где</th><th>На что смотреть</th><th class="num">Приор.</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td>Фактическая отправка формы</td><td>Подвал на каждой странице, <code>/contact-us/</code></td><td>В разметке видны только загрузка файла, чекбокс согласия и кнопка. Если при открытии в браузере полей «Имя / Email / Телефон / Сообщение» действительно нет — форма нерабочая. Проверить также: доходит ли письмо, есть ли автоответ, записывается ли лид в CRM</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td class="num">2</td><td>Строка «Remove» и «Max size: 5GB»</td><td>Подвал, все страницы</td><td>«Remove» — видимая служебная подпись, торчит в интерфейсе. 5 ГБ через браузер не отправляются — нужен реальный лимит</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td class="num">3</td><td>Кнопки «Get a consultation», «Claim your bonus», «Discuss the project»</td><td>Все страницы</td><td>Это, судя по разметке, не ссылки, а JS-обработчики. Проверить: открывается ли модалка, работает ли скролл, не ведёт ли «в никуда»</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td class="num">4</td><td>Кнопка «Get my catalog» на <code>/lead-magnet-subscription/</code></td><td>Страница лид-магнита</td><td>В отдаче нет цели — вероятно, ничего не делает</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td class="num">5</td><td>Фильтры FAQ и Technical Center</td><td><code>/faq/</code>, <code>/technical-center/</code></td><td>Нажать «Show FAQ» и каждую категорию — фильтруется ли список или ничего не происходит</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td class="num">6</td><td>Фильтр категорий кейсов</td><td><code>/case-collection/</code></td><td>Клик по «Capitals» / «Columns» и т.д. — показывает кейсы или пустые заголовки</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td class="num">7</td><td>Вариации товара</td><td>Карточки товаров</td><td>Дропдауны «Width / Depth / Texture / Style», «Loading options...», «Choose an option10», «Yes / No» у цвета — загружаются ли значения</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td class="num">8</td><td>Стабильность /contact-us/</td><td>Главная форма</td><td>При первой проверке <code>/contact-us/</code> отдал <b>HTTP 502</b>, при повторной — 200. Нужно проверить, повторяется ли 502: если да, это нестабильность на стороне хостинга/кэша на самой важной странице</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td class="num">9</td><td>Мобильная вёрстка</td><td>Все страницы</td><td>Горизонтальная прокрутка, наезжающие блоки, «прыгающий» макет на карточках товаров, длинные таблицы (Size Guide, Technical Center) на 360–390 px</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td class="num">10</td><td>Тяжёлые страницы</td><td><code>/technical-center/</code>, <code>/capability-deck/</code></td><td>Прокрутка «подвисает»? Проверить время загрузки на мобильном интернете</td><td class="num"><span class="badge warn">P1</span></td></tr>
+          <tr><td class="num">11</td><td>Cookie-баннер</td><td>Любая страница</td><td>Показывается ли вообще; есть ли Accept / Reject; не грузится ли аналитика до согласия</td><td class="num"><span class="badge bad">P0</span></td></tr>
+          <tr><td class="num">12</td><td>Трекеры</td><td>Все страницы</td><td>Что именно считается (GA4, пиксели, чаты). В SEO-аудите от 26.08 GA4 для домена <b>не настроен</b> — то есть заявки никогда не приписываются источнику</td><td class="num"><span class="badge bad">P0</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">10.</span> Название компании и тематика: вердикт</h2>
+    <p class="sec-note">Что соответствует тематике, а что нет.</p>
+    <div class="rec-grid">
+      <div class="rec-col">
+        <h3>Соответствует</h3>
+        <ol>
+          <li><b>Имя и домен совпадают в большинстве мест.</b> «Decorative Architectural Products» = домен, футер, юридические страницы, блог. Это правильное ядро бренда.</li>
+          <li><b>Продуктовая линейка логична</b> и описана грамотно: балки, фермы, кессонные и резьбные потолки, купола, капители, базы, каминные мансарды, дверные обрамления, балконы Juliet, облицовка колонн, акустика, подвесные потолки, зелёные стены, ограждения и почтовые ящики «под штукатурку».</li>
+          <li><b>Аудитория выбрана правильно</b> — архитекторы, инженеры, подрядчики, девелоперы, дизайнеры. B2B-тон в большинстве блоков выдержан.</li>
+          <li><b>Технический центр, CAD, Revit, спецификации</b> — сильная сторона, ради которой и делается B2B-сайт.</li>
+        </ol>
+      </div>
+      <div class="rec-col">
+        <h3>Не соответствует / мешает</h3>
+        <ol>
+          <li><b>Четыре разных имени</b> (P2.24). «Premier Architectural Products Company» в title — прямое попадание в чужую территорию, «DA Products» — непрофессиональное сокращение.</li>
+          <li><b>«Exterior solutions manufacturer»</b> в подвале при interior-каталоге (P2.26).</li>
+          <li><b>Title про precast</b> на странице акций (P2.27) — продукт, которого нет.</li>
+          <li><b>Ключи-пустышки</b> «architectural designer products», «architectural promotional products», «architectural products list» — подмена смысла ключа ради частотности.</li>
+          <li><b>Смешение материалов</b> в сравнительной таблице: EPS vs polyurethane, хотя полиуретан — часть их же изделия. Архитектор это заметит.</li>
+          <li><b>Отзывы с одинаковой датой</b> (P2.30) разрушают ровно то доверие, которое строит остальной сайт.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="num">11.</span> План работ</h2>
+    <p class="sec-note">Порядок, в котором имеет смысл исправлять. Первый блок — на один-два дня работы.</p>
+    <div class="rec-grid">
+      <div class="rec-col">
+        <h3>Блок 1 — сегодня (деньги и доверие)</h3>
+        <ol>
+          <li><b>Телефон.</b> Заменить <code>tel:9043455400</code> → <code>tel:+19048005651</code> во всех шаблонах. Проверить, что номер в письмах тот же. <span class="why">Без этого теряются все звонки с десктопа.</span></li>
+          <li><b>Снять тестовые товары</b> <code>/product/test-airtable-1/</code> и <code>/product/3dsignfactory-test/</code> с публикации, забрать из sitemap и из «Similar products». <span class="why">Тестовый мусор в индексе бренда.</span></li>
+          <li><b>Убрать «test1 test4»</b> с <code>/how-to-order/</code>. <span class="why">Видно всем.</span></li>
+          <li><b>Починить «Submit now»</b> на <code>/how-to-order/</code> → форма. <span class="why">Кнопка заказа уводит в блог.</span></li>
+          <li><b>«Get my catalog» / «Download PDF»</b> → каталог или форма. <span class="why">Главный лид-магнит сайта не работает.</span></li>
+          <li><b>Исправить ссылку на Нью-Йорк</b> и кнопку «See all services» на блоге. <span class="why">Дешёвые правки с большим эффектом.</span></li>
+        </ol>
+      </div>
+      <div class="rec-col">
+        <h3>Блок 2 — неделя (каталог и интерфейс)</h3>
+        <ol>
+          <li><b>Вернуть каталог</b> <code>/shop/</code> или снять его с публикации вместе с <code>/store/</code> и <code>/under-construction/</code>. <span class="why">Половина пути «посмотреть → купить» сейчас ведёт в заглушку.</span></li>
+          <li><b>Проверить и починить фильтры</b> FAQ / Technical Center / Cases, убрать пустые заголовки. <span class="why">Пустые секции выглядят как поломка.</span></li>
+          <li><b>Кириллица в текстах и слагах</b> — 3 места, включая нерабочий фильтр категорий.</li>
+          <li><b>Опечатки</b> из раздела 6 — списком, одним проходом по всем шаблонам.</li>
+          <li><b>Заполнить переменные товаров</b>: цены, «You save (%)», вариации. <span class="why">Пустые «from» и пустые скидки.</span></li>
+          <li><b>Проверить все якоря</b> Technical Center и убрать опечатку <code>#generainformation</code>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="callout" style="border-color:#1f4d3c;border-left-color:var(--good);background:var(--panel)">
+      <h4 style="color:var(--good)">Выполнено с 27.09 по 12.10</h4>
+      <p>✔ Тестовые товары сняты с публикации · ✔ Пункт 4 Terms of Service переписан · ✔ Вкладка «Cookie Settings» исправлена · ✔ Картинки Capability Deck перенесены на свой домен · ✔ «test1 test4» удалён · ✔ Ссылки на Нью-Йорк и Майами исправлены · ✔ Кнопки «Submit now» (вести в блог) убраны · ✔ Обрезанное слово «deve» дописано · ✔ Плейсхолдер вместо фото заменён · ✔ Подвал переписан на новых шаблонах · ✔ «See all FAQ» стал ссылкой на <code>/how-to-order/</code>.</p>
+      <p style="margin:0"><b>Осталось в блоке 1:</b> дотянуть новый подвал до всех шаблонов (Н2) и вернуть кнопку на шаги процесса заказа (Н3).</p>
+    </div>
+
+    <h3 style="font-size:15px;margin:22px 0 10px;color:var(--accent)">Блок 3 — 2–4 недели (контент, бренд, юридика)</h3>
+    <ol style="font-size:14.5px;line-height:1.65;padding-left:20px;margin:0">
+      <li style="margin-bottom:10px"><b>Собрать «Claims Sheet»</b> — один утверждённый список цифр: вес, пожарный класс, гарантия, стаж, сроки ответа, объём. Переписать по нему главную, услуги и футер. <span class="why">Сейчас один и тот же факт на сайте противоречив минимум в двух местах.</span></li>
+      <li style="margin-bottom:10px"><b>Выбрать одно имя компании</b> и привести к нему все title, футер и юридические тексты. Добавить в футер юр. лицо и адрес цеха.</li>
+      <li style="margin-bottom:10px"><b>Переписать отзывы</b>: собрать реальные с Google Business Profile, с датами и ссылками; шаблонные удалить. <span class="why">Фальсифицированные отзывы — репутационный и юридический риск.</span></li>
+      <li style="margin-bottom:10px"><b>Довести юридические страницы</b>: починить п.4 Terms, сделать рабочий cookie-баннер, вынести «Mandatory Backlink» из privacy policy, добавить opt-out для Калифорнии, ввести все три страницы в sitemap, добавить в футер.</li>
+      <li style="margin-bottom:10px"><b>Заполнить таблицу спецификаций</b> в Technical Center (проверка инженером), убрать дубликат, решить, отдавать ли документацию без логина.</li>
+      <li style="margin-bottom:10px"><b>Разобрать дубли разделов</b> «Портфолио» ↔ «Услуги» и «Lead Magnet» ↔ «Partnership».</li>
+      <li style="margin-bottom:10px"><b>Наполнить «Our team»</b> — реальными людьми или переименовать.</li>
+      <li style="margin-bottom:10px"><b>Перенести картинки</b> Capability Deck с 3dsignfactory.com на свой домен.</li>
+      <li style="margin-bottom:10px"><b>Починить Size Guide</b> на страницах услуг.</li>
+      <li style="margin-bottom:10px"><b>Настроить аналитику</b> — без неё ни одна правка ниже не измерится. В SEO-аудите от 26.08.2026 GA4 для домена отсутствует.</li>
+    </ol>
+  </section>
+
+  <footer>
+    Проверено 27 сентября 2026, повторная проверка 12 октября 2026 · Метод: серверная отдача страниц через прокси + чтение 10 файлов карты сайта, фактические переходы по ссылкам и редиректам, ручная вычитка видимого текста. Покрытие: 28 страниц из 137 URL — все 13 страниц раздела pages, шаблон услуги, шаблон локации, шаблон кейса, карточки товаров, юридические страницы, 404 и страница-заглушка. Шаблоны услуг, локаций, кейсов, портфолио и статей блога идентичны между собой, поэтому выводы по ним распространены на все 20 услуг, 15 локаций, 12 кейсов, 21 страницу портфолио и 10 материалов блога. Пункты, требующие браузера (отправка форм, JS-состояние кнопок, адаптив), вынесены в раздел 9 и не выдаются за подтверждённые. Вторая итерация (12.10.2026) добавила раздел «Что изменилось с прошлой проверки» и 6 новых находок (Н1–Н6), возникших в процессе правок. Отчёт подготовлен для внутреннего использования; правки текста даны в готовом виде для вставки в CMS.
+  </footer>
+
+</div>
+
+<script>
+  function toggleTheme(){
+    var html = document.documentElement;
+    var isLight = html.getAttribute('data-theme') === 'light';
+    var ico = document.getElementById('themeIco');
+    var label = document.getElementById('themeLabel');
+    if(isLight){
+      html.removeAttribute('data-theme');
+      ico.textContent = '☀';
+      label.textContent = 'Светлая тема';
+    }else{
+      html.setAttribute('data-theme','light');
+      ico.textContent = '🌙';
+      label.textContent = 'Тёмная тема';
+    }
+  }
+
+  // Подсказка появляется только у таблиц, которые реально не помещаются по ширине
+  (function(){
+    function mark(){
+      document.querySelectorAll('.tbl-wrap').forEach(function(w){
+        var need = w.scrollWidth > w.clientWidth + 2;
+        var prev = w.previousElementSibling;
+        var has  = prev && prev.classList && prev.classList.contains('scroll-hint');
+        if(need && !has){
+          var h = document.createElement('div');
+          h.className = 'scroll-hint';
+          h.textContent = '↔ таблицу можно прокрутить вбок';
+          w.parentNode.insertBefore(h, w);
+        } else if(!need && has){ prev.remove(); }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', mark);
+    window.addEventListener('load', mark);
+    var t; window.addEventListener('resize', function(){ clearTimeout(t); t=setTimeout(mark,150); });
+  })();
+</script>
+</body>
+</html>
