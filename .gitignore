@@ -1,2 +1,4 @@
 qa/node_modules/
 qa/out/
+*.zip
+ЧИТАТЬ-МЕНЯ.txt
