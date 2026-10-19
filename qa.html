@@ -230,6 +230,59 @@
     (перепроверено 14.10.2026 через WP REST <code>search?search=Factory</code> и <code>search=pergola</code>).</p>
   </div>
 
+  <div class="callout">
+    <p><b>Проверка №5 — 14.10.2026, раздел «Портфолио».</b> Отдельная ревизия <code>/portfolio/</code> и карточек проектов;
+    полный список — в таблице <a href="qa/portfolio-audit.csv"><code>qa/portfolio-audit.csv</code></a>
+    (22 замечания: 3 критичных, 8 высоких, 9 средних, 2 низких).</p>
+    <p><b>Что в порядке:</b> в сетке 29 проектов, и REST <code>/wp-json/wp/v2/portfolio?per_page=100</code> отдаёт ровно те же 29
+    записей — ни потерянных, ни лишних карточек нет; все 9 переименованных slug'ов открываются;
+    счётчики фильтра материалов сходятся: EPS(12) + EPS + Hard Coat(10) + HDU(2) + Urethane(5) = 29;
+    <code>title</code> страницы — «Custom Foam Fabrication Portfolio | Royal Foam Art Design».</p>
+    <p><b>Критичное:</b> старые адреса вида <code>/portfolio/…-copy-7/</code> по-прежнему отдают 404, редиректов 301 нет
+    (9 адресов); 404-страница обещает «Explore our menu below to continue.», но меню под этой фразой не выводится;
+    главный CTA кейса «Get a free quote now» — текст без ссылки (ссылка есть только у «Schedule appointment»).</p>
+    <p><b>Высокое:</b> «Found 0 projects» при 29 опубликованных кейсах; служебная строка <code>FILTER(0)</code>; мусорный
+    «BACKSHOW»; блок «Similar portfolios» одинаков на всех проектах (первые 6 записей, к теме отношения не имеют);
+    галереи кейсов пересекаются — в «Custom Mall Activation Props» лежат фото из Window Displays, Retail Interior и
+    Visual Merchandising; обложка и alt у «Custom Foam Stage &amp; Movie Props» — от проекта про скульптуры;
+    две формы «Let's Get Started» с разными ключами Turnstile на одной странице; у всех 29 карточек локация «Florida».</p>
+    <p><b>Среднее:</b> «Show more» + «Page 1 of 2» одновременно в галерее; пустые <code>alt</code> у части фото
+    (<code>EVA-foam-props.webp</code>, <code>Hollywood-foam-props.webp</code>); копипаст в подзаголовке (кейс про сцену
+    описан как «events and trade shows»); файлы с хвостами редактора (<code>…-e1787224666356.webp</code>);
+    обложки 11 разных пропорций — сетка «рваная»; дубли отзывов (Michael P. и Jessica M. дважды);
+    нет хлебных крошек и prev/next; в кейсах нет фактов (клиент, материал, срок).</p>
+  </div>
+
+  <div class="callout">
+    <p><b>Проверка №6 — 14.10.2026, дубли текстов и картинок.</b> Отдельный разбор: на каких страницах повторяются
+    одни и те же тексты и изображения. Таблица — <a href="qa/duplicates-audit.csv"><code>qa/duplicates-audit.csv</code></a>
+    (24 записи: 11 текстовых дублей, 10 картинных, 3 случая «проверено — не дубль»).</p>
+    <p><b>Самое крупное:</b> на странице услуги <code>/services/brand-activation-props/</code> блок преимуществ
+    продублирован целиком — 6 карточек («High-Impact Solutions Without the High Costs», «End-to-End Support…»,
+    «Lightning-Fast Estimates», «US-based…», «Decades of Proven…», «Custom Fabrication…») идут подряд дважды,
+    с теми же текстами и теми же картинками. Блок глобальный, поэтому с большой вероятностью дубль на всех 31 услуге.</p>
+    <p><b>Тексты:</b> две одинаковые формы «Let's Get Started» на одной странице (с разными ключами Turnstile);
+    одинаковые отзывы Michael P. и Jessica M. — и внутри <code>/portfolio/</code>, и на <code>/special-deals/</code>;
+    один и тот же «Similar portfolios» (6 карточек) на всех кейсах; один и тот же CTA со ссылкой
+    <code>calendar.app.google/aQSLAuFpJfBNQtJ19</code> во всех разделах; весь блок фильтров каталога — и на
+    <code>/store/</code>, и на каждой карточке товара; одинаковая сетка услуг на главной и на
+    <code>/under-construction/</code>; одинаковая 404-страница; «Florida» во всех 29 карточках портфолио;
+    одна и та же ссылка на Dropbox-каталог.</p>
+    <p><b>Картинки:</b> <code>bg_form.webp</code> — на каждой странице с формой (включая 404);
+    <code>404.png</code> — на всех 404; <code>Custom-Foam-Sculptures-1.webp</code> — на <code>/portfolio/</code>
+    и как обложка кейса про сценический реквизит; 6 миниатюр «Similar portfolios» — на каждом кейсе;
+    в галерее «Custom Mall Activation Props» лежат фото кейсов Window Displays, Retail Interior и Visual Merchandising;
+    9 свотчей текстур — на ~600 карточках товаров; 6 иконок преимуществ — дважды на странице услуги;
+    7 одинаковых <code>Кнопка.png</code> на главной и на <code>/special-deals/</code>.</p>
+    <p><b>Проверено и НЕ подтвердилось:</b> описания товаров не копируются (Trade Show MOD001 и Escape Room MOD001 —
+    разные тексты); товары не пересекаются между категориями (в категории 340 — свои 24 slug'а, в 336 — свои 22);
+    FAQ на <code>/portfolio/</code> (13 вопросов) и на <code>/faq/</code> (~28) — разные наборы, совпадает только факт
+    про срок 15–30 дней.</p>
+    <p><b>Важно:</b> каталог правят прямо сейчас — между двумя запросами REST с разницей в полчаса счётчики категорий
+    изменились (Brand Activation 24 → 21, Architectural Shapes ALL 1 → 0), поэтому количественные данные — снимок
+    на 14.10.2026.</p>
+  </div>
+
   <h2 class="sec">1. Критично — ломает сценарии пользователя</h2>
 
   <div class="finding crit">
